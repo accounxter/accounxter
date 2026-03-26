@@ -2,912 +2,726 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accounxter | Contabilidad colombiana offline | 20 días gratis + sorteo</title>
-    <meta name="description" content="Software contable para microempresarios, tenderos, profesionales independientes y contadores. Nómina, IVA, facturación DIAN, retención en la fuente. Funciona sin internet. Pago único.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <meta name="description" content="Software contable para microempresarios colombianos. Nómina, IVA, facturación DIAN, retención. Funciona sin internet. Pago único desde $89.900.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --navy:    #08132e;
+            --navy2:   #0d1f4e;
+            --red:     #e8312a;
+            --red-glow:rgba(232,49,42,0.28);
+            --gold:    #f5a623;
+            --gold-lt: #fff7e6;
+            --purple:  #6c3fc5;
+            --purple-lt:#f3eeff;
+            --off:     #f6f7fb;
+            --border:  #e2e8f2;
+            --txt:     #0d1222;
+            --muted:   #5a647a;
+            --white:   #ffffff;
+            --green:   #10b981;
+            --radius:  1.4rem;
+            --shadow:  0 12px 40px rgba(8,19,46,0.10);
         }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #ffffff;
-            color: #0f172a;
-            line-height: 1.5;
+            font-family: 'Outfit', sans-serif;
+            background: var(--white);
+            color: var(--txt);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+        .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+        .text-center { text-align: center; }
+        .section { padding: 80px 0; }
 
-        /* Header / Hero */
-        .hero {
-            background: linear-gradient(135deg, #0c1c4c 0%, #0a1440 100%);
-            color: white;
-            text-align: center;
-            padding: 80px 24px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
-        }
-
-        .logo {
-            font-family: 'Syne', sans-serif;
-            font-size: 2.8rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.5rem;
-        }
-        .logo span {
-            color: #ff3c3c;
-            text-shadow: 0 0 8px rgba(255,60,60,0.5);
-        }
-        .hero-tagline {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 1rem auto;
-            opacity: 0.9;
-        }
-        .hero-cta {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 2rem 0 3rem;
-        }
-        .btn-primary, .btn-secondary {
+        .label {
             display: inline-block;
-            padding: 1rem 2rem;
-            border-radius: 3rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .btn-primary {
-            background: #ff3c3c;
-            color: white;
-            box-shadow: 0 8px 20px rgba(255,60,60,0.3);
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(255,60,60,0.4);
-        }
-        .btn-secondary {
-            background: rgba(255,255,255,0.15);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-2px);
-        }
-        .hero-stats {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        .stat {
-            text-align: center;
-        }
-        .stat-number {
-            font-family: 'Syne', sans-serif;
-            font-size: 2rem;
-            font-weight: 800;
-            color: #ffd966;
-        }
-        .stat-label {
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-
-        /* Sections */
-        section {
-            padding: 80px 0;
-        }
-        .section-label {
-            font-family: 'Syne', sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: #ff3c3c;
+            color: var(--red);
             margin-bottom: 0.8rem;
         }
-        .section-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 2rem;
-            font-weight: 800;
-            color: #0c1c4c;
+        .heading {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2rem, 4vw, 2.9rem);
+            color: var(--navy);
+            line-height: 1.15;
             margin-bottom: 1rem;
         }
-        .section-sub {
-            font-size: 1.1rem;
-            color: #4b5563;
-            max-width: 700px;
-            margin-bottom: 2rem;
-        }
-        .text-center {
-            text-align: center;
-        }
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-        .card {
-            background: #f9fafb;
-            border-radius: 1.5rem;
-            padding: 1.8rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-4px);
-        }
-        .card-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        .card h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-        .card p {
-            color: #4b5563;
-            font-size: 0.9rem;
+        .subheading {
+            font-size: 1.05rem;
+            color: var(--muted);
+            max-width: 620px;
+            margin: 0 auto 2.5rem;
         }
 
-        /* Pricing */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        .price-card {
-            border-radius: 1.5rem;
-            padding: 2rem;
-            background: white;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            border: 1px solid #e2e8f0;
-            position: relative;
-        }
-        .price-card.popular {
-            border: 2px solid #ffb347;
-            background: linear-gradient(135deg, #fff8ee, #fff3dc);
-        }
-        .price-card.premium {
-            border: 2px solid #7b2ff7;
-            background: linear-gradient(135deg, #f5eeff, #ede0ff);
-        }
-        .price-badge {
-            position: absolute;
-            top: -12px;
-            right: 20px;
-            background: #ffb347;
-            color: white;
-            font-size: 0.7rem;
-            font-weight: bold;
-            padding: 0.2rem 1rem;
-            border-radius: 20px;
-        }
-        .price-amount {
-            font-family: 'Syne', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 1rem 0;
-        }
-        .price-features {
-            list-style: none;
-            margin: 1.5rem 0;
-        }
-        .price-features li {
-            margin-bottom: 0.5rem;
-            display: flex;
+        /* BOTONES */
+        .btn {
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-        }
-        .price-features li::before {
-            content: "✓";
-            color: #10b981;
-            font-weight: bold;
-        }
-        .btn-plan {
-            display: block;
-            text-align: center;
-            padding: 0.8rem;
-            border-radius: 2rem;
-            font-weight: bold;
+            padding: 0.85rem 1.9rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 0.95rem;
             text-decoration: none;
-            transition: background 0.2s;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
         }
-        .btn-standard {
-            background: #ffb347;
-            color: white;
-        }
-        .btn-premium {
-            background: #7b2ff7;
-            color: white;
-        }
-        .btn-demo {
-            background: #0c1c4c;
-            color: white;
-        }
+        .btn-red { background: var(--red); color: #fff; box-shadow: 0 6px 24px var(--red-glow); }
+        .btn-red:hover { transform: translateY(-2px); box-shadow: 0 10px 30px var(--red-glow); }
+        .btn-ghost { background: rgba(255,255,255,0.12); color: #fff; border: 1.5px solid rgba(255,255,255,0.28); backdrop-filter: blur(4px); }
+        .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+        .btn-gold { background: var(--gold); color: var(--navy); box-shadow: 0 6px 20px rgba(245,166,35,0.35); }
+        .btn-gold:hover { transform: translateY(-2px); }
+        .btn-navy { background: var(--navy2); color: #fff; }
+        .btn-navy:hover { background: #172660; transform: translateY(-2px); }
+        .btn-purple { background: var(--purple); color: #fff; box-shadow: 0 6px 20px rgba(108,63,197,0.3); }
+        .btn-purple:hover { transform: translateY(-2px); }
+        .btn-full { width: 100%; justify-content: center; font-size: 1rem; padding: 1rem; }
 
-        /* Formulario */
-        .form-section {
-            background: #f8fafc;
-        }
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 1.5rem;
-            padding: 2rem;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-        }
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 0.8rem;
-            font-size: 1rem;
-        }
-        .form-group input:focus {
-            outline: none;
-            border-color: #ff3c3c;
-            box-shadow: 0 0 0 3px rgba(255,60,60,0.1);
-        }
-        .counter {
-            background: #f1f5f9;
-            padding: 0.8rem;
-            border-radius: 1rem;
-            text-align: center;
-            margin-top: 1rem;
-            font-weight: 600;
-        }
-
-        /* Testimonios */
-        .testimonios-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        .test-card {
-            background: #f9fafb;
-            border-radius: 1rem;
-            padding: 1.5rem;
-        }
-        .test-stars {
-            color: #ffb347;
-            margin-bottom: 0.5rem;
-        }
-        .test-text {
-            font-style: italic;
-            margin-bottom: 1rem;
-        }
-        .test-author {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-        .test-avatar {
-            width: 40px;
-            height: 40px;
-            background: #0c1c4c;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: white;
-        }
-
-        /* Nequi */
-        .nequi-section {
-            background: linear-gradient(135deg, #1a0533, #3d0a6e);
-            color: white;
-            border-radius: 2rem;
-            margin: 2rem 0;
-            padding: 3rem;
-        }
-        .nequi-key {
-            font-family: monospace;
-            font-size: 1.8rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            background: rgba(255,255,255,0.2);
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border-radius: 0.8rem;
-            margin: 1rem 0;
-        }
-
-        /* Footer */
-        footer {
-            background: #0c1c4c;
-            color: rgba(255,255,255,0.6);
-            padding: 3rem 0;
-            text-align: center;
-            font-size: 0.8rem;
-        }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 1.5rem 0;
-            flex-wrap: wrap;
-        }
-        .footer-links a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-        }
-        .footer-links a:hover {
-            color: white;
-        }
-
-        /* Flotante WhatsApp */
-        .wa-float {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-        }
+        /* WHATSAPP FLOTANTE */
+        .wa-float { position: fixed; bottom: 24px; right: 24px; z-index: 999; }
         .wa-float a {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #25D366;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 50px;
+            display: flex; align-items: center; gap: 8px;
+            background: #25D366; color: #fff;
+            padding: 12px 20px; border-radius: 50px;
+            font-weight: 700; font-size: 0.9rem;
             text-decoration: none;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+            transition: all 0.2s;
+        }
+        .wa-float a:hover { transform: translateY(-2px); }
+
+        /* NAVBAR */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+        }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+        .logo-text {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.55rem; color: var(--navy);
+            letter-spacing: -0.01em; text-decoration: none;
+        }
+        .logo-text span { color: var(--red); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--muted); font-size: 0.9rem; font-weight: 500; text-decoration: none; transition: color 0.15s; }
+        .nav-links a:hover { color: var(--navy); }
+        .nav-cta { display: flex; gap: 0.8rem; align-items: center; }
+        @media(max-width:768px) { .nav-links { display: none; } }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(150deg, var(--navy) 0%, #0d2060 55%, #16145a 100%);
+            color: #fff; padding: 100px 0 80px;
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; inset: 0;
+            background-image:
+                radial-gradient(circle at 70% 30%, rgba(232,49,42,0.18) 0%, transparent 55%),
+                radial-gradient(circle at 20% 80%, rgba(108,63,197,0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        @media(max-width:900px) { .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(245,166,35,0.18); border: 1px solid rgba(245,166,35,0.4);
+            color: var(--gold); padding: 0.4rem 1rem; border-radius: 40px;
+            font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em;
+            text-transform: uppercase; margin-bottom: 1.4rem;
+        }
+        .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.1; margin-bottom: 1.2rem; }
+        .hero h1 em { font-style: italic; color: var(--gold); }
+        .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,0.72); margin-bottom: 2rem; line-height: 1.7; }
+        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .hero-stats { display: flex; gap: 2rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.12); flex-wrap: wrap; }
+        .stat-item { display: flex; flex-direction: column; }
+        .stat-num { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--gold); }
+        .stat-lbl { font-size: 0.8rem; color: rgba(255,255,255,0.55); }
+
+        /* HERO CARD (formulario) - MEJORADA */
+        .hero-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.14);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius);
+            padding: 1.8rem;
+        }
+        .hero-card h2 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: #fff; margin-bottom: 0.4rem; }
+        .hero-card p { color: rgba(255,255,255,0.65); font-size: 0.9rem; margin-bottom: 1.4rem; }
+        .cupos-badge {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(245,166,35,0.12); border: 1px solid rgba(245,166,35,0.25);
+            border-radius: 0.75rem; padding: 0.6rem 1rem;
+            margin-top: 0.5rem; margin-bottom: 1rem;
+            font-size: 0.82rem; color: var(--gold); font-weight: 600;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 1rem;
-            }
-            .hero-cta {
-                flex-direction: column;
-                align-items: center;
-            }
-            .btn-primary, .btn-secondary {
-                width: 100%;
-                text-align: center;
-            }
-            .nequi-key {
-                font-size: 1.2rem;
-            }
+        /* IFRAME GOOGLE FORM - MEJORADO */
+        .gform-wrapper {
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #fff;
+            width: 100%;
+        }
+        .gform-wrapper iframe {
+            display: block;
+            width: 100%;
+            border: none;
+            min-height: 700px; /* Altura mínima que se ajustará dinámicamente */
+            height: auto;
+            transition: height 0.2s ease;
+        }
+
+        /* TRUST BAR */
+        .trust-bar { background: var(--off); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 16px 0; }
+        .trust-items { display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: 7px; font-size: 0.82rem; font-weight: 600; color: var(--muted); }
+
+        /* SORTEO */
+        .sorteo-section { background: linear-gradient(135deg, #fff7e6, #fff3d8); border-top: 4px solid var(--gold); }
+        .sorteo-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+        @media(max-width:768px) { .sorteo-inner { grid-template-columns: 1fr; } }
+        .sorteo-box { background: #fff; border: 1px solid rgba(245,166,35,0.35); border-radius: var(--radius); padding: 1.6rem; }
+        .sorteo-box h3 { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 0.6rem; }
+        .sorteo-box p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+        .sorteo-box p + p { margin-top: 0.5rem; }
+        .event-pill { display: inline-block; background: var(--navy2); color: #fff; font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.8rem; border-radius: 20px; margin-right: 4px; margin-bottom: 6px; }
+        .feature-check { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem; }
+        .feature-check li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; color: var(--muted); }
+        .feature-check li::before { content: "✓"; color: var(--green); font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+
+        /* PROBLEMA */
+        .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .problem-card { background: var(--off); border-radius: var(--radius); padding: 1.8rem; border: 1px solid var(--border); transition: box-shadow 0.2s, transform 0.2s; }
+        .problem-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+        .problem-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+        .problem-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+        .problem-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+
+        /* AVATARES */
+        .avatars-section { background: var(--navy); color: #fff; }
+        .avatars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.2rem; margin-top: 3rem; }
+        .avatar-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1.5rem 1.2rem; text-align: center; transition: background 0.2s; }
+        .avatar-card:hover { background: rgba(255,255,255,0.1); }
+        .avatar-emoji { font-size: 2.2rem; margin-bottom: 0.7rem; }
+        .avatar-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.2rem; }
+        .avatar-job { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem; }
+        .avatar-income { font-size: 0.78rem; color: var(--gold); font-weight: 600; }
+
+        /* MÓDULOS */
+        .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.4rem; margin-top: 3rem; }
+        .module-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.6rem; box-shadow: 0 4px 16px rgba(8,19,46,0.05); transition: box-shadow 0.2s, transform 0.2s; }
+        .module-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+        .module-icon { font-size: 1.8rem; margin-bottom: 0.7rem; }
+        .module-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.35rem; }
+        .module-card p { font-size: 0.86rem; color: var(--muted); line-height: 1.65; }
+
+        /* PRICING */
+        .pricing-section { background: var(--off); }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.8rem; margin-top: 3rem; align-items: start; }
+        .price-card { background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 2rem; position: relative; }
+        .price-card.popular { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(245,166,35,0.12); }
+        .price-card.premium { border-color: var(--purple); box-shadow: 0 0 0 4px rgba(108,63,197,0.1); }
+        .price-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); padding: 0.3rem 1.2rem; border-radius: 30px; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em; white-space: nowrap; }
+        .badge-gold-bg { background: var(--gold); color: var(--navy); }
+        .badge-purple-bg { background: var(--purple); color: #fff; }
+        .price-name { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--navy); margin-bottom: 0.2rem; }
+        .price-amount { font-family: 'DM Serif Display', serif; font-size: 2.8rem; color: var(--navy); line-height: 1; margin: 0.7rem 0 0.2rem; }
+        .price-amount small { font-size: 1rem; }
+        .price-period { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
+        .price-features { list-style: none; margin-bottom: 1.8rem; display: flex; flex-direction: column; gap: 0.5rem; }
+        .price-features li { display: flex; align-items: center; gap: 0.55rem; font-size: 0.88rem; color: var(--muted); }
+        .price-features li::before { content: "✓"; color: var(--green); font-weight: 800; }
+        .price-features li.no::before { content: "✗"; color: #ccc; }
+        .price-divider { border: none; border-top: 1px solid var(--border); margin: 1.2rem 0; }
+
+        /* COMPARATIVA */
+        .compare-table { width: 100%; border-collapse: collapse; margin-top: 2.5rem; font-size: 0.9rem; }
+        .compare-table th { text-align: left; padding: 0.8rem 1.2rem; background: var(--navy); color: rgba(255,255,255,0.8); font-weight: 600; font-size: 0.82rem; }
+        .compare-table th:first-child { border-radius: 0.8rem 0 0 0; }
+        .compare-table th:last-child { border-radius: 0 0.8rem 0 0; }
+        .compare-table td { padding: 0.9rem 1.2rem; border-bottom: 1px solid var(--border); color: var(--muted); }
+        .compare-table tr.highlight-row td { background: var(--gold-lt); color: var(--navy); font-weight: 700; }
+        .compare-table tr:hover td { background: var(--off); }
+        .compare-table tr.highlight-row:hover td { background: #fff3cc; }
+        .check-yes { color: var(--green); font-weight: 800; }
+        .check-no  { color: #ccc; }
+        .check-partial { color: var(--gold); }
+
+        /* TESTIMONIOS */
+        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.6rem; margin-top: 3rem; }
+        .testi-card { background: var(--off); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; }
+        .testi-stars { color: var(--gold); font-size: 1rem; margin-bottom: 0.8rem; }
+        .testi-text { font-size: 0.92rem; color: var(--txt); line-height: 1.75; margin-bottom: 1.2rem; font-style: italic; }
+        .testi-author { font-weight: 700; color: var(--navy); font-size: 0.9rem; }
+        .testi-role { font-size: 0.8rem; color: var(--muted); }
+        .testi-note { background: rgba(232,49,42,0.06); border: 1px solid rgba(232,49,42,0.15); border-radius: 0.75rem; padding: 0.8rem 1rem; font-size: 0.8rem; color: var(--muted); margin-top: 2rem; text-align: center; }
+
+        /* PROFESIONAL */
+        .profesional { background: linear-gradient(135deg, #eef4ff, #e6edff); border: 1px solid #c7d9ff; border-radius: var(--radius); padding: 2.5rem; text-align: center; }
+        .prof-avatar { font-size: 3rem; margin-bottom: 0.8rem; }
+        .profesional h2 { font-family: 'DM Serif Display', serif; font-size: 1.7rem; color: var(--navy); margin-bottom: 0.5rem; }
+        .profesional p { color: var(--muted); margin-bottom: 1.2rem; font-size: 0.95rem; }
+        .prof-tags { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: center; margin: 1rem 0; }
+        .prof-tag { background: #fff; border: 1px solid #c7d9ff; border-radius: 30px; padding: 0.3rem 1rem; font-size: 0.82rem; color: var(--navy2); font-weight: 500; }
+
+        /* PAGO */
+        .payment-section { background: linear-gradient(150deg, #1a0533, #3d0a6e, #230d5a); color: #fff; border-radius: 2rem; margin: 0 1rem 2rem; padding: 4rem 2rem; text-align: center; }
+        .payment-section h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 0.5rem; }
+        .payment-section > p { color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
+        .nequi-card { background: linear-gradient(135deg, #7b2ff7, #c53dd8); border-radius: 1.2rem; padding: 1.5rem 2rem; display: inline-block; margin: 0 auto 2rem; text-align: center; }
+        .nequi-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.4rem; }
+        .nequi-number { font-family: 'Outfit', monospace; font-size: 2rem; font-weight: 800; letter-spacing: 0.04em; }
+        .nequi-name { font-size: 0.82rem; opacity: 0.65; margin-top: 0.3rem; }
+        .steps-list { max-width: 420px; margin: 0 auto 2.5rem; text-align: left; display: flex; flex-direction: column; gap: 0.85rem; }
+        .step-item { display: flex; gap: 1rem; align-items: flex-start; background: rgba(255,255,255,0.07); border-radius: 0.9rem; padding: 0.8rem 1rem; }
+        .step-num { background: var(--gold); color: var(--navy); font-weight: 800; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; flex-shrink: 0; margin-top: 1px; }
+        .step-text { font-size: 0.88rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
+        .step-text strong { color: #fff; }
+
+        /* BONO BAR */
+        .bono-bar { background: var(--red); color: #fff; text-align: center; padding: 14px; font-size: 0.88rem; font-weight: 600; }
+        .bono-bar strong { font-size: 1rem; }
+
+        /* FOOTER */
+        footer { background: var(--navy); color: rgba(255,255,255,0.5); padding: 3rem 0 2rem; text-align: center; font-size: 0.82rem; }
+        .footer-logo { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: #fff; margin-bottom: 1rem; }
+        .footer-logo span { color: var(--red); }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin: 1.2rem 0; }
+        .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.82rem; transition: color 0.15s; }
+        .footer-links a:hover { color: #fff; }
+        .footer-copy { margin-top: 1.5rem; line-height: 1.8; }
+
+        /* REVEAL */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.55s, transform 0.55s; }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        @media(max-width:600px) {
+            .section { padding: 56px 0; }
+            .hero { padding: 60px 0 50px; }
+            .payment-section { margin: 0 0.5rem 1.5rem; padding: 2.5rem 1.2rem; }
+            .nequi-number { font-size: 1.5rem; }
+            .gform-wrapper iframe { min-height: 550px; }
         }
     </style>
 </head>
 <body>
 
-<!-- Botón flotante WhatsApp -->
+<!-- Bono lanzamiento -->
+<div class="bono-bar">
+    🎁 Código <strong>AXLANZAMIENTO</strong> — 20% de descuento en planes Standard y Premium · Solo 1.300 cupos
+</div>
+
+<!-- WhatsApp flotante -->
 <div class="wa-float">
     <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Accounxter!%20Quiero%20más%20información" target="_blank">
         💬 Soporte
     </a>
 </div>
 
-<!-- Hero -->
+<!-- NAV -->
+<nav>
+    <div class="container nav-inner">
+        <a href="#" class="logo-text">Accoun<span>X</span>ter</a>
+        <ul class="nav-links">
+            <li><a href="#planes">Planes</a></li>
+            <li><a href="#modulos">Módulos</a></li>
+            <li><a href="#sorteo-info">Sorteo</a></li>
+            <li><a href="#descarga">Descargar</a></li>
+        </ul>
+        <div class="nav-cta">
+            <a href="#sorteo" class="btn btn-red" style="padding:0.6rem 1.4rem;font-size:0.85rem;">Demo gratis →</a>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
 <section class="hero">
     <div class="container">
-        <div class="logo">ACCOUN<span>X</span>TER</div>
-        <div class="hero-tagline">
-            La contabilidad para Doña Rosa, el Profe Luis y Don Efraín.<br>
-            Tan fácil como contar con los dedos. <strong>Funciona sin internet</strong>.
-        </div>
-        <div class="hero-cta">
-            <a href="#descarga" class="btn-primary">📱 Descargar APK gratis</a>
-            <a href="#planes" class="btn-secondary">Ver planes y precios →</a>
-        </div>
-        <div class="hero-stats">
-            <div class="stat"><div class="stat-number">570K+</div><div class="stat-label">microempresarios potenciales</div></div>
-            <div class="stat"><div class="stat-number">9x</div><div class="stat-label">más barato que Siigo</div></div>
-            <div class="stat"><div class="stat-number">100%</div><div class="stat-label">offline · sin internet</div></div>
-            <div class="stat"><div class="stat-number">$0</div><div class="stat-label">para empezar (Demo)</div></div>
-        </div>
-    </div>
-</section>
+        <div class="hero-grid">
+            <!-- Izquierda -->
+            <div>
+                <div class="hero-badge">🚀 Lanzamiento Colombia 2026</div>
+                <h1>La contabilidad para <em>Doña Rosa,</em> el Profe Luis y Don Efraín</h1>
+                <p class="hero-sub">
+                    Software contable 100% offline, diseñado para los microempresarios del Régimen Simple. Tan fácil como contar con los dedos — y <strong style="color:#fff">9 veces más barato</strong> que Siigo.
+                </p>
+                <div class="hero-btns">
+                    <a href="#sorteo" class="btn btn-red">📱 Prueba gratis 20 días</a>
+                    <a href="#planes" class="btn btn-ghost">Ver precios →</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-num">570K+</span>
+                        <span class="stat-lbl">microempresarios potenciales</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">9×</span>
+                        <span class="stat-lbl">más barato que Siigo</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">100%</span>
+                        <span class="stat-lbl">offline, sin internet</span>
+                    </div>
+                </div>
+            </div>
 
-<!-- Problema -->
-<section>
-    <div class="container">
-        <div class="section-label text-center">El problema que resolvemos</div>
-        <h2 class="section-title text-center">¿Por qué los microempresarios pierden dinero?</h2>
-        <p class="section-sub text-center" style="margin:0 auto 2rem;">570.000 contribuyentes del Régimen Simple en Colombia no tienen acceso a un software contable diseñado para ellos.</p>
-        <div class="grid-2">
-            <div class="card">
-                <div class="card-icon">💸</div>
-                <h3>Software costoso y complejo</h3>
-                <p>Siigo cobra $145.993/mes, Alegra $69.900/mes. Diseñados para contadores, no para el tendero del barrio.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">📱</div>
-                <h3>Sin versión offline para celular</h3>
-                <p>Todos los competidores requieren internet permanente. Inútil en zonas con conectividad irregular.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">😰</div>
-                <h3>Miedo a la DIAN</h3>
-                <p>La obligación de facturar electrónicamente existe desde 2020. El 92% de los pequeños no sabe cómo cumplirla.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🤷</div>
-                <h3>No saben cuánto ganan de verdad</h3>
-                <p>Sin control de gastos, muchos emprendedores trabajan sin saber si tienen utilidad o pérdida real.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Para quién -->
-<section style="background: #f8fafc;">
-    <div class="container">
-        <div class="section-label text-center">Para quién es Accounxter</div>
-        <h2 class="section-title text-center">Pensado para los emprendedores reales de Colombia</h2>
-        <div class="grid-2" style="margin-top: 2rem;">
-            <div class="card">
-                <div class="card-icon">🛒</div>
-                <h3>Doña Rosa</h3>
-                <p>Tienda de barrio — Barrancabermeja<br> $4M–$8M / mes</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">📚</div>
-                <h3>Profe Luis</h3>
-                <p>Clases particulares — Floridablanca<br> $2.5M–$5M / mes</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🔧</div>
-                <h3>Don Efraín</h3>
-                <p>Taller bicicletas — Girón<br> $4M–$7M / mes</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">✂️</div>
-                <h3>Doña Patricia</h3>
-                <p>Peluquería — Barrancabermeja<br> $3.5M–$6M / mes</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🍽️</div>
-                <h3>Doña Carmenza</h3>
-                <p>Almuerzos — Barranquilla<br> $5M–$9M / mes</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">👴</div>
-                <h3>Adultos mayores</h3>
-                <p>Cualquier negocio familiar, sin conocimientos contables</p>
+            <!-- Derecha: Google Form oficial embebido (mejorado) -->
+            <div id="sorteo" class="hero-card">
+                <h2>📋 Demo gratis + entra al sorteo</h2>
+                <p>20 días sin compromisos. Automáticamente participas por una licencia premium de 1 año.</p>
+                <div class="cupos-badge">
+                    🎟️ <span id="cuposRestantesSorteo">--</span> cupos disponibles para el sorteo
+                </div>
+                <div class="gform-wrapper">
+                    <iframe
+                        src="https://docs.google.com/forms/d/e/1FAIpQLScdWRV0Ro_VAL3vp-dpI8D0v3Tp0An1q1GjD4Hfg0DUM_21eg/viewform?embedded=true"
+                        title="Registro demo Accounxter"
+                        loading="lazy">
+                        Cargando…
+                    </iframe>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Módulos -->
-<section>
-    <div class="container">
-        <div class="section-label text-center">Módulos incluidos</div>
-        <h2 class="section-title text-center">Todo lo que necesita tu negocio. En un solo celular.</h2>
-        <div class="grid-2">
-            <div class="card">
-                <div class="card-icon">👥</div>
-                <h3>Nómina Avanzada CST</h3>
-                <p>Cesantías, prima, vacaciones, horas extra, aportes parafiscales. SMMLV 2025: $1.423.500.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">📄</div>
-                <h3>Facturación Electrónica DIAN</h3>
-                <p>Genera facturas con CUFE simulado, XML y PDF. Resolución DIAN 000042/2020.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🏦</div>
-                <h3>Conciliación Bancaria</h3>
-                <p>Importa extractos CSV, matching automático, cuentas Bancolombia, Davivienda.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">📊</div>
-                <h3>IVA Bimestral — Form. 300</h3>
-                <p>Cálculo automático por período. UVT 2025: $49.799. Libro de ventas incluido.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">📋</div>
-                <h3>Retención en la Fuente — F350</h3>
-                <p>Registro de pagos, conciliación, certificados de retención. Cumple normativa DIAN.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">☁️</div>
-                <h3>Google Drive Sync</h3>
-                <p>Backup automático en tu Google Drive. Multi-empresa: hasta 5 razones sociales.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">📈</div>
-                <h3>Balance y Estado de Resultados</h3>
-                <p>Balance general, estado de resultados, historial de asientos. Reportes en tiempo real.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🔐</div>
-                <h3>PIN de Seguridad</h3>
-                <p>Protege tus datos con PIN de acceso. 100% local, sin servidores.</p>
-            </div>
-        </div>
+<!-- TRUST BAR -->
+<div class="trust-bar">
+    <div class="trust-items">
+        <div class="trust-item"><span>🔒</span> Datos 100% locales, sin servidores</div>
+        <div class="trust-item"><span>📜</span> DNDA radicado 1-2026-56626</div>
+        <div class="trust-item"><span>📱</span> Android 7.0+</div>
+        <div class="trust-item"><span>🏦</span> Compatible DIAN, Bancolombia, Davivienda</div>
+        <div class="trust-item"><span>💰</span> Pago único, sin suscripciones</div>
     </div>
-</section>
+</div>
 
-<!-- Bono de lanzamiento -->
-<section style="background: linear-gradient(135deg, #FF6B35, #FF9800); color: white; text-align: center;">
+<!-- SORTEO INFO -->
+<section class="section sorteo-section" id="sorteo-info">
     <div class="container">
-        <div class="bono-emoji" style="font-size: 3rem;">🎟️</div>
-        <h2 style="font-size: 2rem;">Bono de Lanzamiento</h2>
-        <p>Solo para las primeras <strong>1.300 personas</strong> que descarguen Accounxter</p>
-        <div style="background: rgba(255,255,255,0.2); display: inline-block; padding: 0.5rem 1.5rem; border-radius: 3rem; margin: 1rem 0;">
-            <span style="font-family: monospace; font-size: 1.5rem; font-weight: bold;">AXLANZAMIENTO</span>
+        <div class="text-center">
+            <span class="label">Sorteo exclusivo</span>
+            <h2 class="heading">🎁 Gana una licencia Premium por 1 año</h2>
+            <p class="subheading">Solo para las primeras 300 personas registradas. Sin compra necesaria.</p>
         </div>
-        <p><strong>20% de descuento</strong> en planes Standard y Premium</p>
-        <p class="mt-2">⏱️ Cupos limitados — solo 1.300 personas — termina sin aviso</p>
-    </div>
-</section>
-
-<!-- Planes y precios -->
-<section id="planes">
-    <div class="container">
-        <div class="section-label text-center">Planes y precios</div>
-        <h2 class="section-title text-center">Pago único. Sin mensualidades eternas.</h2>
-        <div class="pricing-grid">
-            <!-- Demo -->
-            <div class="price-card">
-                <h3>Demo</h3>
-                <div class="price-amount">GRATIS</div>
-                <p>20 días · 12 usuarios disponibles</p>
-                <ul class="price-features">
-                    <li>1 empresa</li>
-                    <li>Nómina avanzada</li>
-                    <li>IVA y Retefuente</li>
-                    <li>Facturación electrónica</li>
-                    <li>Conciliación bancaria</li>
-                    <li>✗ Google Drive Sync</li>
+        <div class="sorteo-inner reveal">
+            <div>
+                <div class="sorteo-box" style="margin-bottom:1.2rem;">
+                    <h3>🎲 Premio: Licencia Premium</h3>
+                    <p><strong>Valor: $500.000 COP</strong> — acceso vitalicio con soporte + actualizaciones.</p>
+                    <p>📅 Fecha del sorteo: <strong>Jueves 14 de mayo de 2026</strong> a las 12:00 m — evento presencial y transmisión en vivo.</p>
+                    <p>El ganador se anuncia en redes y es contactado directamente.</p>
+                </div>
+                <div class="sorteo-box">
+                    <h3>📅 Evento de lanzamiento</h3>
+                    <p>
+                        <span class="event-pill">Jue 14 mayo</span>
+                        <span class="event-pill">Jue 21 mayo</span>
+                        9:00 am – 12:30 pm
+                    </p>
+                    <p style="margin-top:0.6rem">📍 Auditorio Cámara de Comercio de Barrancabermeja (60 personas/jornada).</p>
+                    <p>🎥 Transmisión en vivo por Facebook y YouTube.</p>
+                </div>
+            </div>
+            <div>
+                <h3 style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--navy);margin-bottom:1rem;">✨ ¿Qué incluye tu prueba de 20 días?</h3>
+                <ul class="feature-check">
+                    <li>Contabilidad completa — asientos, terceros, documentos electrónicos</li>
+                    <li>Nómina avanzada con liquidación de prestaciones sociales (SMMLV 2025)</li>
+                    <li>Facturación electrónica DIAN simulada — CUFE, XML y PDF</li>
+                    <li>IVA bimestral (Form. 300) y Retención en la fuente (Form. 350)</li>
+                    <li>Conciliación bancaria — Bancolombia, Davivienda, extractos CSV</li>
+                    <li>Google Drive Sync — backup automático, hasta 5 razones sociales</li>
+                    <li>100% OFFLINE — funciona sin internet en cualquier zona del país</li>
+                    <li>PIN de seguridad — tus datos nunca salen de tu celular</li>
                 </ul>
-                <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20un%20PIN%20Demo%20gratuito%20de%20Accounxter" target="_blank" class="btn-plan btn-demo">Solicitar PIN Demo gratis →</a>
+                <a href="#sorteo" class="btn btn-gold" style="margin-top:1.5rem;display:inline-flex;">🎟️ Quiero mi demo gratis →</a>
             </div>
-            <!-- Standard -->
-            <div class="price-card popular">
-                <div class="price-badge">⭐ MÁS POPULAR</div>
-                <h3>Standard</h3>
-                <div class="price-amount">$89.900 <span style="font-size: 1rem;">COP</span></div>
-                <p>12 meses · Renovación anual</p>
+        </div>
+    </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="section">
+    <div class="container text-center">
+        <span class="label">El problema que resolvemos</span>
+        <h2 class="heading">¿Por qué los microempresarios pierden dinero?</h2>
+        <p class="subheading">570.000 contribuyentes del Régimen Simple en Colombia no tienen acceso a un software contable pensado para ellos.</p>
+        <div class="problem-grid reveal">
+            <div class="problem-card"><div class="problem-icon">💸</div><h3>Software costoso y complejo</h3><p>Siigo cobra $145.993/mes. Alegra, $69.900/mes. Diseñados para contadores, no para el tendero del barrio.</p></div>
+            <div class="problem-card"><div class="problem-icon">📵</div><h3>Sin versión offline</h3><p>Todos los competidores requieren internet permanente. Inútil en zonas con conectividad irregular.</p></div>
+            <div class="problem-card"><div class="problem-icon">😰</div><h3>Miedo a la DIAN</h3><p>La obligación de facturar electrónicamente existe desde 2020. El 92% de los pequeños no sabe cómo cumplirla.</p></div>
+            <div class="problem-card"><div class="problem-icon">🤷</div><h3>No saben cuánto ganan</h3><p>Sin control de gastos, muchos emprendedores trabajan sin saber si tienen utilidad o pérdida real.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- PARA QUIÉN -->
+<section class="section avatars-section">
+    <div class="container text-center">
+        <span class="label" style="color:var(--gold)">Para quién es Accounxter</span>
+        <h2 class="heading" style="color:#fff">Pensado para los emprendedores reales de Colombia</h2>
+        <div class="avatars-grid reveal">
+            <div class="avatar-card"><div class="avatar-emoji">🛒</div><div class="avatar-name">Doña Rosa</div><div class="avatar-job">Tienda de barrio · Barrancabermeja</div><div class="avatar-income">$4M – $8M / mes</div></div>
+            <div class="avatar-card"><div class="avatar-emoji">📚</div><div class="avatar-name">Profe Luis</div><div class="avatar-job">Clases particulares · Floridablanca</div><div class="avatar-income">$2.5M – $5M / mes</div></div>
+            <div class="avatar-card"><div class="avatar-emoji">🔧</div><div class="avatar-name">Don Efraín</div><div class="avatar-job">Taller bicicletas · Girón</div><div class="avatar-income">$4M – $7M / mes</div></div>
+            <div class="avatar-card"><div class="avatar-emoji">✂️</div><div class="avatar-name">Doña Patricia</div><div class="avatar-job">Peluquería · Barrancabermeja</div><div class="avatar-income">$3.5M – $6M / mes</div></div>
+            <div class="avatar-card"><div class="avatar-emoji">🍽️</div><div class="avatar-name">Doña Carmenza</div><div class="avatar-job">Almuerzos · Barranquilla</div><div class="avatar-income">$5M – $9M / mes</div></div>
+            <div class="avatar-card"><div class="avatar-emoji">👴</div><div class="avatar-name">Adultos mayores</div><div class="avatar-job">Cualquier negocio familiar</div><div class="avatar-income">Sin conocimientos previos</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- MÓDULOS -->
+<section class="section" id="modulos">
+    <div class="container text-center">
+        <span class="label">Módulos incluidos</span>
+        <h2 class="heading">Todo lo que necesita tu negocio. En un solo celular.</h2>
+        <div class="modules-grid reveal">
+            <div class="module-card"><div class="module-icon">👥</div><h3>Nómina Avanzada CST</h3><p>Cesantías, prima, vacaciones, horas extra, aportes parafiscales. SMMLV 2025: $1.423.500.</p></div>
+            <div class="module-card"><div class="module-icon">📄</div><h3>Facturación Electrónica DIAN</h3><p>Genera facturas con CUFE simulado, XML y PDF. Resolución DIAN 000042/2020.</p></div>
+            <div class="module-card"><div class="module-icon">🏦</div><h3>Conciliación Bancaria</h3><p>Importa extractos CSV, matching automático. Compatible con Bancolombia y Davivienda.</p></div>
+            <div class="module-card"><div class="module-icon">📊</div><h3>IVA Bimestral — Form. 300</h3><p>Cálculo automático por período. UVT 2025: $49.799. Libro de ventas incluido.</p></div>
+            <div class="module-card"><div class="module-icon">📋</div><h3>Retención en la Fuente — F350</h3><p>Registro de pagos, conciliación, certificados de retención. Cumple normativa DIAN.</p></div>
+            <div class="module-card"><div class="module-icon">☁️</div><h3>Google Drive Sync</h3><p>Backup automático en tu Google Drive. Multi-empresa: hasta 5 razones sociales.</p></div>
+            <div class="module-card"><div class="module-icon">📈</div><h3>Balance y Estado de Resultados</h3><p>Balance general, estado de resultados, historial de asientos. Reportes en tiempo real.</p></div>
+            <div class="module-card"><div class="module-icon">🔐</div><h3>PIN de Seguridad</h3><p>Protege tus datos con PIN de acceso. 100% local, sin servidores externos.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing-section" id="planes">
+    <div class="container text-center">
+        <span class="label">Planes y precios</span>
+        <h2 class="heading">Pago único. Sin mensualidades eternas.</h2>
+        <p class="subheading">Elige una vez, úsalo para siempre. Sin sorpresas al final del mes.</p>
+        <div class="pricing-grid reveal">
+            <div class="price-card">
+                <div class="price-name">Demo</div>
+                <div class="price-amount">GRATIS</div>
+                <div class="price-period">20 días · 12 usuarios disponibles</div>
+                <hr class="price-divider">
                 <ul class="price-features">
-                    <li>Hasta 5 empresas</li>
-                    <li>Nómina avanzada CST</li>
+                    <li>1 empresa</li><li>Nómina avanzada</li><li>IVA y Retefuente</li>
+                    <li>Facturación electrónica</li><li>Conciliación bancaria</li>
+                    <li class="no">Google Drive Sync</li>
+                </ul>
+                <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20un%20PIN%20Demo%20gratuito%20de%20Accounxter" target="_blank" class="btn btn-navy btn-full">Solicitar PIN Demo →</a>
+            </div>
+            <div class="price-card popular">
+                <div class="price-badge badge-gold-bg">⭐ MÁS POPULAR</div>
+                <div class="price-name">Standard</div>
+                <div class="price-amount">$89.900 <small>COP</small></div>
+                <div class="price-period">12 meses · Renovación anual</div>
+                <hr class="price-divider">
+                <ul class="price-features">
+                    <li>Hasta 5 empresas</li><li>Nómina avanzada CST</li>
                     <li>IVA · Retefuente · F300 · F350</li>
                     <li>Facturación FE-DIAN completa</li>
-                    <li>Conciliación bancaria</li>
-                    <li>Google Drive Sync</li>
+                    <li>Conciliación bancaria</li><li>Google Drive Sync</li>
                     <li>Exportar PDF · Multi-empresa</li>
                 </ul>
-                <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Quiero%20comprar%20Accounxter%20Standard%20-%20%2489.900%20COP.%20Código%20bono:%20AXLANZAMIENTO" target="_blank" class="btn-plan btn-standard">Comprar Standard — $89.900</a>
+                <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Quiero%20comprar%20Accounxter%20Standard%20-%20%2489.900%20COP.%20Código%20bono:%20AXLANZAMIENTO" target="_blank" class="btn btn-gold btn-full">Comprar Standard — $89.900</a>
             </div>
-            <!-- Premium -->
             <div class="price-card premium">
-                <div class="price-badge">👑 MEJOR VALOR</div>
-                <h3>Premium</h3>
-                <div class="price-amount">$249.000 <span style="font-size: 1rem;">COP</span></div>
-                <p>Vitalicio · Nunca expira</p>
+                <div class="price-badge badge-purple-bg">👑 MEJOR VALOR</div>
+                <div class="price-name">Premium</div>
+                <div class="price-amount">$249.000 <small>COP</small></div>
+                <div class="price-period">Vitalicio · Nunca expira</div>
+                <hr class="price-divider">
                 <ul class="price-features">
-                    <li>Empresas ilimitadas</li>
-                    <li>Todo lo de Standard</li>
+                    <li>Empresas ilimitadas</li><li>Todo lo de Standard</li>
                     <li>Acceso vitalicio garantizado</li>
                     <li>Todas las actualizaciones incluidas</li>
                     <li>Soporte prioritario WhatsApp</li>
                     <li>Sin pagos futuros nunca</li>
                     <li>Certificados de ingresos y retenciones</li>
                 </ul>
-                <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Quiero%20comprar%20Accounxter%20PREMIUM%20vitalicio%20-%20%24249.000%20COP.%20Código%20bono:%20AXLANZAMIENTO" target="_blank" class="btn-plan btn-premium">Comprar Premium — $249.000</a>
+                <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Quiero%20comprar%20Accounxter%20PREMIUM%20vitalicio%20-%20%24249.000%20COP.%20Código%20bono:%20AXLANZAMIENTO" target="_blank" class="btn btn-purple btn-full">Comprar Premium — $249.000</a>
             </div>
         </div>
-        <p class="text-center" style="margin-top: 2rem; font-size: 0.9rem;">Pago por Nequi · Bre-B · Transferencia. Recibes tu PIN de activación por WhatsApp en máximo 24 horas hábiles.</p>
+        <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--muted)">Pago por Nequi · Bre-B · Transferencia bancaria. PIN de activación en máximo 24 horas hábiles.</p>
     </div>
 </section>
 
-<!-- Comparativa -->
-<section style="background: #f8fafc;">
+<!-- COMPARATIVA -->
+<section class="section">
     <div class="container">
-        <div class="section-label text-center">Comparativa de mercado</div>
-        <h2 class="section-title text-center">Accounxter vs. la competencia</h2>
-        <div style="overflow-x: auto;">
-            <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 1rem; overflow: hidden;">
-                <thead style="background: #0c1c4c; color: white;">
-                    <tr>
-                        <th style="padding: 12px;">Software</th>
-                        <th>Modelo de cobro</th>
-                        <th>Enfocado en pequeños</th>
-                        <th>Funciona offline</th>
-                        <th>Costo anual</th>
-                    </tr>
+        <div class="text-center">
+            <span class="label">Comparativa de mercado</span>
+            <h2 class="heading">Accounxter vs. la competencia</h2>
+        </div>
+        <div class="reveal" style="overflow-x:auto;margin-top:0.5rem;">
+            <table class="compare-table">
+                <thead>
+                    <tr><th>Software</th><th>Modelo de cobro</th><th>Para pequeños</th><th>Funciona offline</th><th>Costo anual</th></tr>
                 </thead>
                 <tbody>
-                    <tr style="background: #eef2ff;">
-                        <td><strong>Accounxter Standard</strong></td>
-                        <td>Pago único anual</td>
-                        <td>✅ Sí</td>
-                        <td>✅ 100% offline</td>
-                        <td><strong>$89.900</strong></td>
-                    </tr>
-                    <tr style="background: #eef2ff;">
-                        <td><strong>Accounxter Premium</strong></td>
-                        <td>Pago único vitalicio</td>
-                        <td>✅ Sí</td>
-                        <td>✅ 100% offline</td>
-                        <td><strong>$249.000</strong> (una vez)</td>
-                    </tr>
-                    <tr>
-                        <td>Alegra Emprendedor</td>
-                        <td>Suscripción mensual</td>
-                        <td>⚠️ Parcialmente</td>
-                        <td>❌ Requiere internet</td>
-                        <td>$838.800/año</td>
-                    </tr>
-                    <tr>
-                        <td>Siigo Profesional</td>
-                        <td>Suscripción mensual</td>
-                        <td>❌ Para contadores</td>
-                        <td>❌ Requiere internet</td>
-                        <td>$1.751.916/año</td>
-                    </tr>
-                    <tr>
-                        <td>Helisa</td>
-                        <td>Mensual/anual</td>
-                        <td>❌ Empresas medianas</td>
-                        <td>❌ Requiere internet</td>
-                        <td>$450.000+/año</td>
-                    </tr>
+                    <tr class="highlight-row"><td><strong>Accounxter Standard</strong></td><td>Pago único anual</td><td class="check-yes">✓ Sí</td><td class="check-yes">✓ 100% offline</td><td><strong>$89.900</strong></td></tr>
+                    <tr class="highlight-row"><td><strong>Accounxter Premium</strong></td><td>Pago único vitalicio</td><td class="check-yes">✓ Sí</td><td class="check-yes">✓ 100% offline</td><td><strong>$249.000 (una vez)</strong></td></tr>
+                    <tr><td>Alegra Emprendedor</td><td>Suscripción mensual</td><td class="check-partial">⚠ Parcialmente</td><td class="check-no">✗ Requiere internet</td><td>$838.800/año</td></tr>
+                    <tr><td>Siigo Profesional</td><td>Suscripción mensual</td><td class="check-no">✗ Para contadores</td><td class="check-no">✗ Requiere internet</td><td>$1.751.916/año</td></tr>
+                    <tr><td>Helisa</td><td>Mensual / anual</td><td class="check-no">✗ Empresas medianas</td><td class="check-no">✗ Requiere internet</td><td>$450.000+/año</td></tr>
                 </tbody>
             </table>
         </div>
     </div>
 </section>
 
-<!-- Testimonios -->
-<section>
-    <div class="container">
-        <div class="section-label text-center">Historias reales</div>
-        <h2 class="section-title text-center">Lo que dicen los emprendedores colombianos</h2>
-        <div class="testimonios-grid">
-            <div class="test-card">
-                <div class="test-stars">★★★★★</div>
-                <div class="test-text">"Antes yo pensaba que la contabilidad era solo para los contadores. Ahora la hago yo misma desde el celular mientras espero que lleguen los clientes. Esta semana vendí $1.022.500 y sé exactamente cuánto gasté."</div>
-                <div class="test-author">
-                    <div class="test-avatar">🛒</div>
-                    <div><strong>Doña Rosa Angélica</strong><br>Tienda de abarrotes · Barrancabermeja</div>
-                </div>
-            </div>
-            <div class="test-card">
-                <div class="test-stars">★★★★★</div>
-                <div class="test-text">"Soy bueno enseñando, no con los números del negocio. Descubrí que tenía $480.000 en cartera que ni sabía que me debían. Al generar la factura electrónica, la DIAN la recibe automáticamente."</div>
-                <div class="test-author">
-                    <div class="test-avatar">📚</div>
-                    <div><strong>Profe Luis Eduardo</strong><br>Profesor particular · Floridablanca</div>
-                </div>
-            </div>
-            <div class="test-card">
-                <div class="test-stars">★★★★★</div>
-                <div class="test-text">"Tenía 48 años y nunca había usado un programa de contabilidad. Mi hija me enseñó a usar Accounxter en 20 minutos. Ahora sé exactamente cuánto pagar a cada empleada por comisión."</div>
-                <div class="test-author">
-                    <div class="test-avatar">✂️</div>
-                    <div><strong>Doña Patricia Suárez</strong><br>Peluquería · Barrancabermeja</div>
-                </div>
-            </div>
+<!-- TESTIMONIOS -->
+<section class="section" style="background:var(--off);">
+    <div class="container text-center">
+        <span class="label">Historias reales</span>
+        <h2 class="heading">Lo que dicen los emprendedores colombianos</h2>
+        <div class="testi-grid reveal">
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Antes pensaba que la contabilidad era solo para contadores. Ahora la hago yo misma desde el celular mientras espero que lleguen los clientes."</div><div class="testi-author">Doña Rosa Angélica</div><div class="testi-role">Tienda de abarrotes · Barrancabermeja</div></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Descubrí que tenía $480.000 en cartera que ni sabía que me debían. Al generar la factura electrónica, la DIAN la recibe automáticamente."</div><div class="testi-author">Profe Luis Eduardo</div><div class="testi-role">Profesor particular · Floridablanca</div></div>
+            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Mi hija me enseñó a usar Accounxter en 20 minutos. Ahora sé exactamente cuánto pagar a cada empleada por comisión."</div><div class="testi-author">Doña Patricia Suárez</div><div class="testi-role">Peluquería · Barrancabermeja</div></div>
+        </div>
+        <div class="testi-note">
+            💡 ¿Tienes Accounxter? <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20compartir%20mi%20testimonio%20de%20Accounxter" target="_blank" style="color:var(--red);font-weight:600;">Comparte tu testimonio</a> y ayuda a otros microempresarios.
         </div>
     </div>
 </section>
 
-<!-- Cómo instalar -->
-<section style="background: #f8fafc;">
+<!-- PROFESIONAL -->
+<section class="section">
     <div class="container">
-        <div class="section-label text-center">Instalación en 3 minutos</div>
-        <h2 class="section-title text-center">¿Cómo empezar?</h2>
-        <div style="max-width: 600px; margin: 2rem auto;">
-            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
-                <div style="background: #0c1c4c; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">1</div>
-                <div><strong>Descarga el APK</strong> – Toca el botón de descarga abajo.</div>
+        <div class="profesional reveal">
+            <div class="prof-avatar">👨‍💼</div>
+            <h2>¿Necesitas asesoría contable y tributaria?</h2>
+            <p>Soy <strong>Miguel Ángel Arroyo Pianeta</strong>, Contador Público y Especialista en Gerencia de Impuestos. Atención personalizada para micro y pequeñas empresas.</p>
+            <div class="prof-tags">
+                <span class="prof-tag">📊 Declaraciones de renta</span>
+                <span class="prof-tag">💼 Asesoría Régimen Simple</span>
+                <span class="prof-tag">📑 Revisión obligaciones DIAN</span>
+                <span class="prof-tag">📈 Planeación tributaria</span>
             </div>
-            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
-                <div style="background: #0c1c4c; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">2</div>
-                <div><strong>Permite instalar desde fuentes desconocidas</strong> – Ajustes → Seguridad → Fuentes desconocidas.</div>
-            </div>
-            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
-                <div style="background: #0c1c4c; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">3</div>
-                <div><strong>Instala y abre Accounxter</strong> – Toca el archivo descargado e instala.</div>
-            </div>
-            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
-                <div style="background: #0c1c4c; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">4</div>
-                <div><strong>Elige tu plan y activa con PIN</strong> – Escríbenos por WhatsApp para pagar y recibir tu PIN.</div>
-            </div>
-        </div>
-        <div class="text-center" id="descarga">
-            <a href="https://drive.google.com/uc?export=download&id=1CpConHqzRHN6rx8Y2xkY8-O7XDNAAmAI" class="btn-primary" style="background: #ff3c3c; display: inline-block;">📱 Descargar APK — Accounxter v5.0.5</a>
-            <p style="margin-top: 1rem; font-size: 0.8rem;">🤖 Android 7.0+ · Sin virus · Archivo seguro</p>
+            <p style="margin-bottom:1.5rem;">✅ Atención personalizada &nbsp;·&nbsp; ✅ Precios justos &nbsp;·&nbsp; ✅ Experiencia en micro y pequeñas empresas</p>
+            <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Miguel,%20quiero%20asesoría%20contable" target="_blank" class="btn btn-navy">📞 Solicita tu asesoría ahora</a>
         </div>
     </div>
 </section>
 
-<!-- Formulario de registro demo + sorteo (con conexión a Google Sheets) -->
-<section class="form-section" id="registro">
-    <div class="container">
-        <div class="section-label text-center">Obtén tu demo gratis</div>
-        <h2 class="section-title text-center">20 días gratis + sortea 1 licencia premium por 1 año</h2>
-        <div class="form-container">
-            <form id="demoForm">
-                <div class="form-group">
-                    <label>Nombre completo *</label>
-                    <input type="text" id="nombre" required placeholder="Ej. Miguel Ángel Arroyo Pianeta">
-                </div>
-                <div class="form-group">
-                    <label>Correo electrónico *</label>
-                    <input type="email" id="email" required placeholder="tu@empresa.com">
-                </div>
-                <div class="form-group">
-                    <label>Teléfono / WhatsApp *</label>
-                    <input type="tel" id="telefono" required placeholder="3058402580">
-                </div>
-                <div class="form-group">
-                    <label>Nombre de tu empresa o negocio</label>
-                    <input type="text" id="empresa" placeholder="Mi PYME S.A.S.">
-                </div>
-                <div class="form-group">
-                    <label>Eres *</label>
-                    <select id="perfil">
-                        <option value="empresario">Dueño de negocio / PYME</option>
-                        <option value="contador">Contador público</option>
-                        <option value="estudiante">Estudiante / otro</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn-primary" style="width: 100%;">✅ Registrarme y participar en el sorteo</button>
-            </form>
-            <div class="counter" id="cuposCounter">
-                🎟️ <span id="cuposRestantes">--</span> cupos disponibles para el sorteo
-            </div>
-            <p style="font-size: 0.7rem; text-align: center; margin-top: 1rem;">Al registrarte aceptas recibir información sobre el software y el evento. Puedes darte de baja en cualquier momento.</p>
-        </div>
-    </div>
-</section>
-
-<!-- Cómo pagar -->
-<section class="nequi-section">
-    <div class="container" style="text-align: center;">
-        <div class="nequi-logo" style="color: rgba(255,255,255,0.6);">Nequi Negocios · Bre-B</div>
-        <h2 style="font-size: 1.8rem;">¿Cómo pagar?</h2>
+<!-- PAGO Y DESCARGA -->
+<section id="descarga">
+    <div class="payment-section">
+        <h2>¿Cómo pagar y activar?</h2>
         <p>Rápido, seguro y sin complicaciones</p>
-        <div class="nequi-key">0091429387</div>
-        <div style="margin: 1rem 0;">Accounxter — Miguel Arroyo · Barrancabermeja</div>
-        <div style="text-align: left; max-width: 400px; margin: 2rem auto;">
-            <div>1️⃣ Aplica el código <strong>AXLANZAMIENTO</strong> en la app para obtener 20% de descuento</div>
-            <div>2️⃣ Transfiere el valor del plan elegido a la llave Nequi <strong>0091429387</strong></div>
-            <div>3️⃣ Envía el comprobante de pago por WhatsApp al <strong>+57 305 840 2580</strong></div>
-            <div>4️⃣ Recibes tu PIN de activación en máximo <strong>24 horas hábiles</strong></div>
-            <div>5️⃣ Ingresa el PIN en la app y disfruta Accounxter ✅</div>
+        <div class="nequi-card">
+            <div class="nequi-label">Llave Nequi Negocios</div>
+            <div class="nequi-number">0091429387</div>
+            <div class="nequi-name">Accounxter — Miguel Arroyo · Barrancabermeja</div>
         </div>
-        <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20activar%20mi%20licencia%20de%20Accounxter.%20Te%20envío%20el%20comprobante." target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #25D366; color: white; padding: 0.8rem 1.5rem; border-radius: 2rem; text-decoration: none;">💬 Enviar comprobante por WhatsApp</a>
+        <div class="steps-list">
+            <div class="step-item"><div class="step-num">1</div><div class="step-text">Aplica el código <strong>AXLANZAMIENTO</strong> para obtener 20% de descuento</div></div>
+            <div class="step-item"><div class="step-num">2</div><div class="step-text">Transfiere el valor del plan elegido a la llave Nequi <strong>0091429387</strong></div></div>
+            <div class="step-item"><div class="step-num">3</div><div class="step-text">Envía el comprobante de pago por WhatsApp al <strong>+57 305 840 2580</strong></div></div>
+            <div class="step-item"><div class="step-num">4</div><div class="step-text">Recibes tu <strong>PIN de activación</strong> en máximo 24 horas hábiles</div></div>
+            <div class="step-item"><div class="step-num">5</div><div class="step-text">Ingresa el PIN en la app y ¡empieza a usar Accounxter! ✅</div></div>
+        </div>
+        <a href="https://drive.google.com/uc?export=download&id=1CpConHqzRHN6rx8Y2xkY8-O7XDNAAmAI" class="btn btn-red" style="font-size:1rem;padding:1rem 2.2rem;">
+            📱 Descargar APK — Accounxter v5.0.5
+        </a>
+        <p style="margin-top:1rem;font-size:0.82rem;color:rgba(255,255,255,0.45);">🤖 Android 7.0+ · Sin virus · Archivo seguro</p>
+        <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20activar%20mi%20licencia%20de%20Accounxter.%20Te%20envío%20el%20comprobante." target="_blank" class="btn btn-ghost" style="margin-top:1rem;">
+            💬 Enviar comprobante por WhatsApp
+        </a>
     </div>
 </section>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <footer>
-    <div class="footer-logo" style="font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800;">ACCOUN<span style="color: #ff3c3c;">X</span>TER</div>
-    <p>Software contable colombiano · Barrancabermeja, Santander · v5.0</p>
-    <div class="footer-links">
-        <a href="#planes">Planes</a>
-        <a href="#registro">Demo y sorteo</a>
-        <a href="#descarga">Descargar</a>
-        <a href="#pagar">Cómo pagar</a>
-        <a href="https://api.whatsapp.com/send/?phone=573058402580" target="_blank">Soporte</a>
+    <div class="container">
+        <div class="footer-logo">Accoun<span>X</span>ter</div>
+        <p>Software contable colombiano · Barrancabermeja, Santander · v5.0.5</p>
+        <div class="footer-links">
+            <a href="#planes">Planes</a>
+            <a href="#sorteo">Demo y sorteo</a>
+            <a href="#descarga">Descargar</a>
+            <a href="#modulos">Módulos</a>
+            <a href="https://api.whatsapp.com/send/?phone=573058402580" target="_blank">Soporte WhatsApp</a>
+        </div>
+        <div class="footer-copy">
+            © 2025–2026 Accounxter · Miguel Ángel Arroyo Pianeta · Barrancabermeja, Santander, Colombia<br>
+            Todos los derechos reservados · Propiedad intelectual protegida · DNDA radicado 1-2026-56626<br>
+            Software de uso personal e intransferible · Prohibida su distribución o modificación sin autorización escrita.
+        </div>
     </div>
-    <p>© 2025-2026 Accounxter · Miguel Ángel Arroyo Pianeta · Barrancabermeja, Santander, Colombia<br>
-    Todos los derechos reservados · Propiedad intelectual protegida · DNDA radicado 1-2026-56626<br>
-    Software de uso personal e intransferible · Prohibida su distribución o modificación sin autorización escrita</p>
 </footer>
 
 <script>
-    // Configuración del contador con Google Apps Script
-    const API_URL = "https://script.google.com/macros/s/AKfycbw7t6ggjW8b5BpmgpSC9o75fliwrZs62fLJQU0FaEg_q0_yQXVblfE7L6xPtVxB5BvC0A/exec";
+    // Contador de cupos (sin cambios)
+    const CUPOS_URL = "https://script.google.com/macros/s/AKfycbw7t6ggjW8b5BpmgpSC9o75fliwrZs62fLJQU0FaEg_q0_yQXVblfE7L6xPtVxB5BvC0A/exec";
 
     async function actualizarCupos() {
-        const cuposSpan = document.getElementById('cuposRestantes');
-        if (!cuposSpan) return;
+        const el = document.getElementById('cuposRestantesSorteo');
+        if (!el) return;
         try {
-            const respuesta = await fetch(API_URL);
-            const datos = await respuesta.json();
-            let disponibles = datos.cuposDisponibles;
-            if (typeof disponibles === 'undefined') disponibles = datos.cupos ?? datos.disponibles;
-            if (typeof disponibles === 'number') {
-                cuposSpan.innerText = disponibles;
-                if (disponibles <= 0) {
-                    const counterDiv = document.getElementById('cuposCounter');
-                    if (counterDiv && !counterDiv.querySelector('.agotado')) {
+            const r = await fetch(CUPOS_URL);
+            const d = await r.json();
+            let n = d.cuposDisponibles ?? d.cupos ?? d.disponibles;
+            if (typeof n === 'number') {
+                el.innerText = n;
+                if (n <= 0) {
+                    const badge = el.closest('.cupos-badge');
+                    if (badge && !badge.querySelector('.agotado')) {
                         const aviso = document.createElement('div');
                         aviso.className = 'agotado';
-                        aviso.style.marginTop = '0.5rem';
-                        aviso.style.color = '#ff3c3c';
-                        aviso.innerText = '⚠️ Cupos agotados para el sorteo, pero aún puedes registrarte para la demo gratuita.';
-                        counterDiv.appendChild(aviso);
+                        aviso.style.cssText = 'margin-top:.4rem;font-size:.74rem;color:#ff8a80;';
+                        aviso.textContent = '⚠️ Cupos de sorteo agotados. Aún puedes registrarte para la demo.';
+                        badge.appendChild(aviso);
                     }
                 }
-            } else {
-                throw new Error('Formato inválido');
-            }
-        } catch (error) {
-            console.error('Error al obtener cupos:', error);
-            cuposSpan.innerText = '??';
+            } else throw new Error('Formato inesperado');
+        } catch(e) {
+            console.warn('Cupos no disponibles:', e);
+            const el2 = document.getElementById('cuposRestantesSorteo');
+            if (el2) el2.innerText = '—';
         }
     }
 
     actualizarCupos();
     setInterval(actualizarCupos, 60000);
 
-    // Envío del formulario a Google Sheets (usando el mismo script)
-    const form = document.getElementById('demoForm');
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const nombre = document.getElementById('nombre').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const telefono = document.getElementById('telefono').value.trim();
-        const empresa = document.getElementById('empresa').value.trim();
-        const perfil = document.getElementById('perfil').value;
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+        });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        if (!nombre || !email || !telefono) {
-            alert('Por favor completa nombre, correo y teléfono.');
-            return;
-        }
-
-        // Preparar datos para enviar al script (debe aceptar POST)
-        const formData = new URLSearchParams();
-        formData.append('nombre', nombre);
-        formData.append('email', email);
-        formData.append('telefono', telefono);
-        formData.append('empresa', empresa);
-        formData.append('perfil', perfil);
-        formData.append('fecha', new Date().toISOString());
-
+    // Redimensionar iframe automáticamente (postMessage de Google Forms)
+    window.addEventListener('message', function(e) {
+        if (e.origin !== 'https://docs.google.com') return;
         try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                body: formData
-            });
-            const result = await response.text();
-            console.log('Registro guardado:', result);
-            alert(`✅ ¡Gracias ${nombre}! Tu registro ha sido guardado. En breve recibirás el enlace de descarga de la demo y los detalles del sorteo. Revisa tu correo.`);
-            // Opcional: redirigir a descarga
-            // window.location.href = "https://drive.google.com/uc?export=download&id=1CpConHqzRHN6rx8Y2xkY8-O7XDNAAmAI";
-        } catch (err) {
-            console.error('Error al enviar:', err);
-            alert('Ocurrió un error al guardar tus datos. Por favor intenta de nuevo o contáctanos por WhatsApp.');
-        }
+            const data = JSON.parse(e.data);
+            if (data && data.type === 'form' && data.height) {
+                const iframe = document.querySelector('.gform-wrapper iframe');
+                if (iframe) iframe.style.height = (data.height + 40) + 'px';
+            }
+        } catch(_) {}
     });
 </script>
 </body>

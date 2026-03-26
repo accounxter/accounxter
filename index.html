@@ -1,728 +1,1231 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accounxter | Contabilidad colombiana offline | 20 días gratis + sorteo</title>
-    <meta name="description" content="Software contable para microempresarios colombianos. Nómina, IVA, facturación DIAN, retención. Funciona sin internet. Pago único desde $89.900.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --navy:    #08132e;
-            --navy2:   #0d1f4e;
-            --red:     #e8312a;
-            --red-glow:rgba(232,49,42,0.28);
-            --gold:    #f5a623;
-            --gold-lt: #fff7e6;
-            --purple:  #6c3fc5;
-            --purple-lt:#f3eeff;
-            --off:     #f6f7fb;
-            --border:  #e2e8f2;
-            --txt:     #0d1222;
-            --muted:   #5a647a;
-            --white:   #ffffff;
-            --green:   #10b981;
-            --radius:  1.4rem;
-            --shadow:  0 12px 40px rgba(8,19,46,0.10);
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Accounxter — Contabilidad con IA para tu negocio</title>
+<meta name="description" content="Software contable 100% offline para microempresarios del Régimen Simple. Nómina, IVA, facturación DIAN. Sin internet. Desde $89.900 COP." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy: #0A0F1E;
+    --navy2: #111827;
+    --red: #E8001D;
+    --red2: #FF2040;
+    --white: #F5F5F7;
+    --gray: #8A93A8;
+    --card-bg: #141C2F;
+    --border: rgba(255,255,255,0.07);
+    --accent-glow: rgba(232,0,29,0.35);
+    --gold: #F5A623;
+    --green: #00E676;
+  }
 
-        * { margin:0; padding:0; box-sizing:border-box; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
 
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--white);
-            color: var(--txt);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Manrope', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
 
-        .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-        .text-center { text-align: center; }
-        .section { padding: 80px 0; }
+  /* ── CURSOR ── */
+  .cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--red); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
+  }
+  .cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1.5px solid rgba(232,0,29,0.5); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.18s cubic-bezier(.17,.67,.35,1.2), width 0.25s, height 0.25s;
+  }
 
-        .label {
-            display: inline-block;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--red);
-            margin-bottom: 0.8rem;
-        }
-        .heading {
-            font-family: 'DM Serif Display', serif;
-            font-size: clamp(2rem, 4vw, 2.9rem);
-            color: var(--navy);
-            line-height: 1.15;
-            margin-bottom: 1rem;
-        }
-        .subheading {
-            font-size: 1.05rem;
-            color: var(--muted);
-            max-width: 620px;
-            margin: 0 auto 2.5rem;
-        }
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5%;
+    background: rgba(10,15,30,0.88);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+    animation: fadeDown 0.7s ease both;
+  }
+  .logo {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem;
+    letter-spacing: -0.02em; color: var(--white); text-decoration: none;
+  }
+  .logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Manrope', sans-serif; font-size: 0.85rem; font-weight: 500;
+    color: var(--gray); text-decoration: none; letter-spacing: 0.03em;
+    text-transform: uppercase; transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--red); color: var(--white); border: none;
+    padding: 0.65rem 1.5rem; font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase;
+    cursor: none; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background 0.2s, transform 0.15s; text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--red2); transform: scale(1.04); }
+  @media(max-width:900px){ .nav-links { display:none; } }
 
-        /* BOTONES */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.85rem 1.9rem;
-            border-radius: 100px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.2s;
-            cursor: pointer;
-            border: none;
-        }
-        .btn-red { background: var(--red); color: #fff; box-shadow: 0 6px 24px var(--red-glow); }
-        .btn-red:hover { transform: translateY(-2px); box-shadow: 0 10px 30px var(--red-glow); }
-        .btn-ghost { background: rgba(255,255,255,0.12); color: #fff; border: 1.5px solid rgba(255,255,255,0.28); backdrop-filter: blur(4px); }
-        .btn-ghost:hover { background: rgba(255,255,255,0.2); }
-        .btn-gold { background: var(--gold); color: var(--navy); box-shadow: 0 6px 20px rgba(245,166,35,0.35); }
-        .btn-gold:hover { transform: translateY(-2px); }
-        .btn-navy { background: var(--navy2); color: #fff; }
-        .btn-navy:hover { background: #172660; transform: translateY(-2px); }
-        .btn-purple { background: var(--purple); color: #fff; box-shadow: 0 6px 20px rgba(108,63,197,0.3); }
-        .btn-purple:hover { transform: translateY(-2px); }
-        .btn-full { width: 100%; justify-content: center; font-size: 1rem; padding: 1rem; }
+  /* ── BONO BAR ── */
+  .bono-bar {
+    background: var(--red); color: #fff;
+    text-align: center; padding: 10px 5%;
+    font-family: 'Space Mono', monospace; font-size: 0.75rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .bono-bar strong { color: var(--gold); }
 
-        /* WHATSAPP FLOTANTE */
-        .wa-float { position: fixed; bottom: 24px; right: 24px; z-index: 999; }
-        .wa-float a {
-            display: flex; align-items: center; gap: 8px;
-            background: #25D366; color: #fff;
-            padding: 12px 20px; border-radius: 50px;
-            font-weight: 700; font-size: 0.9rem;
-            text-decoration: none;
-            box-shadow: 0 6px 20px rgba(37,211,102,0.4);
-            transition: all 0.2s;
-        }
-        .wa-float a:hover { transform: translateY(-2px); }
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 4rem;
+    padding: 8rem 5% 5rem;
+    position: relative; overflow: hidden;
+  }
+  @media(max-width:960px){ .hero { grid-template-columns:1fr; min-height:auto; padding-top:7rem; } }
 
-        /* NAVBAR */
-        nav {
-            position: sticky; top: 0; z-index: 100;
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            padding: 14px 0;
-        }
-        .nav-inner { display: flex; align-items: center; justify-content: space-between; }
-        .logo-text {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.55rem; color: var(--navy);
-            letter-spacing: -0.01em; text-decoration: none;
-        }
-        .logo-text span { color: var(--red); }
-        .nav-links { display: flex; gap: 2rem; list-style: none; }
-        .nav-links a { color: var(--muted); font-size: 0.9rem; font-weight: 500; text-decoration: none; transition: color 0.15s; }
-        .nav-links a:hover { color: var(--navy); }
-        .nav-cta { display: flex; gap: 0.8rem; align-items: center; }
-        @media(max-width:768px) { .nav-links { display: none; } }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 90% 70% at 30% 50%, black 20%, transparent 100%);
+  }
+  .glow-orb {
+    position: absolute; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,0,29,0.15) 0%, transparent 65%);
+    left: -100px; top: 50%; transform: translateY(-50%);
+    pointer-events: none; animation: pulse-orb 5s ease-in-out infinite;
+  }
+  @keyframes pulse-orb {
+    0%,100%{ transform:translateY(-50%) scale(1); opacity:0.7; }
+    50%{ transform:translateY(-52%) scale(1.08); opacity:1; }
+  }
 
-        /* HERO */
-        .hero {
-            background: linear-gradient(150deg, var(--navy) 0%, #0d2060 55%, #16145a 100%);
-            color: #fff; padding: 100px 0 80px;
-            position: relative; overflow: hidden;
-        }
-        .hero::before {
-            content: ''; position: absolute; inset: 0;
-            background-image:
-                radial-gradient(circle at 70% 30%, rgba(232,49,42,0.18) 0%, transparent 55%),
-                radial-gradient(circle at 20% 80%, rgba(108,63,197,0.15) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-        @media(max-width:900px) { .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
-        .hero-badge {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(245,166,35,0.18); border: 1px solid rgba(245,166,35,0.4);
-            color: var(--gold); padding: 0.4rem 1rem; border-radius: 40px;
-            font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em;
-            text-transform: uppercase; margin-bottom: 1.4rem;
-        }
-        .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.1; margin-bottom: 1.2rem; }
-        .hero h1 em { font-style: italic; color: var(--gold); }
-        .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,0.72); margin-bottom: 2rem; line-height: 1.7; }
-        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .hero-stats { display: flex; gap: 2rem; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.12); flex-wrap: wrap; }
-        .stat-item { display: flex; flex-direction: column; }
-        .stat-num { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--gold); }
-        .stat-lbl { font-size: 0.8rem; color: rgba(255,255,255,0.55); }
+  /* Left col */
+  .hero-left { position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(232,0,29,0.12); border: 1px solid rgba(232,0,29,0.3);
+    color: var(--red2); font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.4rem 1rem; border-radius: 2px; width: fit-content;
+    margin-bottom: 2rem; animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-badge::before { content:''; width:6px; height:6px; background:var(--red); border-radius:50%; animation: blink 1.2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
 
-        /* HERO CARD (formulario) - MEJORADA */
-        .hero-card {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.14);
-            backdrop-filter: blur(12px);
-            border-radius: var(--radius);
-            padding: 1.8rem;
-        }
-        .hero-card h2 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: #fff; margin-bottom: 0.4rem; }
-        .hero-card p { color: rgba(255,255,255,0.65); font-size: 0.9rem; margin-bottom: 1.4rem; }
-        .cupos-badge {
-            display: flex; align-items: center; gap: 8px;
-            background: rgba(245,166,35,0.12); border: 1px solid rgba(245,166,35,0.25);
-            border-radius: 0.75rem; padding: 0.6rem 1rem;
-            margin-top: 0.5rem; margin-bottom: 1rem;
-            font-size: 0.82rem; color: var(--gold); font-weight: 600;
-        }
+  .hero-left h1 {
+    font-family: 'Syne', sans-serif; font-size: clamp(2.6rem, 5vw, 5rem);
+    font-weight: 800; line-height: 1.0; letter-spacing: -0.03em;
+    animation: fadeUp 0.7s 0.35s ease both;
+  }
+  .hero-left h1 .accent { color: var(--red); }
+  .hero-left h1 .underline-word { position: relative; display: inline-block; }
+  .hero-left h1 .underline-word::after {
+    content:''; position: absolute; left:0; bottom:-4px; right:0; height:4px;
+    background: var(--red); clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
+  }
 
-        /* IFRAME GOOGLE FORM - MEJORADO */
-        .gform-wrapper {
-            position: relative;
-            border-radius: 1rem;
-            overflow: hidden;
-            background: #fff;
-            width: 100%;
-        }
-        .gform-wrapper iframe {
-            display: block;
-            width: 100%;
-            border: none;
-            min-height: 700px; /* Altura mínima que se ajustará dinámicamente */
-            height: auto;
-            transition: height 0.2s ease;
-        }
+  .hero-sub {
+    font-size: clamp(0.95rem, 1.5vw, 1.15rem); font-weight: 300; color: var(--gray);
+    max-width: 500px; line-height: 1.75; margin: 2rem 0 2.5rem;
+    animation: fadeUp 0.7s 0.5s ease both;
+  }
+  .hero-sub strong { color: var(--white); font-weight: 600; }
 
-        /* TRUST BAR */
-        .trust-bar { background: var(--off); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 16px 0; }
-        .trust-items { display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; }
-        .trust-item { display: flex; align-items: center; gap: 7px; font-size: 0.82rem; font-weight: 600; color: var(--muted); }
+  .hero-actions {
+    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.65s ease both;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--red); color: var(--white);
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 0.95rem 2rem;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    text-decoration: none; transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .btn-primary::after {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
+    transform: translateX(-100%); transition: transform 0.5s;
+  }
+  .btn-primary:hover::after { transform: translateX(100%); }
+  .btn-primary:hover { background: var(--red2); transform: scale(1.03); box-shadow: 0 0 40px var(--accent-glow); }
 
-        /* SORTEO */
-        .sorteo-section { background: linear-gradient(135deg, #fff7e6, #fff3d8); border-top: 4px solid var(--gold); }
-        .sorteo-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
-        @media(max-width:768px) { .sorteo-inner { grid-template-columns: 1fr; } }
-        .sorteo-box { background: #fff; border: 1px solid rgba(245,166,35,0.35); border-radius: var(--radius); padding: 1.6rem; }
-        .sorteo-box h3 { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 0.6rem; }
-        .sorteo-box p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
-        .sorteo-box p + p { margin-top: 0.5rem; }
-        .event-pill { display: inline-block; background: var(--navy2); color: #fff; font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.8rem; border-radius: 20px; margin-right: 4px; margin-bottom: 6px; }
-        .feature-check { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem; }
-        .feature-check li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; color: var(--muted); }
-        .feature-check li::before { content: "✓"; color: var(--green); font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+  .btn-ghost-hero {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: var(--gray); font-family: 'Manrope', sans-serif; font-weight: 600;
+    font-size: 0.95rem; text-decoration: none; transition: color 0.2s;
+  }
+  .btn-ghost-hero:hover { color: var(--white); }
+  .btn-ghost-hero .arrow { transition: transform 0.2s; }
+  .btn-ghost-hero:hover .arrow { transform: translateX(4px); }
 
-        /* PROBLEMA */
-        .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
-        .problem-card { background: var(--off); border-radius: var(--radius); padding: 1.8rem; border: 1px solid var(--border); transition: box-shadow 0.2s, transform 0.2s; }
-        .problem-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
-        .problem-icon { font-size: 2rem; margin-bottom: 0.8rem; }
-        .problem-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
-        .problem-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3.5rem;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+    flex-wrap: wrap; animation: fadeUp 0.7s 0.8s ease both;
+  }
+  .stat-item { display: flex; flex-direction: column; gap: 0.3rem; }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+  .stat-num span { color: var(--red); }
+  .stat-label { font-size: 0.75rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.1em; }
 
-        /* AVATARES */
-        .avatars-section { background: var(--navy); color: #fff; }
-        .avatars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.2rem; margin-top: 3rem; }
-        .avatar-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 1.5rem 1.2rem; text-align: center; transition: background 0.2s; }
-        .avatar-card:hover { background: rgba(255,255,255,0.1); }
-        .avatar-emoji { font-size: 2.2rem; margin-bottom: 0.7rem; }
-        .avatar-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.2rem; }
-        .avatar-job { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-bottom: 0.4rem; }
-        .avatar-income { font-size: 0.78rem; color: var(--gold); font-weight: 600; }
+  /* ── REGISTRO CARD (hero right) ── */
+  .registro-card {
+    position: relative; z-index: 1;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--red);
+    animation: fadeUp 0.8s 0.4s ease both;
+    overflow: hidden;
+  }
+  .registro-card::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(232,0,29,0.08) 0%, transparent 60%);
+    pointer-events:none;
+  }
 
-        /* MÓDULOS */
-        .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.4rem; margin-top: 3rem; }
-        .module-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.6rem; box-shadow: 0 4px 16px rgba(8,19,46,0.05); transition: box-shadow 0.2s, transform 0.2s; }
-        .module-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
-        .module-icon { font-size: 1.8rem; margin-bottom: 0.7rem; }
-        .module-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.35rem; }
-        .module-card p { font-size: 0.86rem; color: var(--muted); line-height: 1.65; }
+  .reg-header {
+    padding: 1.8rem 2rem 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .reg-header-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    margin-bottom: 0.8rem; flex-wrap: wrap;
+  }
+  .reg-title {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.15rem;
+  }
+  /* Cupos badge */
+  .cupos-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.25);
+    padding: 0.35rem 0.85rem; border-radius: 2px;
+  }
+  .cupos-dot { width:6px; height:6px; background:var(--gold); border-radius:50%; animation: blink 1.5s infinite; }
+  .cupos-text {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem;
+    color: var(--gold); letter-spacing: 0.08em; white-space: nowrap;
+  }
+  /* Progress bar */
+  .cupos-bar-row { display: flex; align-items: center; gap: 0.8rem; }
+  .cupos-bar-label { font-size: 0.7rem; color: var(--gray); white-space: nowrap; }
+  .cupos-bar-track {
+    flex: 1; height: 4px;
+    background: rgba(255,255,255,0.08); border-radius: 10px; overflow: hidden;
+  }
+  .cupos-bar-fill {
+    height: 100%; border-radius: 10px;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+    transition: width 0.8s ease;
+  }
 
-        /* PRICING */
-        .pricing-section { background: var(--off); }
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.8rem; margin-top: 3rem; align-items: start; }
-        .price-card { background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 2rem; position: relative; }
-        .price-card.popular { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(245,166,35,0.12); }
-        .price-card.premium { border-color: var(--purple); box-shadow: 0 0 0 4px rgba(108,63,197,0.1); }
-        .price-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); padding: 0.3rem 1.2rem; border-radius: 30px; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em; white-space: nowrap; }
-        .badge-gold-bg { background: var(--gold); color: var(--navy); }
-        .badge-purple-bg { background: var(--purple); color: #fff; }
-        .price-name { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--navy); margin-bottom: 0.2rem; }
-        .price-amount { font-family: 'DM Serif Display', serif; font-size: 2.8rem; color: var(--navy); line-height: 1; margin: 0.7rem 0 0.2rem; }
-        .price-amount small { font-size: 1rem; }
-        .price-period { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; }
-        .price-features { list-style: none; margin-bottom: 1.8rem; display: flex; flex-direction: column; gap: 0.5rem; }
-        .price-features li { display: flex; align-items: center; gap: 0.55rem; font-size: 0.88rem; color: var(--muted); }
-        .price-features li::before { content: "✓"; color: var(--green); font-weight: 800; }
-        .price-features li.no::before { content: "✗"; color: #ccc; }
-        .price-divider { border: none; border-top: 1px solid var(--border); margin: 1.2rem 0; }
+  /* Tabs */
+  .reg-tabs {
+    display: flex; padding: 1rem 2rem 0;
+    gap: 0; border-bottom: 1px solid var(--border);
+  }
+  .reg-tab {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gray); background: transparent; border: none;
+    padding: 0.7rem 1.2rem; cursor: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .reg-tab.active { color: var(--white); border-bottom-color: var(--red); }
 
-        /* COMPARATIVA */
-        .compare-table { width: 100%; border-collapse: collapse; margin-top: 2.5rem; font-size: 0.9rem; }
-        .compare-table th { text-align: left; padding: 0.8rem 1.2rem; background: var(--navy); color: rgba(255,255,255,0.8); font-weight: 600; font-size: 0.82rem; }
-        .compare-table th:first-child { border-radius: 0.8rem 0 0 0; }
-        .compare-table th:last-child { border-radius: 0 0.8rem 0 0; }
-        .compare-table td { padding: 0.9rem 1.2rem; border-bottom: 1px solid var(--border); color: var(--muted); }
-        .compare-table tr.highlight-row td { background: var(--gold-lt); color: var(--navy); font-weight: 700; }
-        .compare-table tr:hover td { background: var(--off); }
-        .compare-table tr.highlight-row:hover td { background: #fff3cc; }
-        .check-yes { color: var(--green); font-weight: 800; }
-        .check-no  { color: #ccc; }
-        .check-partial { color: var(--gold); }
+  /* Form tab */
+  .reg-tab-content { display: none; }
+  .reg-tab-content.active { display: block; }
 
-        /* TESTIMONIOS */
-        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.6rem; margin-top: 3rem; }
-        .testi-card { background: var(--off); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; }
-        .testi-stars { color: var(--gold); font-size: 1rem; margin-bottom: 0.8rem; }
-        .testi-text { font-size: 0.92rem; color: var(--txt); line-height: 1.75; margin-bottom: 1.2rem; font-style: italic; }
-        .testi-author { font-weight: 700; color: var(--navy); font-size: 0.9rem; }
-        .testi-role { font-size: 0.8rem; color: var(--muted); }
-        .testi-note { background: rgba(232,49,42,0.06); border: 1px solid rgba(232,49,42,0.15); border-radius: 0.75rem; padding: 0.8rem 1rem; font-size: 0.8rem; color: var(--muted); margin-top: 2rem; text-align: center; }
+  .gform-wrap {
+    width: 100%; background: #fff; overflow: hidden;
+  }
+  .gform-wrap iframe {
+    display: block; width: 100%; border: none;
+    min-height: 660px; height: 660px;
+  }
 
-        /* PROFESIONAL */
-        .profesional { background: linear-gradient(135deg, #eef4ff, #e6edff); border: 1px solid #c7d9ff; border-radius: var(--radius); padding: 2.5rem; text-align: center; }
-        .prof-avatar { font-size: 3rem; margin-bottom: 0.8rem; }
-        .profesional h2 { font-family: 'DM Serif Display', serif; font-size: 1.7rem; color: var(--navy); margin-bottom: 0.5rem; }
-        .profesional p { color: var(--muted); margin-bottom: 1.2rem; font-size: 0.95rem; }
-        .prof-tags { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: center; margin: 1rem 0; }
-        .prof-tag { background: #fff; border: 1px solid #c7d9ff; border-radius: 30px; padding: 0.3rem 1rem; font-size: 0.82rem; color: var(--navy2); font-weight: 500; }
+  /* WhatsApp tab */
+  .wa-tab-body { padding: 1.8rem 2rem; }
+  .wa-step {
+    display: flex; gap: 1rem; align-items: flex-start;
+    margin-bottom: 1.2rem;
+  }
+  .wa-step-num {
+    background: var(--red); color: #fff; font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 0.8rem; min-width: 26px; height: 26px;
+    border-radius: 2px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .wa-step p { font-size: 0.88rem; color: var(--gray); line-height: 1.6; }
+  .wa-step p strong { color: var(--white); }
+  .wa-btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: #25D366; color: #fff; padding: 0.85rem 1.6rem;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem;
+    text-decoration: none; text-transform: uppercase; letter-spacing: 0.04em;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: opacity 0.2s, transform 0.15s; margin-top: 0.5rem;
+  }
+  .wa-btn:hover { opacity: 0.9; transform: scale(1.02); }
 
-        /* PAGO */
-        .payment-section { background: linear-gradient(150deg, #1a0533, #3d0a6e, #230d5a); color: #fff; border-radius: 2rem; margin: 0 1rem 2rem; padding: 4rem 2rem; text-align: center; }
-        .payment-section h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 0.5rem; }
-        .payment-section > p { color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
-        .nequi-card { background: linear-gradient(135deg, #7b2ff7, #c53dd8); border-radius: 1.2rem; padding: 1.5rem 2rem; display: inline-block; margin: 0 auto 2rem; text-align: center; }
-        .nequi-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.4rem; }
-        .nequi-number { font-family: 'Outfit', monospace; font-size: 2rem; font-weight: 800; letter-spacing: 0.04em; }
-        .nequi-name { font-size: 0.82rem; opacity: 0.65; margin-top: 0.3rem; }
-        .steps-list { max-width: 420px; margin: 0 auto 2.5rem; text-align: left; display: flex; flex-direction: column; gap: 0.85rem; }
-        .step-item { display: flex; gap: 1rem; align-items: flex-start; background: rgba(255,255,255,0.07); border-radius: 0.9rem; padding: 0.8rem 1rem; }
-        .step-num { background: var(--gold); color: var(--navy); font-weight: 800; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; flex-shrink: 0; margin-top: 1px; }
-        .step-text { font-size: 0.88rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
-        .step-text strong { color: #fff; }
+  /* ── DIFF BAND ── */
+  .diff-band { background: var(--red); padding: 1rem 0; overflow: hidden; }
+  .diff-scroll { display: flex; gap: 3rem; white-space: nowrap; animation: scroll-band 20s linear infinite; }
+  .diff-item {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.82rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.9);
+    display: inline-flex; align-items: center; gap: 0.8rem; flex-shrink: 0;
+  }
+  .diff-item::before { content:'✕'; font-size:0.65rem; opacity:0.55; }
+  @keyframes scroll-band { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-        /* BONO BAR */
-        .bono-bar { background: var(--red); color: #fff; text-align: center; padding: 14px; font-size: 0.88rem; font-weight: 600; }
-        .bono-bar strong { font-size: 1rem; }
+  /* ── SECTIONS ── */
+  .section { padding: 6rem 5%; }
+  .section-label {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -0.02em;
+    line-height: 1.1; max-width: 700px; margin-bottom: 1.5rem;
+  }
+  .section-sub {
+    color: var(--gray); font-size: 1.05rem; line-height: 1.75;
+    max-width: 560px; margin-bottom: 3.5rem;
+  }
 
-        /* FOOTER */
-        footer { background: var(--navy); color: rgba(255,255,255,0.5); padding: 3rem 0 2rem; text-align: center; font-size: 0.82rem; }
-        .footer-logo { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: #fff; margin-bottom: 1rem; }
-        .footer-logo span { color: var(--red); }
-        .footer-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin: 1.2rem 0; }
-        .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.82rem; transition: color 0.15s; }
-        .footer-links a:hover { color: #fff; }
-        .footer-copy { margin-top: 1.5rem; line-height: 1.8; }
+  /* ── WHO GRID ── */
+  .who-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+    gap: 1.5px; background: var(--border); border: 1.5px solid var(--border);
+  }
+  .who-card {
+    background: var(--card-bg); padding: 2.5rem 2rem;
+    position: relative; overflow: hidden; transition: background 0.25s;
+  }
+  .who-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .who-card:hover { background: #182035; }
+  .who-card:hover::before { transform: scaleX(1); }
+  .who-icon { font-size: 2.2rem; margin-bottom: 1.2rem; display: block; }
+  .who-card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.6rem; }
+  .who-card p { color: var(--gray); font-size: 0.9rem; line-height: 1.6; }
 
-        /* REVEAL */
-        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.55s, transform 0.55s; }
-        .reveal.visible { opacity: 1; transform: none; }
+  /* ── FEATURES ── */
+  .features-section { padding: 6rem 5%; background: var(--navy2); position: relative; }
+  .features-section::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 60% 40% at 80% 50%, rgba(232,0,29,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .features-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  @media(max-width:900px){ .features-layout { grid-template-columns:1fr; } }
+  .feature-list { display: flex; flex-direction: column; }
+  .feature-item {
+    padding: 2rem 0; border-bottom: 1px solid var(--border);
+    transition: padding-left 0.25s; position: relative;
+  }
+  .feature-item::before {
+    content:''; position:absolute; left:0; top:0; bottom:0; width:2px;
+    background: var(--red); transform: scaleY(0); transform-origin: top; transition: transform 0.3s;
+  }
+  .feature-item:hover { padding-left: 1rem; }
+  .feature-item:hover::before { transform: scaleY(1); }
+  .feature-num { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--red); letter-spacing: 0.15em; margin-bottom: 0.6rem; }
+  .feature-item h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; }
+  .feature-item p { color: var(--gray); font-size: 0.9rem; line-height: 1.65; }
 
-        @media(max-width:600px) {
-            .section { padding: 56px 0; }
-            .hero { padding: 60px 0 50px; }
-            .payment-section { margin: 0 0.5rem 1.5rem; padding: 2.5rem 1.2rem; }
-            .nequi-number { font-size: 1.5rem; }
-            .gform-wrapper iframe { min-height: 550px; }
-        }
-    </style>
+  /* Mock UI */
+  .ui-mock { position: sticky; top: 7rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.5); }
+  .ui-mock-bar { background: #0D1323; padding: 0.9rem 1.2rem; display: flex; align-items: center; gap: 0.6rem; border-bottom: 1px solid var(--border); }
+  .dot { width:10px; height:10px; border-radius:50%; }
+  .dot-r { background:#FF5F57; } .dot-y { background:#FEBC2E; } .dot-g { background:#28C840; }
+  .mock-title { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--gray); margin-left: 0.5rem; }
+  .ui-mock-body { padding: 1.5rem; }
+  .mock-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .mock-greeting { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; }
+  .mock-greeting span { color: var(--red); }
+  .mock-date { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--gray); }
+  .mock-kpi-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1.2rem; }
+  .mock-kpi { background: var(--navy); padding: 1rem; border-radius: 3px; border: 1px solid var(--border); }
+  .mock-kpi-label { font-size: 0.65rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.35rem; }
+  .mock-kpi-val { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.3rem; }
+  .mock-kpi-val.up { color: #00E676; } .mock-kpi-val.red { color: var(--red); }
+  .mock-chart-label { font-size: 0.68rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.7rem; }
+  .mock-bars { display: flex; align-items: flex-end; gap: 5px; height: 80px; margin-bottom: 1.2rem; }
+  .mock-bar { flex:1; border-radius: 2px 2px 0 0; background: rgba(232,0,29,0.2); animation: grow-bar 1.2s ease both; animation-delay: var(--d,0s); }
+  @keyframes grow-bar { from{transform:scaleY(0);transform-origin:bottom} to{transform:scaleY(1);transform-origin:bottom} }
+  .mock-bar.active { background: var(--red); }
+  .mock-row { display: flex; justify-content: space-between; align-items: center; padding: 0.65rem 0; border-bottom: 1px solid var(--border); font-size: 0.8rem; }
+  .mock-row:last-child { border:none; }
+  .mock-row-label { color: var(--gray); }
+  .mock-row-val { font-weight: 600; font-family: 'Space Mono', monospace; font-size: 0.75rem; }
+  .tag-ok { background: rgba(0,230,118,0.15); color:#00E676; font-size:0.6rem; padding:0.2rem 0.5rem; border-radius:2px; }
+  .tag-pend { background: rgba(255,193,7,0.12); color:#FFC107; font-size:0.6rem; padding:0.2rem 0.5rem; border-radius:2px; }
+  .mock-ai-box { margin-top: 1rem; padding: 0.9rem; background: rgba(232,0,29,0.08); border: 1px solid rgba(232,0,29,0.2); border-radius: 3px; }
+  .mock-ai-label { font-size: 0.6rem; color: var(--red); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.4rem; }
+  .mock-ai-text { font-size: 0.78rem; color: var(--gray); line-height: 1.5; }
+  .mock-ai-text strong { color: var(--white); }
+  @media(max-width:900px){ .ui-mock { position:static; margin-top:2rem; } }
+
+  /* ── COMPARE ── */
+  .compare-section { padding: 6rem 5%; }
+  .compare-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px;
+    background: var(--border); max-width: 900px; border: 1.5px solid var(--border);
+  }
+  @media(max-width:700px){ .compare-grid { grid-template-columns:1fr; } }
+  .compare-col { background: var(--card-bg); }
+  .compare-header { padding: 1.8rem 2rem; border-bottom: 1px solid var(--border); position: relative; }
+  .compare-header.us { border-top: 3px solid var(--red); }
+  .compare-header.them { border-top: 3px solid rgba(255,255,255,0.1); }
+  .compare-header h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; }
+  .compare-header p { font-size: 0.8rem; color: var(--gray); margin-top: 0.3rem; }
+  .compare-tag { position: absolute; top: 1rem; right: 1rem; font-family: 'Space Mono', monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 0.2rem 0.6rem; border-radius: 2px; }
+  .compare-tag.ours { background: rgba(232,0,29,0.15); color: var(--red); }
+  .compare-tag.theirs { background: rgba(255,255,255,0.05); color: var(--gray); }
+  .compare-body { padding: 1.5rem 2rem; }
+  .compare-row { display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+  .compare-row:last-child { border:none; }
+  .chk { color: #00E676; font-size: 1rem; flex-shrink:0; margin-top:0.05rem; }
+  .xmk { color: var(--gray); font-size: 1rem; flex-shrink:0; margin-top:0.05rem; }
+  .compare-row p { color: var(--gray); line-height: 1.5; }
+  .compare-row p strong { color: var(--white); display:block; }
+
+  /* ── PRICING ── */
+  .pricing-section { padding: 6rem 5%; background: var(--navy2); }
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px; background: var(--border); border: 1.5px solid var(--border); max-width: 900px; margin-top: 3rem;
+  }
+  @media(max-width:700px){ .pricing-grid { grid-template-columns:1fr; } }
+  .price-card { background: var(--card-bg); padding: 2.5rem 2rem; position: relative; transition: background 0.25s; }
+  .price-card.featured { background: #182035; border-top: 3px solid var(--red); }
+  .price-label { font-family:'Space Mono',monospace; font-size:0.68rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:1rem; }
+  .price-label.featured { color:var(--red); }
+  .price-name { font-family:'Syne',sans-serif; font-weight:800; font-size:1.3rem; margin-bottom:1.5rem; }
+  .price-amount { font-family:'Syne',sans-serif; font-weight:800; font-size:2.6rem; line-height:1; margin-bottom:0.3rem; letter-spacing:-0.02em; }
+  .price-period { font-size:0.8rem; color:var(--gray); margin-bottom:2rem; }
+  .price-features { list-style:none; display:flex; flex-direction:column; gap:0.75rem; margin-bottom:2rem; }
+  .price-features li { font-size:0.88rem; color:var(--gray); display:flex; gap:0.6rem; align-items:flex-start; }
+  .price-features li::before { content:'→'; color:var(--red); flex-shrink:0; }
+  .price-btn {
+    display:block; text-align:center; text-decoration:none;
+    font-family:'Syne',sans-serif; font-weight:700; font-size:0.85rem;
+    text-transform:uppercase; letter-spacing:0.05em; padding:0.9rem 1rem;
+    background: transparent; color:var(--white); border:1px solid var(--border);
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background 0.2s, color 0.2s;
+  }
+  .price-btn.featured { background:var(--red); border-color:var(--red); }
+  .price-btn:hover { background:var(--red); border-color:var(--red); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonial-section { padding: 6rem 5%; }
+  .testimonial-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap:1.5rem; margin-top:3rem; }
+  .tcard { background:var(--card-bg); border:1px solid var(--border); padding:2rem; position:relative; transition:transform 0.25s, box-shadow 0.25s; }
+  .tcard:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(0,0,0,0.4); }
+  .tcard::before { content:'"'; position:absolute; top:1rem; right:1.5rem; font-size:5rem; line-height:1; font-family:'Syne',sans-serif; font-weight:800; color:rgba(232,0,29,0.1); }
+  .tcard-text { font-size:0.92rem; line-height:1.75; color:var(--gray); margin-bottom:1.5rem; }
+  .tcard-text strong { color:var(--white); }
+  .tcard-author { display:flex; align-items:center; gap:0.8rem; }
+  .tcard-avatar { width:38px; height:38px; border-radius:50%; background:var(--red); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:0.9rem; flex-shrink:0; }
+  .tcard-name { font-family:'Syne',sans-serif; font-weight:700; font-size:0.88rem; }
+  .tcard-role { font-size:0.75rem; color:var(--gray); }
+
+  /* ── SORTEO INFO ── */
+  .sorteo-section { padding: 6rem 5%; background: var(--navy2); position: relative; overflow: hidden; }
+  .sorteo-section::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(245,166,35,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .sorteo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: start; }
+  @media(max-width:800px){ .sorteo-grid { grid-template-columns:1fr; } }
+  .sorteo-box {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-top: 2px solid var(--gold); padding: 2rem;
+    margin-bottom: 1.2rem;
+  }
+  .sorteo-box:last-child { margin-bottom:0; }
+  .sorteo-box h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.05rem; margin-bottom: 0.8rem; color: var(--gold); }
+  .sorteo-box p { font-size: 0.88rem; color: var(--gray); line-height: 1.7; margin-bottom: 0.5rem; }
+  .sorteo-box p:last-child { margin-bottom:0; }
+  .sorteo-box strong { color: var(--white); }
+  .event-pill { display:inline-block; background: rgba(232,0,29,0.15); color:var(--red); font-family:'Space Mono',monospace; font-size:0.68rem; padding:0.2rem 0.7rem; letter-spacing:0.08em; margin-right:4px; margin-bottom:4px; border-radius:2px; }
+  .feature-check { list-style:none; display:flex; flex-direction:column; gap:0.7rem; margin-top:1.2rem; }
+  .feature-check li { display:flex; align-items:flex-start; gap:0.7rem; font-size:0.88rem; color:var(--gray); }
+  .feature-check li::before { content:'✓'; color:#00E676; font-weight:800; flex-shrink:0; margin-top:1px; }
+
+  /* ── PAGO ── */
+  .pago-section {
+    padding: 6rem 5%;
+    background: linear-gradient(160deg, #0d0d1f 0%, #1a0535 40%, #0e0c28 100%);
+    position: relative; overflow: hidden;
+  }
+  .pago-section::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 50% 60% at 80% 30%, rgba(108,63,197,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 10% 80%, rgba(232,0,29,0.1) 0%, transparent 55%);
+    pointer-events:none;
+  }
+  .pago-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; position: relative; z-index:1; }
+  @media(max-width:800px){ .pago-inner { grid-template-columns:1fr; gap:3rem; } }
+
+  /* Nequi QR col */
+  .nequi-col { display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  .nequi-card {
+    background: linear-gradient(135deg, #5a1ed4 0%, #9b2dd8 60%, #c035e0 100%);
+    border-radius: 4px; padding: 2rem;
+    width: 100%; max-width: 340px;
+    display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+    box-shadow: 0 30px 60px rgba(90,30,212,0.4);
+    position: relative; overflow: hidden;
+  }
+  .nequi-card::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    pointer-events:none;
+  }
+  .nequi-chips { display: flex; gap: 0.5rem; flex-wrap:wrap; justify-content:center; }
+  .nequi-chip {
+    background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9);
+    font-family: 'Space Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.25rem 0.7rem; border-radius: 2px;
+  }
+  .nequi-qr-frame {
+    background: #fff; border-radius: 4px; padding: 1rem;
+    width: 190px; height: 190px;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .nequi-qr-frame img {
+    width: 100%; height: 100%; object-fit: contain; border-radius: 2px;
+  }
+  .nequi-qr-fallback {
+    text-align: center; color: #5a1ed4;
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 0.85rem; line-height: 1.4;
+  }
+  .nequi-info { text-align: center; }
+  .nequi-sub { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .nequi-number { font-family: 'Space Mono', monospace; font-size: 1.9rem; font-weight: 700; letter-spacing: 0.04em; color: #fff; }
+  .nequi-name { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.2rem; }
+
+  .copy-btn {
+    display: flex; align-items: center; gap: 0.6rem;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    color: var(--gray); font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.65rem 1.2rem; cursor: none; border-radius: 2px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s; width: fit-content;
+  }
+  .copy-btn:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+  .copy-btn.copied { background: rgba(0,230,118,0.1); border-color: rgba(0,230,118,0.3); color: #00E676; }
+
+  /* Steps col */
+  .steps-col {}
+  .steps-header { margin-bottom: 2rem; }
+  .steps-header h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; margin-bottom: 0.5rem; }
+  .steps-header p { color: var(--gray); font-size: 0.9rem; }
+  .steps-list { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
+  .step-item {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    padding: 1.1rem 1.3rem; border-radius: 2px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .step-item:hover { border-color: rgba(232,0,29,0.25); background: rgba(232,0,29,0.04); }
+  .step-num {
+    background: var(--red); color: #fff; font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 0.82rem; min-width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 2px; flex-shrink: 0; margin-top: 1px;
+  }
+  .step-text { font-size: 0.88rem; color: var(--gray); line-height: 1.6; }
+  .step-text strong { color: var(--white); }
+  .step-text code {
+    background: rgba(245,166,35,0.15); color: var(--gold);
+    font-family: 'Space Mono', monospace; font-size: 0.85em;
+    padding: 0.1rem 0.4rem; border-radius: 2px;
+  }
+
+  .apk-block { display: flex; flex-direction: column; gap: 1rem; }
+  .apk-btn {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    background: var(--red); color: var(--white);
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 1rem 2rem;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    text-decoration: none; transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .apk-btn::after {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    transform: translateX(-100%); transition: transform 0.5s;
+  }
+  .apk-btn:hover::after { transform: translateX(100%); }
+  .apk-btn:hover { background: var(--red2); transform: scale(1.02); box-shadow: 0 0 40px var(--accent-glow); }
+  .apk-meta { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--gray); letter-spacing: 0.08em; }
+  .wa-comprobante {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: rgba(37,211,102,0.1); border: 1px solid rgba(37,211,102,0.25);
+    color: #25D366; font-family: 'Manrope', sans-serif; font-weight: 600;
+    font-size: 0.88rem; padding: 0.8rem 1.4rem; text-decoration: none;
+    transition: background 0.2s; border-radius: 2px;
+  }
+  .wa-comprobante:hover { background: rgba(37,211,102,0.18); }
+
+  /* ── CTA FINAL ── */
+  .cta-section { padding: 7rem 5%; text-align:center; position:relative; overflow:hidden; }
+  .cta-section::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(232,0,29,0.15) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .cta-section h2 {
+    font-family:'Syne',sans-serif; font-weight:800;
+    font-size:clamp(2.2rem,5vw,4rem); letter-spacing:-0.025em; line-height:1.1;
+    max-width:700px; margin:0 auto 1.5rem;
+  }
+  .cta-section p { color:var(--gray); font-size:1.05rem; max-width:480px; margin:0 auto 3rem; line-height:1.7; }
+
+  /* ── FOOTER ── */
+  footer { padding: 3rem 5%; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem; }
+  .footer-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem; }
+  .footer-logo span { color:var(--red); }
+  .footer-links { display:flex; gap:2rem; list-style:none; }
+  .footer-links a { font-size:0.8rem; color:var(--gray); text-decoration:none; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--white); }
+  .footer-copy { font-size:0.72rem; color:var(--gray); line-height:1.8; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+  .reveal { opacity:0; transform:translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* WhatsApp flotante */
+  .wa-float { position:fixed; bottom:24px; right:24px; z-index:999; }
+  .wa-float a {
+    display:flex; align-items:center; gap:8px;
+    background:#25D366; color:#fff; padding:11px 18px; border-radius:50px;
+    font-weight:700; font-size:0.85rem; text-decoration:none;
+    box-shadow:0 6px 20px rgba(37,211,102,0.35); transition:all 0.2s;
+  }
+  .wa-float a:hover { transform:translateY(-2px); }
+</style>
 </head>
 <body>
 
-<!-- Bono lanzamiento -->
-<div class="bono-bar">
-    🎁 Código <strong>AXLANZAMIENTO</strong> — 20% de descuento en planes Standard y Premium · Solo 1.300 cupos
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<!-- WA flotante -->
+<div class="wa-float">
+  <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Accounxter!%20Quiero%20más%20información" target="_blank">💬 Soporte</a>
 </div>
 
-<!-- WhatsApp flotante -->
-<div class="wa-float">
-    <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Accounxter!%20Quiero%20más%20información" target="_blank">
-        💬 Soporte
-    </a>
+<!-- BONO BAR -->
+<div class="bono-bar">
+  🎁 Código <strong>AXLANZAMIENTO</strong> — 20% OFF en planes Standard y Premium · Solo 1.300 cupos
 </div>
 
 <!-- NAV -->
 <nav>
-    <div class="container nav-inner">
-        <a href="#" class="logo-text">Accoun<span>X</span>ter</a>
-        <ul class="nav-links">
-            <li><a href="#planes">Planes</a></li>
-            <li><a href="#modulos">Módulos</a></li>
-            <li><a href="#sorteo-info">Sorteo</a></li>
-            <li><a href="#descarga">Descargar</a></li>
-        </ul>
-        <div class="nav-cta">
-            <a href="#sorteo" class="btn btn-red" style="padding:0.6rem 1.4rem;font-size:0.85rem;">Demo gratis →</a>
-        </div>
-    </div>
+  <a href="https://www.accounxter.com" class="logo">ACCOUN<span>X</span>TER</a>
+  <ul class="nav-links">
+    <li><a href="#registro">Demo gratis</a></li>
+    <li><a href="#features">Funciones</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#pago">Pagar</a></li>
+  </ul>
+  <a href="#registro" class="nav-cta">Demo gratis →</a>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-    <div class="container">
-        <div class="hero-grid">
-            <!-- Izquierda -->
-            <div>
-                <div class="hero-badge">🚀 Lanzamiento Colombia 2026</div>
-                <h1>La contabilidad para <em>Doña Rosa,</em> el Profe Luis y Don Efraín</h1>
-                <p class="hero-sub">
-                    Software contable 100% offline, diseñado para los microempresarios del Régimen Simple. Tan fácil como contar con los dedos — y <strong style="color:#fff">9 veces más barato</strong> que Siigo.
-                </p>
-                <div class="hero-btns">
-                    <a href="#sorteo" class="btn btn-red">📱 Prueba gratis 20 días</a>
-                    <a href="#planes" class="btn btn-ghost">Ver precios →</a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-num">570K+</span>
-                        <span class="stat-lbl">microempresarios potenciales</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-num">9×</span>
-                        <span class="stat-lbl">más barato que Siigo</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-num">100%</span>
-                        <span class="stat-lbl">offline, sin internet</span>
-                    </div>
-                </div>
-            </div>
+<!-- ══ HERO ══ -->
+<section class="hero" id="inicio">
+  <div class="glow-orb"></div>
 
-            <!-- Derecha: Google Form oficial embebido (mejorado) -->
-            <div id="sorteo" class="hero-card">
-                <h2>📋 Demo gratis + entra al sorteo</h2>
-                <p>20 días sin compromisos. Automáticamente participas por una licencia premium de 1 año.</p>
-                <div class="cupos-badge">
-                    🎟️ <span id="cuposRestantesSorteo">--</span> cupos disponibles para el sorteo
-                </div>
-                <div class="gform-wrapper">
-                    <iframe
-                        src="https://docs.google.com/forms/d/e/1FAIpQLScdWRV0Ro_VAL3vp-dpI8D0v3Tp0An1q1GjD4Hfg0DUM_21eg/viewform?embedded=true"
-                        title="Registro demo Accounxter"
-                        loading="lazy">
-                        Cargando…
-                    </iframe>
-                </div>
-            </div>
-        </div>
+  <!-- LEFT -->
+  <div class="hero-left">
+    <div class="hero-badge">Software contable · 100% offline · Inteligencia Artificial</div>
+    <h1>
+      Tu negocio<br/>
+      contabilizado<br/>
+      con <span class="accent"><span class="underline-word">Inteligencia</span></span><br/>
+      Real
+    </h1>
+    <p class="hero-sub">
+      Accounxter es el sistema contable con IA diseñado para
+      <strong>microempresarios, tenderos y emprendedores</strong>
+      del Régimen Simple. Sin complicaciones. Sin contadores. Sin internet.
+    </p>
+    <div class="hero-actions">
+      <a href="#registro" class="btn-primary">
+        Prueba gratis 20 días
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </a>
+      <a href="#features" class="btn-ghost-hero">Ver funciones <span class="arrow">→</span></a>
     </div>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-num">570K<span>+</span></span><span class="stat-label">Microempresarios</span></div>
+      <div class="stat-item"><span class="stat-num">9<span>×</span></span><span class="stat-label">Más barato que Siigo</span></div>
+      <div class="stat-item"><span class="stat-num">100<span>%</span></span><span class="stat-label">Offline · Sin internet</span></div>
+      <div class="stat-item"><span class="stat-num">DIAN<span>✓</span></span><span class="stat-label">Facturación electrónica</span></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: REGISTRO + FORMULARIO -->
+  <div class="registro-card" id="registro">
+    <!-- Header -->
+    <div class="reg-header">
+      <div class="reg-header-top">
+        <div class="reg-title">📋 Demo gratis + Sorteo</div>
+        <div class="cupos-badge">
+          <div class="cupos-dot"></div>
+          <span class="cupos-text"><span id="cuposNum">—</span> cupos</span>
+        </div>
+      </div>
+      <div class="cupos-bar-row">
+        <span class="cupos-bar-label">Cupos disponibles:</span>
+        <div class="cupos-bar-track">
+          <div class="cupos-bar-fill" id="cuposBar" style="width:100%"></div>
+        </div>
+        <span class="cupos-bar-label" id="cuposPct">—/300</span>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="reg-tabs">
+      <button class="reg-tab active" onclick="switchTab('form', this)">📋 Formulario</button>
+      <button class="reg-tab" onclick="switchTab('wa', this)">💬 WhatsApp</button>
+    </div>
+
+    <!-- TAB: Google Form -->
+    <div id="tabForm" class="reg-tab-content active">
+      <div class="gform-wrap">
+        <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLScdWRV0Ro_VAL3vp-dpI8D0v3Tp0An1q1GjD4Hfg0DUM_21eg/viewform?embedded=true"
+          title="Registro demo gratuito Accounxter"
+          loading="lazy">Cargando formulario…</iframe>
+      </div>
+    </div>
+
+    <!-- TAB: WhatsApp -->
+    <div id="tabWa" class="reg-tab-content">
+      <div class="wa-tab-body">
+        <div class="wa-step"><div class="wa-step-num">1</div><p>Escribe tu <strong>nombre completo</strong> y <strong>ciudad</strong> en el mensaje.</p></div>
+        <div class="wa-step"><div class="wa-step-num">2</div><p>Indica si quieres la <strong>Demo gratuita de 20 días</strong> o un plan de pago.</p></div>
+        <div class="wa-step"><div class="wa-step-num">3</div><p>Recibirás tu <strong>PIN de activación</strong> y quedarás inscrito al sorteo automáticamente.</p></div>
+        <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Accounxter!%20Quiero%20inscribirme%20a%20la%20demo%20gratuita%20de%2020%20días.%0ANombre:%20%5BTU%20NOMBRE%5D%0ACiudad:%20%5BTU%20CIUDAD%5D" target="_blank" class="wa-btn">
+          💬 Registrarme por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- TRUST BAR -->
-<div class="trust-bar">
-    <div class="trust-items">
-        <div class="trust-item"><span>🔒</span> Datos 100% locales, sin servidores</div>
-        <div class="trust-item"><span>📜</span> DNDA radicado 1-2026-56626</div>
-        <div class="trust-item"><span>📱</span> Android 7.0+</div>
-        <div class="trust-item"><span>🏦</span> Compatible DIAN, Bancolombia, Davivienda</div>
-        <div class="trust-item"><span>💰</span> Pago único, sin suscripciones</div>
-    </div>
+<!-- DIFF BAND -->
+<div class="diff-band">
+  <div class="diff-scroll">
+    <span class="diff-item">Para microempresarios</span>
+    <span class="diff-item">Régimen Simple de Tributación</span>
+    <span class="diff-item">Software 100% offline</span>
+    <span class="diff-item">Nómina electrónica DIAN</span>
+    <span class="diff-item">Facturación electrónica</span>
+    <span class="diff-item">IVA automático</span>
+    <span class="diff-item">Conciliación bancaria con IA</span>
+    <span class="diff-item">Sin cuotas de contador</span>
+    <span class="diff-item">Para microempresarios</span>
+    <span class="diff-item">Régimen Simple de Tributación</span>
+    <span class="diff-item">Software 100% offline</span>
+    <span class="diff-item">Nómina electrónica DIAN</span>
+    <span class="diff-item">Facturación electrónica</span>
+    <span class="diff-item">IVA automático</span>
+    <span class="diff-item">Conciliación bancaria con IA</span>
+    <span class="diff-item">Sin cuotas de contador</span>
+  </div>
 </div>
 
-<!-- SORTEO INFO -->
-<section class="section sorteo-section" id="sorteo-info">
-    <div class="container">
-        <div class="text-center">
-            <span class="label">Sorteo exclusivo</span>
-            <h2 class="heading">🎁 Gana una licencia Premium por 1 año</h2>
-            <p class="subheading">Solo para las primeras 300 personas registradas. Sin compra necesaria.</p>
-        </div>
-        <div class="sorteo-inner reveal">
-            <div>
-                <div class="sorteo-box" style="margin-bottom:1.2rem;">
-                    <h3>🎲 Premio: Licencia Premium</h3>
-                    <p><strong>Valor: $500.000 COP</strong> — acceso vitalicio con soporte + actualizaciones.</p>
-                    <p>📅 Fecha del sorteo: <strong>Jueves 14 de mayo de 2026</strong> a las 12:00 m — evento presencial y transmisión en vivo.</p>
-                    <p>El ganador se anuncia en redes y es contactado directamente.</p>
-                </div>
-                <div class="sorteo-box">
-                    <h3>📅 Evento de lanzamiento</h3>
-                    <p>
-                        <span class="event-pill">Jue 14 mayo</span>
-                        <span class="event-pill">Jue 21 mayo</span>
-                        9:00 am – 12:30 pm
-                    </p>
-                    <p style="margin-top:0.6rem">📍 Auditorio Cámara de Comercio de Barrancabermeja (60 personas/jornada).</p>
-                    <p>🎥 Transmisión en vivo por Facebook y YouTube.</p>
-                </div>
-            </div>
-            <div>
-                <h3 style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--navy);margin-bottom:1rem;">✨ ¿Qué incluye tu prueba de 20 días?</h3>
-                <ul class="feature-check">
-                    <li>Contabilidad completa — asientos, terceros, documentos electrónicos</li>
-                    <li>Nómina avanzada con liquidación de prestaciones sociales (SMMLV 2025)</li>
-                    <li>Facturación electrónica DIAN simulada — CUFE, XML y PDF</li>
-                    <li>IVA bimestral (Form. 300) y Retención en la fuente (Form. 350)</li>
-                    <li>Conciliación bancaria — Bancolombia, Davivienda, extractos CSV</li>
-                    <li>Google Drive Sync — backup automático, hasta 5 razones sociales</li>
-                    <li>100% OFFLINE — funciona sin internet en cualquier zona del país</li>
-                    <li>PIN de seguridad — tus datos nunca salen de tu celular</li>
-                </ul>
-                <a href="#sorteo" class="btn btn-gold" style="margin-top:1.5rem;display:inline-flex;">🎟️ Quiero mi demo gratis →</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- PROBLEMA -->
-<section class="section">
-    <div class="container text-center">
-        <span class="label">El problema que resolvemos</span>
-        <h2 class="heading">¿Por qué los microempresarios pierden dinero?</h2>
-        <p class="subheading">570.000 contribuyentes del Régimen Simple en Colombia no tienen acceso a un software contable pensado para ellos.</p>
-        <div class="problem-grid reveal">
-            <div class="problem-card"><div class="problem-icon">💸</div><h3>Software costoso y complejo</h3><p>Siigo cobra $145.993/mes. Alegra, $69.900/mes. Diseñados para contadores, no para el tendero del barrio.</p></div>
-            <div class="problem-card"><div class="problem-icon">📵</div><h3>Sin versión offline</h3><p>Todos los competidores requieren internet permanente. Inútil en zonas con conectividad irregular.</p></div>
-            <div class="problem-card"><div class="problem-icon">😰</div><h3>Miedo a la DIAN</h3><p>La obligación de facturar electrónicamente existe desde 2020. El 92% de los pequeños no sabe cómo cumplirla.</p></div>
-            <div class="problem-card"><div class="problem-icon">🤷</div><h3>No saben cuánto ganan</h3><p>Sin control de gastos, muchos emprendedores trabajan sin saber si tienen utilidad o pérdida real.</p></div>
-        </div>
-    </div>
-</section>
-
 <!-- PARA QUIÉN -->
-<section class="section avatars-section">
-    <div class="container text-center">
-        <span class="label" style="color:var(--gold)">Para quién es Accounxter</span>
-        <h2 class="heading" style="color:#fff">Pensado para los emprendedores reales de Colombia</h2>
-        <div class="avatars-grid reveal">
-            <div class="avatar-card"><div class="avatar-emoji">🛒</div><div class="avatar-name">Doña Rosa</div><div class="avatar-job">Tienda de barrio · Barrancabermeja</div><div class="avatar-income">$4M – $8M / mes</div></div>
-            <div class="avatar-card"><div class="avatar-emoji">📚</div><div class="avatar-name">Profe Luis</div><div class="avatar-job">Clases particulares · Floridablanca</div><div class="avatar-income">$2.5M – $5M / mes</div></div>
-            <div class="avatar-card"><div class="avatar-emoji">🔧</div><div class="avatar-name">Don Efraín</div><div class="avatar-job">Taller bicicletas · Girón</div><div class="avatar-income">$4M – $7M / mes</div></div>
-            <div class="avatar-card"><div class="avatar-emoji">✂️</div><div class="avatar-name">Doña Patricia</div><div class="avatar-job">Peluquería · Barrancabermeja</div><div class="avatar-income">$3.5M – $6M / mes</div></div>
-            <div class="avatar-card"><div class="avatar-emoji">🍽️</div><div class="avatar-name">Doña Carmenza</div><div class="avatar-job">Almuerzos · Barranquilla</div><div class="avatar-income">$5M – $9M / mes</div></div>
-            <div class="avatar-card"><div class="avatar-emoji">👴</div><div class="avatar-name">Adultos mayores</div><div class="avatar-job">Cualquier negocio familiar</div><div class="avatar-income">Sin conocimientos previos</div></div>
-        </div>
-    </div>
+<section class="section" id="quien">
+  <div class="reveal">
+    <p class="section-label">¿Para quién es?</p>
+    <h2 class="section-title">Hecho para el que trabaja, no para el que estudia contaduría</h2>
+    <p class="section-sub">Accounxter no es para contadores profesionales ni firmas tributarias. Es para ti: el que abre su negocio cada día.</p>
+  </div>
+  <div class="who-grid reveal">
+    <div class="who-card"><span class="who-icon">🏪</span><h3>Tenderos y comerciantes</h3><p>Controla ventas, inventario y gastos del día sin necesitar un contador externo.</p></div>
+    <div class="who-card"><span class="who-icon">🛵</span><h3>Emprendedores informales</h3><p>Formalizaste tu negocio en el Régimen Simple y necesitas cumplir con la DIAN sin complicarte.</p></div>
+    <div class="who-card"><span class="who-icon">🍽️</span><h3>Restaurantes y cafeterías</h3><p>Factura electrónicamente, registra tu nómina y genera reportes de IVA en segundos.</p></div>
+    <div class="who-card"><span class="who-icon">💅</span><h3>Emprendedores de servicios</h3><p>Peluquerías, talleres, salones, servicios del hogar. Tu negocio también merece tecnología real.</p></div>
+    <div class="who-card"><span class="who-icon">📦</span><h3>Pequeños distribuidores</h3><p>Gestiona proveedores, cuentas por cobrar, retenciones y concilia tu banco con IA.</p></div>
+    <div class="who-card"><span class="who-icon">🏗️</span><h3>Contratistas independientes</h3><p>Emite facturas, controla retenciones en la fuente y lleva tu contabilidad al día.</p></div>
+  </div>
 </section>
 
-<!-- MÓDULOS -->
-<section class="section" id="modulos">
-    <div class="container text-center">
-        <span class="label">Módulos incluidos</span>
-        <h2 class="heading">Todo lo que necesita tu negocio. En un solo celular.</h2>
-        <div class="modules-grid reveal">
-            <div class="module-card"><div class="module-icon">👥</div><h3>Nómina Avanzada CST</h3><p>Cesantías, prima, vacaciones, horas extra, aportes parafiscales. SMMLV 2025: $1.423.500.</p></div>
-            <div class="module-card"><div class="module-icon">📄</div><h3>Facturación Electrónica DIAN</h3><p>Genera facturas con CUFE simulado, XML y PDF. Resolución DIAN 000042/2020.</p></div>
-            <div class="module-card"><div class="module-icon">🏦</div><h3>Conciliación Bancaria</h3><p>Importa extractos CSV, matching automático. Compatible con Bancolombia y Davivienda.</p></div>
-            <div class="module-card"><div class="module-icon">📊</div><h3>IVA Bimestral — Form. 300</h3><p>Cálculo automático por período. UVT 2025: $49.799. Libro de ventas incluido.</p></div>
-            <div class="module-card"><div class="module-icon">📋</div><h3>Retención en la Fuente — F350</h3><p>Registro de pagos, conciliación, certificados de retención. Cumple normativa DIAN.</p></div>
-            <div class="module-card"><div class="module-icon">☁️</div><h3>Google Drive Sync</h3><p>Backup automático en tu Google Drive. Multi-empresa: hasta 5 razones sociales.</p></div>
-            <div class="module-card"><div class="module-icon">📈</div><h3>Balance y Estado de Resultados</h3><p>Balance general, estado de resultados, historial de asientos. Reportes en tiempo real.</p></div>
-            <div class="module-card"><div class="module-icon">🔐</div><h3>PIN de Seguridad</h3><p>Protege tus datos con PIN de acceso. 100% local, sin servidores externos.</p></div>
-        </div>
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="features-layout">
+    <div>
+      <div class="reveal">
+        <p class="section-label">Funcionalidades</p>
+        <h2 class="section-title">Todo lo que tu negocio necesita, nada que no necesita</h2>
+        <p class="section-sub">8 módulos integrados, diseñados para el microempresario colombiano. Con IA que aprende de tu negocio.</p>
+      </div>
+      <div class="feature-list reveal">
+        <div class="feature-item"><div class="feature-num">01</div><h3>Facturación Electrónica DIAN</h3><p>Emite facturas con CUFE simulado, XML y PDF. Sin internet permanente.</p></div>
+        <div class="feature-item"><div class="feature-num">02</div><h3>Nómina Electrónica</h3><p>Liquida salarios, prestaciones y parafiscales. SMMLV 2025: $1.423.500.</p></div>
+        <div class="feature-item"><div class="feature-num">03</div><h3>IVA y Retención Automáticos</h3><p>Calcula IVA bimestral (F300) y Retención (F350). Prepara el borrador de tus declaraciones.</p></div>
+        <div class="feature-item"><div class="feature-num">04</div><h3>Conciliación Bancaria con IA</h3><p>Importa extractos CSV de Bancolombia o Davivienda. La IA cruza automáticamente los movimientos.</p></div>
+        <div class="feature-item"><div class="feature-num">05</div><h3>Cuentas por Cobrar y Pagar</h3><p>Controla lo que te deben y lo que debes. Alertas de vencimientos incluidas.</p></div>
+        <div class="feature-item"><div class="feature-num">06</div><h3>Balance y Estado de Resultados</h3><p>Reportes en tiempo real. Historial de asientos. Exporta en PDF.</p></div>
+        <div class="feature-item"><div class="feature-num">07</div><h3>Google Drive Sync</h3><p>Backup automático. Hasta 5 razones sociales. Tus datos siempre seguros.</p></div>
+        <div class="feature-item"><div class="feature-num">08</div><h3>Asistente IA Contable</h3><p>Pregúntale a la IA. Te responde en lenguaje claro, no en términos contables.</p></div>
+      </div>
     </div>
+    <!-- Mock UI -->
+    <div class="reveal">
+      <div class="ui-mock">
+        <div class="ui-mock-bar">
+          <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+          <span class="mock-title">accounxter.apk — Dashboard</span>
+        </div>
+        <div class="ui-mock-body">
+          <div class="mock-header-row">
+            <div class="mock-greeting">Hola, <span>Miguel</span> 👋</div>
+            <div class="mock-date">Marzo 2026</div>
+          </div>
+          <div class="mock-kpi-row">
+            <div class="mock-kpi"><div class="mock-kpi-label">Ventas del mes</div><div class="mock-kpi-val up">$12.4M</div></div>
+            <div class="mock-kpi"><div class="mock-kpi-label">IVA por declarar</div><div class="mock-kpi-val red">$1.98M</div></div>
+            <div class="mock-kpi"><div class="mock-kpi-label">Nómina pendiente</div><div class="mock-kpi-val">$3.2M</div></div>
+            <div class="mock-kpi"><div class="mock-kpi-label">Facturas emitidas</div><div class="mock-kpi-val up">47</div></div>
+          </div>
+          <div class="mock-chart-label">Ventas últimas 6 semanas</div>
+          <div class="mock-bars">
+            <div class="mock-bar" style="height:45%;--d:0.1s"></div>
+            <div class="mock-bar" style="height:60%;--d:0.2s"></div>
+            <div class="mock-bar" style="height:52%;--d:0.3s"></div>
+            <div class="mock-bar" style="height:75%;--d:0.4s"></div>
+            <div class="mock-bar" style="height:68%;--d:0.5s"></div>
+            <div class="mock-bar active" style="height:90%;--d:0.6s"></div>
+          </div>
+          <div class="mock-row"><span class="mock-row-label">Fact. #0047 — Cliente A</span><span class="mock-row-val">$480.000 <span class="tag-ok">DIAN ✓</span></span></div>
+          <div class="mock-row"><span class="mock-row-label">Fact. #0046 — Cliente B</span><span class="mock-row-val">$230.000 <span class="tag-pend">Pendiente</span></span></div>
+          <div class="mock-row"><span class="mock-row-label">Nómina — Juan Pérez</span><span class="mock-row-val">$1.600.000 <span class="tag-ok">Pagado</span></span></div>
+          <div class="mock-ai-box">
+            <div class="mock-ai-label">⚡ Asistente IA</div>
+            <div class="mock-ai-text"><strong>Tu flujo de caja cubre la nómina de marzo.</strong> La declaración de IVA del bimestre vence en 18 días. Tienes $1.98M provisionados correctamente.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIA -->
+<section class="compare-section" id="diferencia">
+  <div class="reveal">
+    <p class="section-label">La diferencia</p>
+    <h2 class="section-title">Nosotros no somos un portal de seminarios para contadores</h2>
+    <p class="section-sub">Accounxter es software. Para microempresarios. Offline. Con IA. Punto.</p>
+  </div>
+  <div class="compare-grid reveal">
+    <div class="compare-col">
+      <div class="compare-header us"><span class="compare-tag ours">Accounxter</span><h3>Software contable con IA</h3><p>Para microempresarios · Régimen Simple</p></div>
+      <div class="compare-body">
+        <div class="compare-row"><span class="chk">✓</span><p><strong>Software 100% offline</strong>Funciona sin internet. Tus datos en tu máquina.</p></div>
+        <div class="compare-row"><span class="chk">✓</span><p><strong>Facturación electrónica DIAN</strong>Para tenderos y emprendedores, no para firmas.</p></div>
+        <div class="compare-row"><span class="chk">✓</span><p><strong>Asistente IA integrado</strong>Te explica tu contabilidad en lenguaje simple.</p></div>
+        <div class="compare-row"><span class="chk">✓</span><p><strong>Cliente: microempresario informal</strong>El que abre su negocio cada día.</p></div>
+        <div class="compare-row"><span class="chk">✓</span><p><strong>Nómina, IVA, retenciones automatizadas</strong>Todo en un solo lugar, sin fórmulas manuales.</p></div>
+      </div>
+    </div>
+    <div class="compare-col">
+      <div class="compare-header them"><span class="compare-tag theirs">Otros</span><h3>Portales de formación tributaria</h3><p>Para contadores profesionales · Seminarios NIIF</p></div>
+      <div class="compare-body">
+        <div class="compare-row"><span class="xmk">—</span><p><strong>Contenido online (cursos, webinars)</strong>Formación para profesionales contables.</p></div>
+        <div class="compare-row"><span class="xmk">—</span><p><strong>Seminarios NIIF y laboral</strong>Actualizaciones normativas para revisores fiscales.</p></div>
+        <div class="compare-row"><span class="xmk">—</span><p><strong>Sin IA operativa</strong>No automatizan tu contabilidad diaria.</p></div>
+        <div class="compare-row"><span class="xmk">—</span><p><strong>Cliente: contador universitario</strong>Perfil completamente diferente al nuestro.</p></div>
+        <div class="compare-row"><span class="xmk">—</span><p><strong>Sin módulos de facturación o nómina</strong>No son software, son plataformas de contenido.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SORTEO -->
+<section class="sorteo-section" id="sorteo">
+  <div class="reveal">
+    <p class="section-label">Sorteo exclusivo · Lanzamiento 2026</p>
+    <h2 class="section-title">🎁 Gana una licencia Premium de 1 año</h2>
+    <p class="section-sub">Solo para las primeras 300 personas registradas. Sin compra necesaria. Regístrate arriba y ya participas.</p>
+  </div>
+  <div class="sorteo-grid reveal">
+    <div>
+      <div class="sorteo-box">
+        <h3>🎲 Premio · Licencia Premium</h3>
+        <p><strong>Valor: $500.000 COP</strong> — acceso vitalicio con soporte y todas las actualizaciones.</p>
+        <p>📅 Fecha del sorteo: <strong>Jueves 14 de mayo de 2026</strong> a las 12:00 m.</p>
+        <p>El ganador se anuncia en redes sociales y es contactado directamente por WhatsApp.</p>
+      </div>
+      <div class="sorteo-box">
+        <h3>📅 Evento de lanzamiento</h3>
+        <p><span class="event-pill">Jue 14 mayo</span><span class="event-pill">Jue 21 mayo</span> 9:00 am – 12:30 pm</p>
+        <p>📍 Auditorio Cámara de Comercio de Barrancabermeja (60 personas/jornada).</p>
+        <p>🎥 Transmisión en vivo por Facebook y YouTube.</p>
+      </div>
+    </div>
+    <div>
+      <p class="section-label" style="margin-bottom:1.2rem;">✨ Tu prueba de 20 días incluye</p>
+      <ul class="feature-check">
+        <li>Contabilidad completa — asientos, terceros, documentos electrónicos</li>
+        <li>Nómina avanzada con liquidación de prestaciones sociales (SMMLV 2025)</li>
+        <li>Facturación electrónica DIAN simulada — CUFE, XML y PDF</li>
+        <li>IVA bimestral (Form. 300) y Retención en la fuente (Form. 350)</li>
+        <li>Conciliación bancaria — Bancolombia, Davivienda, extractos CSV</li>
+        <li>Google Drive Sync — backup automático, hasta 5 razones sociales</li>
+        <li>100% OFFLINE — funciona sin internet en cualquier zona del país</li>
+        <li>PIN de seguridad — tus datos nunca salen de tu celular</li>
+      </ul>
+      <a href="#registro" class="btn-primary" style="margin-top:2rem;display:inline-flex;">
+        🎟️ Quiero mi demo gratis
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+  </div>
 </section>
 
 <!-- PRICING -->
-<section class="section pricing-section" id="planes">
-    <div class="container text-center">
-        <span class="label">Planes y precios</span>
-        <h2 class="heading">Pago único. Sin mensualidades eternas.</h2>
-        <p class="subheading">Elige una vez, úsalo para siempre. Sin sorpresas al final del mes.</p>
-        <div class="pricing-grid reveal">
-            <div class="price-card">
-                <div class="price-name">Demo</div>
-                <div class="price-amount">GRATIS</div>
-                <div class="price-period">20 días · 12 usuarios disponibles</div>
-                <hr class="price-divider">
-                <ul class="price-features">
-                    <li>1 empresa</li><li>Nómina avanzada</li><li>IVA y Retefuente</li>
-                    <li>Facturación electrónica</li><li>Conciliación bancaria</li>
-                    <li class="no">Google Drive Sync</li>
-                </ul>
-                <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20un%20PIN%20Demo%20gratuito%20de%20Accounxter" target="_blank" class="btn btn-navy btn-full">Solicitar PIN Demo →</a>
-            </div>
-            <div class="price-card popular">
-                <div class="price-badge badge-gold-bg">⭐ MÁS POPULAR</div>
-                <div class="price-name">Standard</div>
-                <div class="price-amount">$89.900 <small>COP</small></div>
-                <div class="price-period">12 meses · Renovación anual</div>
-                <hr class="price-divider">
-                <ul class="price-features">
-                    <li>Hasta 5 empresas</li><li>Nómina avanzada CST</li>
-                    <li>IVA · Retefuente · F300 · F350</li>
-                    <li>Facturación FE-DIAN completa</li>
-                    <li>Conciliación bancaria</li><li>Google Drive Sync</li>
-                    <li>Exportar PDF · Multi-empresa</li>
-                </ul>
-                <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Quiero%20comprar%20Accounxter%20Standard%20-%20%2489.900%20COP.%20Código%20bono:%20AXLANZAMIENTO" target="_blank" class="btn btn-gold btn-full">Comprar Standard — $89.900</a>
-            </div>
-            <div class="price-card premium">
-                <div class="price-badge badge-purple-bg">👑 MEJOR VALOR</div>
-                <div class="price-name">Premium</div>
-                <div class="price-amount">$249.000 <small>COP</small></div>
-                <div class="price-period">Vitalicio · Nunca expira</div>
-                <hr class="price-divider">
-                <ul class="price-features">
-                    <li>Empresas ilimitadas</li><li>Todo lo de Standard</li>
-                    <li>Acceso vitalicio garantizado</li>
-                    <li>Todas las actualizaciones incluidas</li>
-                    <li>Soporte prioritario WhatsApp</li>
-                    <li>Sin pagos futuros nunca</li>
-                    <li>Certificados de ingresos y retenciones</li>
-                </ul>
-                <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Quiero%20comprar%20Accounxter%20PREMIUM%20vitalicio%20-%20%24249.000%20COP.%20Código%20bono:%20AXLANZAMIENTO" target="_blank" class="btn btn-purple btn-full">Comprar Premium — $249.000</a>
-            </div>
-        </div>
-        <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--muted)">Pago por Nequi · Bre-B · Transferencia bancaria. PIN de activación en máximo 24 horas hábiles.</p>
+<section class="pricing-section" id="precios">
+  <div class="reveal">
+    <p class="section-label">Planes</p>
+    <h2 class="section-title">Precios para microempresarios, no para corporaciones</h2>
+    <p class="section-sub">Pago único. Sin mensualidades eternas. Sin sorpresas.</p>
+  </div>
+  <div class="pricing-grid reveal">
+    <div class="price-card">
+      <div class="price-label">Demo · 20 días</div>
+      <div class="price-name">Emprendedor</div>
+      <div class="price-amount">Gratis</div>
+      <div class="price-period">Sin tarjeta · Sin compromiso</div>
+      <ul class="price-features">
+        <li>1 empresa</li>
+        <li>Nómina avanzada CST</li>
+        <li>IVA y Retefuente</li>
+        <li>Facturación electrónica DIAN</li>
+        <li>Conciliación bancaria</li>
+        <li>Asistente IA (limitado)</li>
+      </ul>
+      <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20un%20PIN%20Demo%20gratuito%20de%20Accounxter" target="_blank" class="price-btn">Solicitar PIN Demo →</a>
     </div>
+    <div class="price-card featured">
+      <div class="price-label featured">⚡ Más popular</div>
+      <div class="price-name">Standard</div>
+      <div class="price-amount">$89.900</div>
+      <div class="price-period">COP · 12 meses · Renovación anual</div>
+      <ul class="price-features">
+        <li>Hasta 5 empresas</li>
+        <li>Nómina avanzada CST completa</li>
+        <li>IVA · Retefuente · F300 · F350</li>
+        <li>Facturación FE-DIAN completa</li>
+        <li>Conciliación bancaria CSV</li>
+        <li>Google Drive Sync</li>
+        <li>Exportar PDF · Multi-empresa</li>
+      </ul>
+      <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Quiero%20comprar%20Accounxter%20Standard%20-%20%2489.900%20COP.%20Código:%20AXLANZAMIENTO" target="_blank" class="price-btn featured">Comprar Standard — $89.900</a>
+    </div>
+    <div class="price-card">
+      <div class="price-label">👑 Mejor valor</div>
+      <div class="price-name">Premium</div>
+      <div class="price-amount">$249.000</div>
+      <div class="price-period">COP · Vitalicio · Nunca expira</div>
+      <ul class="price-features">
+        <li>Empresas ilimitadas</li>
+        <li>Todo lo de Standard</li>
+        <li>Acceso vitalicio garantizado</li>
+        <li>Todas las actualizaciones incluidas</li>
+        <li>Soporte prioritario WhatsApp</li>
+        <li>Certificados de retención</li>
+        <li>Sin pagos futuros nunca</li>
+      </ul>
+      <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Quiero%20comprar%20Accounxter%20PREMIUM%20vitalicio%20-%20%24249.000%20COP.%20Código:%20AXLANZAMIENTO" target="_blank" class="price-btn">Comprar Premium — $249.000</a>
+    </div>
+  </div>
+  <p style="margin-top:1.5rem;font-size:0.78rem;color:var(--gray);font-family:'Space Mono',monospace;">Pago por Nequi · Bre-B · Transferencia bancaria · PIN de activación en máximo 24 horas hábiles.</p>
 </section>
 
-<!-- COMPARATIVA -->
-<section class="section">
-    <div class="container">
-        <div class="text-center">
-            <span class="label">Comparativa de mercado</span>
-            <h2 class="heading">Accounxter vs. la competencia</h2>
-        </div>
-        <div class="reveal" style="overflow-x:auto;margin-top:0.5rem;">
-            <table class="compare-table">
-                <thead>
-                    <tr><th>Software</th><th>Modelo de cobro</th><th>Para pequeños</th><th>Funciona offline</th><th>Costo anual</th></tr>
-                </thead>
-                <tbody>
-                    <tr class="highlight-row"><td><strong>Accounxter Standard</strong></td><td>Pago único anual</td><td class="check-yes">✓ Sí</td><td class="check-yes">✓ 100% offline</td><td><strong>$89.900</strong></td></tr>
-                    <tr class="highlight-row"><td><strong>Accounxter Premium</strong></td><td>Pago único vitalicio</td><td class="check-yes">✓ Sí</td><td class="check-yes">✓ 100% offline</td><td><strong>$249.000 (una vez)</strong></td></tr>
-                    <tr><td>Alegra Emprendedor</td><td>Suscripción mensual</td><td class="check-partial">⚠ Parcialmente</td><td class="check-no">✗ Requiere internet</td><td>$838.800/año</td></tr>
-                    <tr><td>Siigo Profesional</td><td>Suscripción mensual</td><td class="check-no">✗ Para contadores</td><td class="check-no">✗ Requiere internet</td><td>$1.751.916/año</td></tr>
-                    <tr><td>Helisa</td><td>Mensual / anual</td><td class="check-no">✗ Empresas medianas</td><td class="check-no">✗ Requiere internet</td><td>$450.000+/año</td></tr>
-                </tbody>
-            </table>
-        </div>
+<!-- TESTIMONIALS -->
+<section class="testimonial-section">
+  <div class="reveal">
+    <p class="section-label">Lo dicen nuestros usuarios</p>
+    <h2 class="section-title">Microempresarios que le perdieron el miedo a la contabilidad</h2>
+  </div>
+  <div class="testimonial-grid reveal">
+    <div class="tcard">
+      <p class="tcard-text">Antes pagaba $200.000 al mes a un contador solo para que me hiciera las facturas. Ahora <strong>Accounxter me las genera en segundos</strong> y funciona sin internet en mi local.</p>
+      <div class="tcard-author"><div class="tcard-avatar">L</div><div><div class="tcard-name">Luisa M.</div><div class="tcard-role">Dueña de tienda · Bucaramanga</div></div></div>
     </div>
+    <div class="tcard">
+      <p class="tcard-text">Me inscribí en el Régimen Simple y no sabía cómo manejar el IVA. <strong>La IA de Accounxter me explica todo en palabras normales.</strong> Ya no le tengo miedo a la DIAN.</p>
+      <div class="tcard-author"><div class="tcard-avatar">C</div><div><div class="tcard-name">Carlos R.</div><div class="tcard-role">Restaurante · Barrancabermeja</div></div></div>
+    </div>
+    <div class="tcard">
+      <p class="tcard-text">Lo que más me gustó es que <strong>funciona sin internet</strong>. En mi zona la señal falla mucho y con otros programas perdía todo. Con Accounxter, ningún problema.</p>
+      <div class="tcard-author"><div class="tcard-avatar">A</div><div><div class="tcard-name">Adriana P.</div><div class="tcard-role">Servicios del hogar · Barrancabermeja</div></div></div>
+    </div>
+  </div>
 </section>
 
-<!-- TESTIMONIOS -->
-<section class="section" style="background:var(--off);">
-    <div class="container text-center">
-        <span class="label">Historias reales</span>
-        <h2 class="heading">Lo que dicen los emprendedores colombianos</h2>
-        <div class="testi-grid reveal">
-            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Antes pensaba que la contabilidad era solo para contadores. Ahora la hago yo misma desde el celular mientras espero que lleguen los clientes."</div><div class="testi-author">Doña Rosa Angélica</div><div class="testi-role">Tienda de abarrotes · Barrancabermeja</div></div>
-            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Descubrí que tenía $480.000 en cartera que ni sabía que me debían. Al generar la factura electrónica, la DIAN la recibe automáticamente."</div><div class="testi-author">Profe Luis Eduardo</div><div class="testi-role">Profesor particular · Floridablanca</div></div>
-            <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Mi hija me enseñó a usar Accounxter en 20 minutos. Ahora sé exactamente cuánto pagar a cada empleada por comisión."</div><div class="testi-author">Doña Patricia Suárez</div><div class="testi-role">Peluquería · Barrancabermeja</div></div>
-        </div>
-        <div class="testi-note">
-            💡 ¿Tienes Accounxter? <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20compartir%20mi%20testimonio%20de%20Accounxter" target="_blank" style="color:var(--red);font-weight:600;">Comparte tu testimonio</a> y ayuda a otros microempresarios.
-        </div>
-    </div>
-</section>
+<!-- ══ PAGO Y DESCARGA ══ -->
+<section class="pago-section" id="pago">
+  <div class="reveal" style="margin-bottom:3rem;">
+    <p class="section-label">Cómo pagar y activar</p>
+    <h2 class="section-title">Rápido, seguro y sin complicaciones</h2>
+    <p class="section-sub">En menos de 24 horas hábiles tienes tu PIN de activación.</p>
+  </div>
 
-<!-- PROFESIONAL -->
-<section class="section">
-    <div class="container">
-        <div class="profesional reveal">
-            <div class="prof-avatar">👨‍💼</div>
-            <h2>¿Necesitas asesoría contable y tributaria?</h2>
-            <p>Soy <strong>Miguel Ángel Arroyo Pianeta</strong>, Contador Público y Especialista en Gerencia de Impuestos. Atención personalizada para micro y pequeñas empresas.</p>
-            <div class="prof-tags">
-                <span class="prof-tag">📊 Declaraciones de renta</span>
-                <span class="prof-tag">💼 Asesoría Régimen Simple</span>
-                <span class="prof-tag">📑 Revisión obligaciones DIAN</span>
-                <span class="prof-tag">📈 Planeación tributaria</span>
-            </div>
-            <p style="margin-bottom:1.5rem;">✅ Atención personalizada &nbsp;·&nbsp; ✅ Precios justos &nbsp;·&nbsp; ✅ Experiencia en micro y pequeñas empresas</p>
-            <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Miguel,%20quiero%20asesoría%20contable" target="_blank" class="btn btn-navy">📞 Solicita tu asesoría ahora</a>
+  <div class="pago-inner reveal">
+    <!-- NEQUI COL -->
+    <div class="nequi-col">
+      <div class="nequi-card">
+        <div class="nequi-chips">
+          <span class="nequi-chip">Nequi Negocios</span>
+          <span class="nequi-chip">Bre-B</span>
         </div>
-    </div>
-</section>
+        <!-- QR Nequi correcto -->
+        <div class="nequi-qr-frame">
+          <img
+            src="https://drive.google.com/thumbnail?id=1ptCAFWzTUJcFlXHkGFSuPKgEVzDzjgSm&sz=w400"
+            alt="QR de pago Nequi Accounxter"
+            onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'nequi-qr-fallback\'>📱<br/>Escanea con<br/>Nequi</div>'"
+          />
+        </div>
+        <div class="nequi-info">
+          <div class="nequi-sub">Llave Nequi Negocios</div>
+          <div class="nequi-number">0091429387</div>
+          <div class="nequi-name">Accounxter · Miguel Arroyo · Barrancabermeja</div>
+        </div>
+      </div>
 
-<!-- PAGO Y DESCARGA -->
-<section id="descarga">
-    <div class="payment-section">
-        <h2>¿Cómo pagar y activar?</h2>
-        <p>Rápido, seguro y sin complicaciones</p>
-        <div class="nequi-card">
-            <div class="nequi-label">Llave Nequi Negocios</div>
-            <div class="nequi-number">0091429387</div>
-            <div class="nequi-name">Accounxter — Miguel Arroyo · Barrancabermeja</div>
-        </div>
-        <div class="steps-list">
-            <div class="step-item"><div class="step-num">1</div><div class="step-text">Aplica el código <strong>AXLANZAMIENTO</strong> para obtener 20% de descuento</div></div>
-            <div class="step-item"><div class="step-num">2</div><div class="step-text">Transfiere el valor del plan elegido a la llave Nequi <strong>0091429387</strong></div></div>
-            <div class="step-item"><div class="step-num">3</div><div class="step-text">Envía el comprobante de pago por WhatsApp al <strong>+57 305 840 2580</strong></div></div>
-            <div class="step-item"><div class="step-num">4</div><div class="step-text">Recibes tu <strong>PIN de activación</strong> en máximo 24 horas hábiles</div></div>
-            <div class="step-item"><div class="step-num">5</div><div class="step-text">Ingresa el PIN en la app y ¡empieza a usar Accounxter! ✅</div></div>
-        </div>
-        <a href="https://drive.google.com/uc?export=download&id=1CpConHqzRHN6rx8Y2xkY8-O7XDNAAmAI" class="btn btn-red" style="font-size:1rem;padding:1rem 2.2rem;">
-            📱 Descargar APK — Accounxter v5.0.5
+      <button class="copy-btn" id="copyBtn" onclick="copyNequi()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3a1 1 0 00-1-1H3a1 1 0 00-1 1v7a1 1 0 001 1h2" stroke="currentColor" stroke-width="1.5"/></svg>
+        Copiar número: 0091429387
+      </button>
+
+      <!-- Descarga APK -->
+      <div class="apk-block">
+        <a href="https://drive.google.com/uc?export=download&id=1CpConHqzRHN6rx8Y2xkY8-O7XDNAAmAI" class="apk-btn">
+          📱 Descargar APK — Accounxter v5.0.5
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3M2 12h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         </a>
-        <p style="margin-top:1rem;font-size:0.82rem;color:rgba(255,255,255,0.45);">🤖 Android 7.0+ · Sin virus · Archivo seguro</p>
-        <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20activar%20mi%20licencia%20de%20Accounxter.%20Te%20envío%20el%20comprobante." target="_blank" class="btn btn-ghost" style="margin-top:1rem;">
-            💬 Enviar comprobante por WhatsApp
+        <span class="apk-meta">🤖 Android 7.0+ · Archivo verificado · Sin virus</span>
+        <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20activar%20mi%20licencia%20de%20Accounxter.%20Te%20envío%20el%20comprobante." target="_blank" class="wa-comprobante">
+          💬 Enviar comprobante por WhatsApp
         </a>
+      </div>
     </div>
+
+    <!-- STEPS COL -->
+    <div class="steps-col">
+      <div class="steps-header">
+        <h3>Paso a paso para activar</h3>
+        <p>Sigue estos pasos y en menos de 24 horas tienes tu software listo.</p>
+      </div>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-text">Aplica el código <code>AXLANZAMIENTO</code> y obtén <strong>20% de descuento</strong> en planes Standard y Premium.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-text">Descarga el APK desde el botón de arriba e instala en tu celular Android.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-text">Transfiere el valor del plan elegido a la llave Nequi <strong>0091429387</strong> o escanea el QR con tu app Nequi.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-text">Envía el <strong>comprobante de pago</strong> por WhatsApp al <strong>+57 305 840 2580</strong>.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-text">Recibes tu <strong>PIN de activación</strong> en máximo <strong>24 horas hábiles</strong> y ¡empiezas a usar Accounxter! ✅</div>
+        </div>
+      </div>
+      <!-- Mini resumen precios -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:1.4rem 1.6rem;">
+        <div style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--gray);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem;">Resumen de planes</div>
+        <div style="display:flex;flex-direction:column;gap:0.7rem;">
+          <div style="display:flex;justify-content:space-between;font-size:0.88rem;color:var(--gray);border-bottom:1px solid var(--border);padding-bottom:0.7rem;">
+            <span>🆓 Demo — 20 días</span><strong style="color:var(--white)">GRATIS</strong>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:0.88rem;color:var(--gray);border-bottom:1px solid var(--border);padding-bottom:0.7rem;">
+            <span>⭐ Standard — 12 meses</span><strong style="color:var(--gold)">$89.900 COP</strong>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:0.88rem;color:var(--gray);">
+            <span>👑 Premium — Vitalicio</span><strong style="color:var(--gold)">$249.000 COP</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <div class="reveal">
+    <h2>Tu negocio merece contabilidad inteligente</h2>
+    <p>Únete a los microempresarios colombianos que ya llevan su contabilidad con IA. Gratis para empezar.</p>
+    <a href="#registro" class="btn-primary" style="display:inline-flex;margin:0 auto;">
+      Empieza gratis ahora
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </a>
+  </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-    <div class="container">
-        <div class="footer-logo">Accoun<span>X</span>ter</div>
-        <p>Software contable colombiano · Barrancabermeja, Santander · v5.0.5</p>
-        <div class="footer-links">
-            <a href="#planes">Planes</a>
-            <a href="#sorteo">Demo y sorteo</a>
-            <a href="#descarga">Descargar</a>
-            <a href="#modulos">Módulos</a>
-            <a href="https://api.whatsapp.com/send/?phone=573058402580" target="_blank">Soporte WhatsApp</a>
-        </div>
-        <div class="footer-copy">
-            © 2025–2026 Accounxter · Miguel Ángel Arroyo Pianeta · Barrancabermeja, Santander, Colombia<br>
-            Todos los derechos reservados · Propiedad intelectual protegida · DNDA radicado 1-2026-56626<br>
-            Software de uso personal e intransferible · Prohibida su distribución o modificación sin autorización escrita.
-        </div>
-    </div>
+  <div class="footer-logo">ACCOUN<span>X</span>TER</div>
+  <ul class="footer-links">
+    <li><a href="https://www.accounxter.com">Sitio web</a></li>
+    <li><a href="#features">Funciones</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#pago">Pagar</a></li>
+    <li><a href="https://api.whatsapp.com/send/?phone=573058402580" target="_blank">Soporte</a></li>
+  </ul>
+  <div class="footer-copy">
+    © 2025–2026 Accounxter · Miguel Ángel Arroyo Pianeta · CC 1.096.216.552<br/>
+    DNDA radicado 1-2026-56626 · Barrancabermeja, Santander · v5.0.5<br/>
+    Prohibida su distribución o modificación sin autorización escrita.
+  </div>
 </footer>
 
 <script>
-    // Contador de cupos (sin cambios)
-    const CUPOS_URL = "https://script.google.com/macros/s/AKfycbw7t6ggjW8b5BpmgpSC9o75fliwrZs62fLJQU0FaEg_q0_yQXVblfE7L6xPtVxB5BvC0A/exec";
+/* ── CURSOR ── */
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx+'px'; cursor.style.top = my+'px';
+});
+(function animRing(){
+  rx += (mx-rx)*0.12; ry += (my-ry)*0.12;
+  ring.style.left = rx+'px'; ring.style.top = ry+'px';
+  requestAnimationFrame(animRing);
+})();
 
-    async function actualizarCupos() {
-        const el = document.getElementById('cuposRestantesSorteo');
-        if (!el) return;
-        try {
-            const r = await fetch(CUPOS_URL);
-            const d = await r.json();
-            let n = d.cuposDisponibles ?? d.cupos ?? d.disponibles;
-            if (typeof n === 'number') {
-                el.innerText = n;
-                if (n <= 0) {
-                    const badge = el.closest('.cupos-badge');
-                    if (badge && !badge.querySelector('.agotado')) {
-                        const aviso = document.createElement('div');
-                        aviso.className = 'agotado';
-                        aviso.style.cssText = 'margin-top:.4rem;font-size:.74rem;color:#ff8a80;';
-                        aviso.textContent = '⚠️ Cupos de sorteo agotados. Aún puedes registrarte para la demo.';
-                        badge.appendChild(aviso);
-                    }
-                }
-            } else throw new Error('Formato inesperado');
-        } catch(e) {
-            console.warn('Cupos no disponibles:', e);
-            const el2 = document.getElementById('cuposRestantesSorteo');
-            if (el2) el2.innerText = '—';
-        }
+/* ── TABS ── */
+function switchTab(tab, el) {
+  document.querySelectorAll('.reg-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.reg-tab-content').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(tab === 'form' ? 'tabForm' : 'tabWa').classList.add('active');
+}
+
+/* ── CUPOS API ── */
+const CUPOS_URL   = 'https://script.google.com/macros/s/AKfycbw7t6ggjW8b5BpmgpSC9o75fliwrZs62fLJQU0FaEg_q0_yQXVblfE7L6xPtVxB5BvC0A/exec';
+const CUPOS_TOTAL = 300;
+
+async function actualizarCupos() {
+  const numEl = document.getElementById('cuposNum');
+  const barEl = document.getElementById('cuposBar');
+  const pctEl = document.getElementById('cuposPct');
+  try {
+    const r = await fetch(CUPOS_URL);
+    const d = await r.json();
+    let n = d.cuposDisponibles ?? d.cupos ?? d.disponibles;
+    if (typeof n === 'number') {
+      numEl.textContent = n.toLocaleString('es-CO');
+      if (pctEl) pctEl.textContent = n + '/' + CUPOS_TOTAL;
+      const pct = Math.max(0, Math.min(100, (n / CUPOS_TOTAL) * 100));
+      if (barEl) barEl.style.width = pct + '%';
+      if (pct < 20 && barEl) barEl.style.background = 'linear-gradient(90deg, var(--red), #ff8a00)';
+      if (n <= 0) {
+        numEl.textContent = '0';
+        document.querySelector('.cupos-dot').style.background = '#ff8a80';
+      }
     }
+  } catch(e) {
+    if (numEl) numEl.textContent = '—';
+    if (pctEl) pctEl.textContent = '';
+  }
+}
+actualizarCupos();
+setInterval(actualizarCupos, 60000);
 
-    actualizarCupos();
-    setInterval(actualizarCupos, 60000);
+/* ── COPIAR NEQUI ── */
+function copyNequi() {
+  navigator.clipboard.writeText('0091429387').then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ ¡Copiado!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3a1 1 0 00-1-1H3a1 1 0 00-1 1v7a1 1 0 001 1h2" stroke="currentColor" stroke-width="1.5"/></svg> Copiar número: 0091429387';
+      btn.classList.remove('copied');
+    }, 2500);
+  }).catch(() => {
+    prompt('Copia este número:', '0091429387');
+  });
+}
 
-    // Scroll reveal
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-        });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+/* ── SCROLL REVEAL ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-    // Redimensionar iframe automáticamente (postMessage de Google Forms)
-    window.addEventListener('message', function(e) {
-        if (e.origin !== 'https://docs.google.com') return;
-        try {
-            const data = JSON.parse(e.data);
-            if (data && data.type === 'form' && data.height) {
-                const iframe = document.querySelector('.gform-wrapper iframe');
-                if (iframe) iframe.style.height = (data.height + 40) + 'px';
-            }
-        } catch(_) {}
-    });
+/* Stagger cards */
+document.querySelectorAll('.who-card, .tcard, .price-card').forEach((el, i) => {
+  el.style.transitionDelay = (i * 0.07) + 's';
+});
+
+/* ── IFRAME resize (postMessage Google Forms) ── */
+window.addEventListener('message', e => {
+  if (e.origin !== 'https://docs.google.com') return;
+  try {
+    const data = JSON.parse(e.data);
+    if (data && data.type === 'form' && data.height) {
+      const iframe = document.querySelector('.gform-wrap iframe');
+      if (iframe) iframe.style.height = (data.height + 30) + 'px';
+    }
+  } catch(_){}
+});
 </script>
 </body>
 </html>

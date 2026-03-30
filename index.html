@@ -59,6 +59,100 @@
     --green:       #00FF9D;
   }
 
+  /* Tema 4 — Blogger Classic (Brochure original del blog) */
+  body.theme-blogger {
+    --navy:        #003366;
+    --navy2:       #002952;
+    --mint:        #CE1126;
+    --mint-dark:   #A80D1E;
+    --white:       #F4F6FB;
+    --gray:        #6B7280;
+    --card-bg:     #FFFFFF;
+    --border:      rgba(0,51,102,0.12);
+    --accent-glow: rgba(206,17,38,0.35);
+    --gold:        #F5A623;
+    --green:       #1DB954;
+  }
+  /* En este tema el cuerpo tiene fondo claro */
+  body.theme-blogger {
+    background: #F4F6FB;
+    color: #0A0E1A;
+  }
+  /* Nav: azul marino opaco como el hero del brochure */
+  body.theme-blogger nav {
+    background: rgba(0, 51, 102, 0.96);
+    border-bottom: 1px solid rgba(206,17,38,0.25);
+  }
+  /* Logo en blanco sobre fondo azul */
+  body.theme-blogger .logo { color: #FFFFFF; }
+  body.theme-blogger .nav-links a { color: rgba(255,255,255,0.7); }
+  body.theme-blogger .nav-links a:hover { color: #FFFFFF; }
+  /* Barra bono: rojo en lugar de mint */
+  body.theme-blogger .bono-bar { background: var(--mint); }
+  /* Hero: fondo azul marino oscuro como el brochure */
+  body.theme-blogger .hero {
+    background: #0A0E1A;
+    color: #FFFFFF;
+  }
+  body.theme-blogger .hero-left h1,
+  body.theme-blogger .hero-left .hero-sub,
+  body.theme-blogger .stat-num { color: #FFFFFF; }
+  body.theme-blogger .hero-left .hero-sub { color: rgba(255,255,255,0.75); }
+  /* Cards de secciones: fondo blanco sobre body claro */
+  body.theme-blogger .registro-card,
+  body.theme-blogger .who-card,
+  body.theme-blogger .tcard,
+  body.theme-blogger .price-card,
+  body.theme-blogger .sorteo-box,
+  body.theme-blogger .ui-mock { background: #FFFFFF; border-color: rgba(0,51,102,0.1); color: #0A0E1A; }
+  body.theme-blogger .who-card p,
+  body.theme-blogger .tcard-text,
+  body.theme-blogger .feature-item p,
+  body.theme-blogger .section-sub { color: #6B7280; }
+  body.theme-blogger .who-card h3,
+  body.theme-blogger .tcard-name,
+  body.theme-blogger .feature-item h3,
+  body.theme-blogger .section-title { color: #003366; }
+  /* Sección features: fondo navy como el brochure */
+  body.theme-blogger .features-section { background: #003366; }
+  body.theme-blogger .features-section .section-title,
+  body.theme-blogger .features-section .feature-item h3 { color: #FFFFFF; }
+  body.theme-blogger .features-section .feature-item p { color: rgba(255,255,255,0.65); }
+  body.theme-blogger .features-section .feature-num { color: #CE1126; }
+  body.theme-blogger .pricing-section { background: #F4F6FB; }
+  body.theme-blogger .price-card.featured { background: linear-gradient(135deg,#FFF8EE,#FFF3DC); border-color: var(--gold); }
+  body.theme-blogger .mock-kpi { background: #F4F6FB; }
+  body.theme-blogger .mock-greeting span,
+  body.theme-blogger .mock-ai-label,
+  body.theme-blogger .mock-kpi-val.red { color: #CE1126; }
+  body.theme-blogger .mock-bar { background: rgba(206,17,38,0.2); }
+  body.theme-blogger .mock-bar.active { background: #CE1126; }
+  body.theme-blogger .ui-mock-bar { background: #002952; }
+  /* Selector de tema sobre fondo azul marino (nav) */
+  body.theme-blogger .theme-select { color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
+  body.theme-blogger .theme-select-wrap::after { color: #CE1126; }
+  body.theme-blogger .theme-dot { background: #CE1126; box-shadow: 0 0 6px rgba(206,17,38,0.5); }
+  body.theme-blogger .theme-switcher-icon { color: rgba(255,255,255,0.8); }
+  body.theme-blogger .nav-cta { background: #CE1126; }
+  body.theme-blogger .nav-cta:hover { background: #A80D1E; }
+  /* Cursor adaptado al rojo */
+  body.theme-blogger .cursor { background: #CE1126; }
+  body.theme-blogger .cursor-ring { border-color: rgba(206,17,38,0.5); }
+  /* Glow orb hero con color rojo */
+  body.theme-blogger .glow-orb {
+    background: radial-gradient(circle, rgba(206,17,38,0.18) 0%, transparent 65%);
+  }
+  /* Hero badge con rojo */
+  body.theme-blogger .hero-badge {
+    background: rgba(206,17,38,0.15);
+    border-color: rgba(206,17,38,0.35);
+  }
+  /* Sorteo section */
+  body.theme-blogger .sorteo-section { background: #F4F6FB; }
+  body.theme-blogger .sorteo-box { background: #FFFFFF; border-color: rgba(0,51,102,0.1); }
+  body.theme-blogger .sorteo-box h3 { color: #F5A623; }
+  body.theme-blogger .sorteo-box p, body.theme-blogger .sorteo-box strong { color: #0A0E1A; }
+
   /* Transición global suave al cambiar paleta */
   *, *::before, *::after {
     box-sizing: border-box; margin: 0; padding: 0;
@@ -687,7 +781,7 @@
   }
 </style>
 </head>
-<body class="theme-original">
+<body class="theme-blogger">
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="ring"></div>
@@ -719,6 +813,7 @@
       <div class="theme-dot" id="themeDot"></div>
       <div class="theme-select-wrap">
         <select class="theme-select" id="themePicker" onchange="applyTheme(this.value)" aria-label="Seleccionar paleta de colores">
+          <option value="theme-blogger">🇨🇴 Brochure Clásico</option>
           <option value="theme-original">🌿 Verde Menta</option>
           <option value="theme-professional">🔷 Azul Ébano</option>
           <option value="theme-contrast">⚡ Alto Contraste</option>
@@ -1205,6 +1300,7 @@ document.addEventListener('mousemove', e => {
 ══════════════════════════════════════════ */
 const THEME_KEY   = 'accounxter_theme';
 const THEME_NAMES = {
+  'theme-blogger':      '🇨🇴 Brochure Clásico',
   'theme-original':     '🌿 Verde Menta',
   'theme-professional': '🔷 Azul Ébano',
   'theme-contrast':     '⚡ Alto Contraste'
@@ -1237,10 +1333,10 @@ function applyTheme(themeClass, skipSave) {
   }
 }
 
-// Cargar el tema guardado al iniciar
+// Cargar el tema guardado al iniciar (por defecto: Blogger Classic)
 (function initTheme() {
-  let saved = 'theme-original';
-  try { saved = localStorage.getItem(THEME_KEY) || 'theme-original'; } catch(e) {}
+  let saved = 'theme-blogger';
+  try { saved = localStorage.getItem(THEME_KEY) || 'theme-blogger'; } catch(e) {}
   applyTheme(saved, true);
 })();
 

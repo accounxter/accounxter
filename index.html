@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Accounxter — Contabilidad con IA para tu negocio</title>
-<meta name="description" content="Software contable 100% offline para microempresarios del Régimen Simple. Nómina, IVA, facturación DIAN. Sin internet. Desde $89.900 COP." />
+<title>Miguel Ángel Arroyo Pianeta — Contador Público | Accounxter</title>
+<meta name="description" content="Miguel Ángel Arroyo Pianeta, Contador Público T.P. 326622-t, Especialista en Gerencia de Impuestos. Servicios contables profesionales + Accounxter, software contable con IA 100% offline para microempresarios." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -85,6 +85,8 @@
   }
   /* Logo en blanco sobre fondo azul */
   body.theme-blogger .logo { color: #FFFFFF; }
+  body.theme-blogger .logo-name { color: #FFFFFF; }
+  body.theme-blogger .logo-sub { color: rgba(255,255,255,0.75); }
   body.theme-blogger .nav-links a { color: rgba(255,255,255,0.7); }
   body.theme-blogger .nav-links a:hover { color: #FFFFFF; }
   /* Barra bono: rojo en lugar de mint */
@@ -152,6 +154,18 @@
   body.theme-blogger .sorteo-box { background: #FFFFFF; border-color: rgba(0,51,102,0.1); }
   body.theme-blogger .sorteo-box h3 { color: #F5A623; }
   body.theme-blogger .sorteo-box p, body.theme-blogger .sorteo-box strong { color: #0A0E1A; }
+  /* Servicios section en theme-blogger */
+  body.theme-blogger .servicios-section { background: #F4F6FB; }
+  body.theme-blogger .servicios-section .section-title { color: #003366; }
+  body.theme-blogger .servicios-section .who-card { background: #FFFFFF; border-color: rgba(0,51,102,0.1); }
+  body.theme-blogger .servicios-section .who-card h3 { color: #003366; }
+  body.theme-blogger .servicios-section .who-card p { color: #6B7280; }
+  /* TP badge en blogger */
+  body.theme-blogger .tp-badge { background: rgba(206,17,38,0.1); border-color: rgba(206,17,38,0.25); color: #CE1126; }
+  /* Precio servicios highlight */
+  body.theme-blogger .servicios-highlight { background: #FFFFFF; border-color: rgba(0,51,102,0.12); }
+  body.theme-blogger .servicios-highlight p { color: #6B7280; }
+  body.theme-blogger .servicios-highlight strong { color: #003366; }
 
   /* Transición global suave al cambiar paleta */
   *, *::before, *::after {
@@ -190,7 +204,6 @@
                 width 0.25s, height 0.25s,
                 border-color 0.45s ease;
   }
-  /* El ring hereda el color mint actual */
   body.theme-professional .cursor-ring { border-color: rgba(76,154,140,0.5); }
   body.theme-contrast .cursor-ring     { border-color: rgba(0,255,157,0.5); }
 
@@ -211,7 +224,6 @@
     opacity: 0.85;
   }
 
-  /* Wrapper con flecha personalizada */
   .theme-select-wrap {
     position: relative;
     display: flex;
@@ -256,7 +268,6 @@
     border-color: var(--mint);
     box-shadow: 0 0 0 2px var(--accent-glow);
   }
-  /* Opciones: fondo oscuro en todos los temas */
   .theme-select option {
     background: #111827;
     color: #F5F5F7;
@@ -264,7 +275,6 @@
     font-size: 0.7rem;
   }
 
-  /* Indicador de tema activo (dot de color) */
   .theme-dot {
     width: 7px; height: 7px;
     border-radius: 50%;
@@ -279,7 +289,7 @@
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 1.2rem 5%;
+    padding: 1rem 5%;
     background: rgba(10,15,30,0.88);
     backdrop-filter: blur(18px);
     border-bottom: 1px solid var(--border);
@@ -287,16 +297,33 @@
     gap: 1rem;
   }
 
-  /* Aplica fondo oscuro adaptado al tema en nav */
   body.theme-professional nav { background: rgba(10,37,64,0.9); }
   body.theme-contrast nav     { background: rgba(0,0,0,0.95); }
 
+  /* Logo reposicionado: Nombre + Accounxter */
   .logo {
-    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem;
-    letter-spacing: -0.02em; color: var(--white); text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    text-decoration: none;
     flex-shrink: 0;
+    line-height: 1.1;
   }
-  .logo span { color: var(--mint); }
+  .logo-name {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.95rem;
+    letter-spacing: 0.01em; color: var(--white);
+    text-transform: uppercase;
+  }
+  .logo-title {
+    font-family: 'Manrope', sans-serif; font-weight: 400; font-size: 0.6rem;
+    color: var(--gray); letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .logo-sub {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem;
+    letter-spacing: -0.02em; color: var(--mint);
+    line-height: 1;
+  }
+
   .nav-links { display: flex; gap: 2.2rem; list-style: none; }
   .nav-links a {
     font-family: 'Manrope', sans-serif; font-size: 0.85rem; font-weight: 500;
@@ -305,7 +332,6 @@
   }
   .nav-links a:hover { color: var(--white); }
 
-  /* Grupo derecho de la nav: switcher + CTA */
   .nav-right {
     display: flex; align-items: center; gap: 1.2rem; flex-shrink: 0;
   }
@@ -313,7 +339,7 @@
   .nav-cta {
     background: var(--mint); color: var(--white); border: none;
     padding: 0.65rem 1.5rem; font-family: 'Syne', sans-serif; font-weight: 700;
-    font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase;
+    font-size: 0.82rem; letter-spacing: 0.04em; text-transform: uppercase;
     cursor: none; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
     transition: background 0.2s, transform 0.15s; text-decoration: none;
     white-space: nowrap;
@@ -332,10 +358,13 @@
   .bono-bar {
     background: var(--mint); color: #fff;
     text-align: center; padding: 10px 5%;
-    font-family: 'Space Mono', monospace; font-size: 0.75rem;
-    letter-spacing: 0.06em; text-transform: uppercase;
+    font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    line-height: 1.5;
   }
   .bono-bar strong { color: var(--gold); }
+  .bono-bar a { color: var(--gold); text-decoration: none; font-weight: 700; }
+  .bono-bar a:hover { text-decoration: underline; }
 
   /* ── HERO ── */
   .hero {
@@ -388,6 +417,16 @@
   .hero-left h1 .underline-word::after {
     content:''; position: absolute; left:0; bottom:-4px; right:0; height:4px;
     background: var(--mint); clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
+  }
+
+  /* TP badge en hero */
+  .tp-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: rgba(43,191,159,0.08); border: 1px solid rgba(43,191,159,0.2);
+    color: var(--mint); font-family: 'Space Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.25rem 0.7rem; border-radius: 2px; margin-bottom: 1.2rem;
+    width: fit-content; animation: fadeUp 0.6s 0.1s ease both;
   }
 
   .hero-sub {
@@ -526,6 +565,33 @@
   .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -0.02em; line-height: 1.1; max-width: 700px; margin-bottom: 1.5rem; }
   .section-sub { color: var(--gray); font-size: 1.05rem; line-height: 1.75; max-width: 560px; margin-bottom: 3.5rem; }
 
+  /* ── SERVICIOS SECTION ── */
+  .servicios-section {
+    padding: 6rem 5%;
+    background: var(--navy2);
+    position: relative;
+    overflow: hidden;
+  }
+  .servicios-section::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 50% 40% at 10% 50%, rgba(43,191,159,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .servicios-highlight {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--mint);
+    padding: 1.5rem 2rem;
+    margin-bottom: 3rem;
+    max-width: 800px;
+  }
+  .servicios-highlight p {
+    font-size: 0.92rem;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+  .servicios-highlight strong { color: var(--white); }
+
   /* ── WHO GRID ── */
   .who-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 1.5px; background: var(--border); border: 1.5px solid var(--border); }
   .who-card { background: var(--card-bg); padding: 2.5rem 2rem; position: relative; overflow: hidden; transition: background 0.25s; }
@@ -609,6 +675,16 @@
 
   /* ── PRICING ── */
   .pricing-section { padding: 6rem 5%; background: var(--navy2); }
+  .pricing-intro {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    max-width: 700px;
+  }
+  .pricing-intro p { font-size: 0.92rem; color: var(--gray); line-height: 1.7; }
+  .pricing-intro strong { color: var(--white); }
   .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--border); border: 1.5px solid var(--border); max-width: 900px; margin-top: 3rem; }
   @media(max-width:700px){ .pricing-grid { grid-template-columns:1fr; } }
   .price-card { background: var(--card-bg); padding: 2.5rem 2rem; position: relative; transition: background 0.25s; }
@@ -743,13 +819,20 @@
   .cta-section p { color:var(--gray); font-size:1.05rem; max-width:480px; margin:0 auto 3rem; line-height:1.7; }
 
   /* ── FOOTER ── */
-  footer { padding: 3rem 5%; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem; }
-  .footer-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem; }
+  footer { padding: 3rem 5%; border-top:1px solid var(--border); }
+  .footer-inner { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:2rem; }
+  .footer-brand {}
+  .footer-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem; margin-bottom:0.3rem; }
   .footer-logo span { color:var(--mint); }
+  .footer-professional { font-size:0.78rem; color:var(--gray); line-height:1.8; }
+  .footer-professional strong { color:var(--white); }
+  .footer-contact { font-size:0.82rem; margin-top:0.8rem; }
+  .footer-contact a { color:var(--mint); text-decoration:none; font-weight:600; }
+  .footer-contact a:hover { text-decoration:underline; }
   .footer-links { display:flex; gap:2rem; list-style:none; }
   .footer-links a { font-size:0.8rem; color:var(--gray); text-decoration:none; transition:color 0.2s; }
   .footer-links a:hover { color:var(--white); }
-  .footer-copy { font-size:0.72rem; color:var(--gray); line-height:1.8; }
+  .footer-copy { font-size:0.72rem; color:var(--gray); line-height:1.8; margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--border); }
 
   /* ── ANIMATIONS ── */
   @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
@@ -767,10 +850,6 @@
   }
   .wa-float a:hover { transform:translateY(-2px); }
 
-  /* ══════════════════════════════════════════
-     TEMA: indicadores de paleta activa
-     (pequeño flash en la barra bono al cambiar)
-  ══════════════════════════════════════════ */
   @keyframes theme-flash {
     0%  { opacity: 0.5; }
     50% { opacity: 1; }
@@ -778,6 +857,13 @@
   }
   body.theme-switching .bono-bar {
     animation: theme-flash 0.5s ease;
+  }
+
+  /* Servicios section adaptaciones para temas oscuros */
+  body.theme-original .servicios-section,
+  body.theme-professional .servicios-section,
+  body.theme-contrast .servicios-section {
+    background: var(--navy2);
   }
 </style>
 </head>
@@ -788,22 +874,26 @@
 
 <!-- WA flotante -->
 <div class="wa-float">
-  <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Accounxter!%20Quiero%20más%20información" target="_blank">💬 Soporte</a>
+  <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Miguel%20Ángel!%20Quiero%20agendar%20una%20asesoría%20contable." target="_blank">💬 Asesoría</a>
 </div>
 
 <!-- BONO BAR -->
 <div class="bono-bar">
-  🎁 Código <strong>AXLANZAMIENTO</strong> — 20% OFF en planes Standard y Premium · Solo 1.300 cupos
+  🇨🇴 <strong>Miguel Ángel Arroyo</strong>, Contador Público T.P. 32--22-t | Tu negocio no solo necesita software, necesita un contador experto. ¡Primera asesoría sin costo! 📞 <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20mi%20primera%20asesoría%20gratuita." target="_blank">3058402580</a>
 </div>
 
 <!-- NAV -->
 <nav>
-  <a href="https://www.accounxter.com" class="logo">ACCOUN<span>X</span>TER</a>
+  <a href="https://www.accounxter.com" class="logo">
+    <span class="logo-name">M. A. Arroyo Pianeta</span>
+    <span class="logo-title">Contador Público · Esp. Gerencia de Impuestos</span>
+    <span class="logo-sub">Accoun<span style="opacity:0.7">x</span>ter</span>
+  </a>
   <ul class="nav-links">
-    <li><a href="#registro">Demo gratis</a></li>
-    <li><a href="#features">Funciones</a></li>
+    <li><a href="#servicios">Mis Servicios</a></li>
+    <li><a href="#features">Software Accounxter</a></li>
     <li><a href="#precios">Precios</a></li>
-    <li><a href="#pago">Pagar</a></li>
+    <li><a href="#contacto">Contacto</a></li>
   </ul>
 
   <!-- ══ THEME SWITCHER ══ -->
@@ -820,7 +910,7 @@
         </select>
       </div>
     </div>
-    <a href="#registro" class="nav-cta">Demo gratis →</a>
+    <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20agendar%20una%20asesoría%20con%20Miguel%20Ángel%20Arroyo." target="_blank" class="nav-cta">📞 Agendar Asesoría →</a>
   </div>
 </nav>
 
@@ -830,30 +920,29 @@
 
   <!-- LEFT -->
   <div class="hero-left">
-    <div class="hero-badge">Software contable · 100% offline · Inteligencia Artificial</div>
+    <div class="tp-badge">🏅 T.P. 32--22-t · Registro Profesional Verificado</div>
+    <div class="hero-badge">Contador Público · Especialista en Impuestos · Creador de Accounxter</div>
     <h1>
       Tu negocio<br/>
-      contabilizado<br/>
-      con <span class="accent"><span class="underline-word">Inteligencia</span></span><br/>
-      Real
+      <span class="accent">contabilizado</span><br/>
+      por un experto<br/>
+      con <span class="underline-word">Inteligencia Real</span>
     </h1>
     <p class="hero-sub">
-      Accounxter es el sistema contable con IA diseñado para
-      <strong>microempresarios, tenderos y emprendedores</strong>
-      del Régimen Simple. Sin complicaciones. Sin contadores. Sin internet.
+      Soy <strong>Miguel Ángel Arroyo, Contador Público</strong> y creador de <strong>Accounxter</strong>. Obtén la seguridad de un contador especializado con la potencia de un software con IA. <strong>Servicios contables personalizados + herramienta profesional</strong>, todo en un solo lugar. Sin letras chiquitas.
     </p>
     <div class="hero-actions">
-      <a href="#registro" class="btn-primary">
-        Prueba gratis 20 días
+      <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20agendar%20mi%20primera%20asesoría%20gratuita%20con%20Miguel%20Ángel%20Arroyo." target="_blank" class="btn-primary">
+        📞 Agendar Asesoría Gratis
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </a>
-      <a href="#features" class="btn-ghost-hero">Ver funciones <span class="arrow">→</span></a>
+      <a href="#servicios" class="btn-ghost-hero">Ver mis servicios <span class="arrow">→</span></a>
     </div>
     <div class="hero-stats">
       <div class="stat-item"><span class="stat-num">570K<span>+</span></span><span class="stat-label">Microempresarios</span></div>
       <div class="stat-item"><span class="stat-num">9<span>×</span></span><span class="stat-label">Más barato que Siigo</span></div>
       <div class="stat-item"><span class="stat-num">100<span>%</span></span><span class="stat-label">Offline · Sin internet</span></div>
-      <div class="stat-item"><span class="stat-num">DIAN<span>✓</span></span><span class="stat-label">Facturación electrónica</span></div>
+      <div class="stat-item"><span class="stat-num">15<span>+</span></span><span class="stat-label">Años de experiencia</span></div>
     </div>
   </div>
 
@@ -895,7 +984,7 @@
         <div class="wa-step"><div class="wa-step-num">1</div><p>Escribe tu <strong>nombre completo</strong> y <strong>ciudad</strong> en el mensaje.</p></div>
         <div class="wa-step"><div class="wa-step-num">2</div><p>Indica si quieres la <strong>Demo gratuita de 20 días</strong> o un plan de pago.</p></div>
         <div class="wa-step"><div class="wa-step-num">3</div><p>Recibirás tu <strong>PIN de activación</strong> y quedarás inscrito al sorteo automáticamente.</p></div>
-        <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Accounxter!%20Quiero%20inscribirme%20a%20la%20demo%20gratuita%20de%2020%20días.%0ANombre:%20%5BTU%20NOMBRE%5D%0ACiudad:%20%5BTU%20CIUDAD%5D" target="_blank" class="wa-btn">
+        <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Miguel%20Ángel!%20Quiero%20inscribirme%20a%20la%20demo%20gratuita%20de%2020%20días.%0ANombre:%20%5BTU%20NOMBRE%5D%0ACiudad:%20%5BTU%20CIUDAD%5D" target="_blank" class="wa-btn">
           💬 Registrarme por WhatsApp
         </a>
       </div>
@@ -906,31 +995,67 @@
 <!-- DIFF BAND -->
 <div class="diff-band">
   <div class="diff-scroll">
-    <span class="diff-item">Para microempresarios</span>
+    <span class="diff-item">Contador Público Certificado</span>
+    <span class="diff-item">Especialista en Impuestos</span>
     <span class="diff-item">Régimen Simple de Tributación</span>
     <span class="diff-item">Software 100% offline</span>
     <span class="diff-item">Nómina electrónica DIAN</span>
     <span class="diff-item">Facturación electrónica</span>
     <span class="diff-item">IVA automático</span>
-    <span class="diff-item">Conciliación bancaria con IA</span>
-    <span class="diff-item">Sin cuotas de contador</span>
-    <span class="diff-item">Para microempresarios</span>
+    <span class="diff-item">Planeación Tributaria</span>
+    <span class="diff-item">Contador Público Certificado</span>
+    <span class="diff-item">Especialista en Impuestos</span>
     <span class="diff-item">Régimen Simple de Tributación</span>
     <span class="diff-item">Software 100% offline</span>
     <span class="diff-item">Nómina electrónica DIAN</span>
     <span class="diff-item">Facturación electrónica</span>
     <span class="diff-item">IVA automático</span>
-    <span class="diff-item">Conciliación bancaria con IA</span>
-    <span class="diff-item">Sin cuotas de contador</span>
+    <span class="diff-item">Planeación Tributaria</span>
   </div>
 </div>
+
+<!-- ══ NUEVA SECCIÓN: MIS SERVICIOS PROFESIONALES ══ -->
+<section class="section servicios-section" id="servicios">
+  <div class="reveal">
+    <p class="section-label">Lo que ofrezco como Contador Público</p>
+    <h2 class="section-title">Más allá del software: tu tranquilidad financiera</h2>
+    <p class="section-sub">El software es mi herramienta, pero mi valor está en la estrategia, el cumplimiento tributario y la asesoría experta para tu negocio.</p>
+  </div>
+
+  <div class="servicios-highlight reveal">
+    <p>🤝 <strong>Primera asesoría completamente sin costo.</strong> Cuéntame tu situación y te digo exactamente qué necesitas — sin tecnicismos, sin compromisos. Contáctame directamente al <strong>3058402580</strong>.</p>
+  </div>
+
+  <div class="who-grid reveal">
+    <div class="who-card">
+      <span class="who-icon">📋</span>
+      <h3>Asesoría Contable y Tributaria</h3>
+      <p>Resuelvo tus dudas sobre Régimen Simple, IVA, Retención en la fuente y más. Te explico en palabras claras, no en jerga contable.</p>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">⚖️</span>
+      <h3>Planeación Tributaria</h3>
+      <p>Te ayudo a optimizar tu carga impositiva legalmente. Juntos revisamos tu caso para que pagues justo lo que debes, ni más, ni menos.</p>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">📄</span>
+      <h3>Declaraciones de Renta y IVA</h3>
+      <p>Preparamos y presentamos tus declaraciones ante la DIAN. Con mi respaldo, cumples sin errores ni sanciones.</p>
+    </div>
+    <div class="who-card">
+      <span class="who-icon">🛠️</span>
+      <h3>Implementación de Accounxter</h3>
+      <p>No solo te doy el software. Te capacito a ti y a tu equipo para que lo uses al 100% y saques el máximo provecho a tu contabilidad.</p>
+    </div>
+  </div>
+</section>
 
 <!-- PARA QUIÉN -->
 <section class="section" id="quien">
   <div class="reveal">
-    <p class="section-label">¿Para quién es?</p>
-    <h2 class="section-title">Hecho para el que trabaja, no para el que estudia contaduría</h2>
-    <p class="section-sub">Accounxter no es para contadores profesionales ni firmas tributarias. Es para ti: el que abre su negocio cada día.</p>
+    <p class="section-label">🤝 Clientes que confían en mi servicio</p>
+    <h2 class="section-title">Este es el perfil de los emprendedores a los que ayudo</h2>
+    <p class="section-sub">Como contador especializado, trabajo con microempresarios que necesitan más que un software: necesitan un aliado experto que entienda su negocio.</p>
   </div>
   <div class="who-grid reveal">
     <div class="who-card"><span class="who-icon">🏪</span><h3>Tenderos y comerciantes</h3><p>Controla ventas, inventario y gastos del día sin necesitar un contador externo.</p></div>
@@ -947,7 +1072,7 @@
   <div class="features-layout">
     <div>
       <div class="reveal">
-        <p class="section-label">Funcionalidades</p>
+        <p class="section-label">Software Accounxter</p>
         <h2 class="section-title">Todo lo que tu negocio necesita, nada que no necesita</h2>
         <p class="section-sub">8 módulos integrados, diseñados para el microempresario colombiano. Con IA que aprende de tu negocio.</p>
       </div>
@@ -1081,6 +1206,13 @@
     <h2 class="section-title">Precios para microempresarios, no para corporaciones</h2>
     <p class="section-sub">Pago único. Sin mensualidades eternas. Sin sorpresas.</p>
   </div>
+
+  <!-- Bloque destacado servicios vs software -->
+  <div class="pricing-intro reveal">
+    <p>💡 <strong>¿Necesitas solo el software o un servicio integral?</strong><br/>
+    Elige el plan de software Accounxter o contáctame para un presupuesto personalizado de mis servicios profesionales (Asesoría continua, declaraciones, planeación tributaria, etc.).</p>
+  </div>
+
   <div class="pricing-grid reveal">
     <div class="price-card">
       <div class="price-label">Demo · 20 días</div>
@@ -1130,7 +1262,13 @@
       <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Quiero%20comprar%20Accounxter%20PREMIUM%20vitalicio%20-%20%24249.000%20COP.%20Código:%20AXLANZAMIENTO" target="_blank" class="price-btn">Comprar Premium — $249.000</a>
     </div>
   </div>
+
   <p style="margin-top:1.5rem;font-size:0.78rem;color:var(--gray);font-family:'Space Mono',monospace;">Pago por Nequi · Bre-B · Transferencia bancaria · PIN de activación en máximo 24 horas hábiles.</p>
+
+  <!-- Botón servicios profesionales -->
+  <div style="text-align:center; margin-top:2.5rem;" class="reveal">
+    <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Miguel%20Ángel!%20Quiero%20cotizar%20sus%20servicios%20contables%20profesionales." target="_blank" class="btn-ghost-hero" style="display:inline-flex;">📞 Solicitar presupuesto de Servicios Contables → <span class="arrow"></span></a>
+  </div>
 </section>
 
 <!-- TESTIMONIALS -->
@@ -1191,7 +1329,7 @@
 
       <div class="apk-block">
         <a href="https://drive.google.com/uc?export=download&id=1CpConHqzRHN6rx8Y2xkY8-O7XDNAAmAI" class="apk-btn">
-          📱 Descargar APK — Accounxter v5.0.5
+          📱 Descargar APK — Accounxter 
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3M2 12h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         </a>
         <span class="apk-meta">🤖 Android 7.0+ · Archivo verificado · Sin virus</span>
@@ -1241,6 +1379,9 @@
             <span>👑 Premium — Vitalicio</span><strong style="color:var(--gold)">$249.000 COP</strong>
           </div>
         </div>
+        <div style="margin-top:1rem;padding-top:0.8rem;border-top:1px solid var(--border);font-size:0.78rem;color:var(--gray);font-family:'Space Mono',monospace;letter-spacing:0.05em;">
+          🏷️ *Los servicios profesionales de asesoría tienen costo adicional, según el alcance acordado.
+        </div>
       </div>
     </div>
   </div>
@@ -1250,27 +1391,50 @@
 <section class="cta-section">
   <div class="reveal">
     <h2>Tu negocio merece contabilidad inteligente</h2>
-    <p>Únete a los microempresarios colombianos que ya llevan su contabilidad con IA. Gratis para empezar.</p>
-    <a href="#registro" class="btn-primary" style="display:inline-flex;margin:0 auto;">
-      Empieza gratis ahora
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    </a>
+    <p>Únete a los microempresarios colombianos que ya llevan su contabilidad con IA. Gratis para empezar. Con el respaldo de un Contador Público especializado.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Miguel%20Ángel!%20Quiero%20agendar%20mi%20primera%20asesoría%20gratuita." target="_blank" class="btn-primary" style="display:inline-flex;">
+        📞 Agendar Asesoría Gratis
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </a>
+      <a href="#registro" class="btn-primary" style="display:inline-flex;background:transparent;border:1px solid var(--mint);color:var(--mint);">
+        Probar software gratis
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </a>
+    </div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-logo">ACCOUN<span>X</span>TER</div>
-  <ul class="footer-links">
-    <li><a href="https://www.accounxter.com">Sitio web</a></li>
-    <li><a href="#features">Funciones</a></li>
-    <li><a href="#precios">Precios</a></li>
-    <li><a href="#pago">Pagar</a></li>
-    <li><a href="https://api.whatsapp.com/send/?phone=573058402580" target="_blank">Soporte</a></li>
-  </ul>
+<footer id="contacto">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">ACCOUN<span>X</span>TER</div>
+      <div class="footer-professional">
+        <strong>Miguel Ángel Arroyo Pianeta</strong><br/>
+        Contador Público · T.P. 32--22-t<br/>
+        Especialista en Gerencia de Impuestos<br/>
+        CC 1.096.--6.552 · Barrancabermeja, Santander
+      </div>
+      <div class="footer-contact" style="margin-top:0.8rem;">
+        📞 <a href="https://api.whatsapp.com/send/?phone=573058402580" target="_blank">3058402580</a>
+        &nbsp;·&nbsp;
+        ✉️ <a href="mailto:accounxter@gmail.com">accounxter@gmail.com</a>
+      </div>
+    </div>
+
+    <ul class="footer-links">
+      <li><a href="#servicios">Mis Servicios</a></li>
+      <li><a href="#features">Software Accounxter</a></li>
+      <li><a href="#precios">Precios</a></li>
+      <li><a href="#pago">Pagar</a></li>
+      <li><a href="https://api.whatsapp.com/send/?phone=573058402580" target="_blank">Soporte</a></li>
+    </ul>
+  </div>
+
   <div class="footer-copy">
-    © 2025–2026 Accounxter · Miguel Ángel Arroyo Pianeta · CC 1.096.216.552<br/>
-    DNDA radicado 1-2026-56626 · Barrancabermeja, Santander · v5.0.5<br/>
+    © 2025–2026 Accounxter · Miguel Ángel Arroyo Pianeta · Contador Público T.P. 32--22-t · CC 1.096.--6.552<br/>
+    DNDA radicado 1-2026-5--26 · Barrancabermeja, Santander · v5.0.5<br/>
     Prohibida su distribución o modificación sin autorización escrita.
   </div>
 </footer>
@@ -1307,33 +1471,23 @@ const THEME_NAMES = {
 };
 const ALL_THEMES  = Object.keys(THEME_NAMES);
 
-/**
- * Aplica un tema al body, actualiza el selector y persiste en localStorage.
- * @param {string} themeClass - p.ej. 'theme-original'
- * @param {boolean} [skipSave] - si true, no guarda en localStorage (solo para init)
- */
 function applyTheme(themeClass, skipSave) {
   if (!ALL_THEMES.includes(themeClass)) themeClass = 'theme-original';
 
-  // Flash visual en bono-bar
   document.body.classList.add('theme-switching');
   setTimeout(() => document.body.classList.remove('theme-switching'), 500);
 
-  // Intercambiar clases de tema
   ALL_THEMES.forEach(t => document.body.classList.remove(t));
   document.body.classList.add(themeClass);
 
-  // Sincronizar el <select>
   const picker = document.getElementById('themePicker');
   if (picker) picker.value = themeClass;
 
-  // Guardar preferencia
   if (!skipSave) {
     try { localStorage.setItem(THEME_KEY, themeClass); } catch(e) {}
   }
 }
 
-// Cargar el tema guardado al iniciar (por defecto: Blogger Classic)
 (function initTheme() {
   let saved = 'theme-blogger';
   try { saved = localStorage.getItem(THEME_KEY) || 'theme-blogger'; } catch(e) {}

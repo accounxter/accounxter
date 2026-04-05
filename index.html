@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-<title>Accounxter — Contabilidad facil para tu negocio</title>
-<meta name="description" content="Software contable 100% offline para microempresarios no obligados a llevar contabilidad, Pymes del Régimen Simple. Nómina, IVA, facturación DIAN. Sin internet. Desde $89.900 COP." />
+<title>Accounxter — Contabilidad con IA para tu negocio</title>
+<meta name="description" content="Software contable 100% offline para microempresarios del Régimen Simple. Nómina, IVA, facturación DIAN. Sin internet. Desde $89.900 COP." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -235,12 +235,11 @@ body.theme-contrast nav { background: rgba(0,0,0,0.97); }
 @media (max-width: 480px) { .bono-bar { font-size: 0.6rem; padding: 8px 4%; } }
 
 /* ══════════════════════════════════════════
-   HERO — FIX PRINCIPAL DESKTOP + RESPONSIVE
+   HERO
 ══════════════════════════════════════════ */
 .hero {
   min-height: 100vh;
   display: grid;
-  /* Desktop: siempre 2 columnas con proporciones fijas */
   grid-template-columns: 1fr 480px;
   align-items: start;
   gap: 2.5rem;
@@ -248,23 +247,11 @@ body.theme-contrast nav { background: rgba(0,0,0,0.97); }
   position: relative;
   overflow: hidden;
 }
-
-/* Tablet grande: reducir la columna derecha */
 @media (max-width: 1200px) {
-  .hero {
-    grid-template-columns: 1fr 420px;
-    gap: 2rem;
-  }
+  .hero { grid-template-columns: 1fr 420px; gap: 2rem; }
 }
-
-/* Tablet: colapsar a 1 columna */
 @media (max-width: 960px) {
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: auto;
-    padding: 6.5rem 5% 4rem;
-    gap: 2.5rem;
-  }
+  .hero { grid-template-columns: 1fr; min-height: auto; padding: 6.5rem 5% 4rem; gap: 2.5rem; }
 }
 @media (max-width: 480px) {
   .hero { padding: 6rem 4% 3rem; gap: 2rem; }
@@ -287,7 +274,6 @@ body.theme-contrast nav { background: rgba(0,0,0,0.97); }
 }
 @keyframes pulse-orb { 0%,100%{transform:translateY(-50%) scale(1);opacity:0.7} 50%{transform:translateY(-52%) scale(1.08);opacity:1} }
 
-/* ── HERO LEFT ── */
 .hero-left { position: relative; z-index: 1; width: 100%; min-width: 0; }
 
 .hero-badge {
@@ -302,22 +288,14 @@ body.theme-contrast nav { background: rgba(0,0,0,0.97); }
 }
 .hero-badge::before { content:''; width:6px; height:6px; min-width: 6px; background:var(--mint); border-radius:50%; animation: blink 1.2s infinite; }
 
-/* ══════════════════════════════════════════
-   TÍTULO HERO — FIX CRÍTICO
-   Sin hyphens, sin word-break agresivo
-   clamp bien calibrado para no partirse
-══════════════════════════════════════════ */
 .hero-left h1 {
   font-family: 'Syne', sans-serif;
-  /* Desktop: grande pero controlado; móvil: ajustado */
   font-size: clamp(1.9rem, 4.5vw, 3.8rem);
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.03em;
   animation: fadeUp 0.7s 0.35s ease both;
-  /* REMOVIDO: hyphens: auto — causaba el corte ne-gocio */
   hyphens: none;
-  /* REMOVIDO: word-break: break-word — no necesario con clamp correcto */
   overflow-wrap: normal;
   max-width: 100%;
 }
@@ -390,7 +368,7 @@ body.theme-contrast nav { background: rgba(0,0,0,0.97); }
 .stat-label { font-size: 0.68rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.1em; }
 
 /* ══════════════════════════════════════════
-   REGISTRO CARD — FIX DESKTOP
+   REGISTRO CARD
 ══════════════════════════════════════════ */
 .registro-card {
   position: relative; z-index: 1;
@@ -399,10 +377,8 @@ body.theme-contrast nav { background: rgba(0,0,0,0.97); }
   border-top: 2px solid var(--mint);
   animation: fadeUp 0.8s 0.4s ease both;
   overflow: hidden;
-  /* Asegurar que no desborde su columna */
   width: 100%;
   min-width: 0;
-  /* Alinear al top del grid */
   align-self: start;
 }
 .registro-card::before {
@@ -748,6 +724,407 @@ footer{padding:2.5rem 5%;border-top:1px solid var(--border);display:flex;justify
 
 @keyframes theme-flash{0%{opacity:0.5}50%{opacity:1}100%{opacity:1}}
 body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
+
+/* ══════════════════════════════════════════
+   SECCIÓN CREADOR (CON FOTO REAL)
+══════════════════════════════════════════ */
+.creador-section {
+  padding: 6rem 5%;
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+.creador-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 55% 60% at 100% 0%, rgba(43,191,159,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 0% 100%, rgba(245,166,35,0.05) 0%, transparent 55%);
+  pointer-events: none;
+}
+.creador-section::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.creador-inner {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 5rem;
+  align-items: start;
+  max-width: 1200px;
+}
+@media (max-width: 1024px) {
+  .creador-inner { grid-template-columns: 300px 1fr; gap: 3.5rem; }
+}
+@media (max-width: 800px) {
+  .creador-inner { grid-template-columns: 1fr; gap: 3rem; }
+}
+
+/* ── Columna izquierda: perfil ── */
+.creador-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.creador-card {
+  width: 100%;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--mint);
+  padding: 2rem 1.8rem 1.8rem;
+  position: relative;
+  overflow: hidden;
+}
+body.theme-blogger .creador-card { background: #fff; border-color: rgba(0,51,102,0.1); }
+
+.creador-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(135deg, rgba(43,191,159,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Avatar con ring animado y foto real */
+.creador-avatar-wrap {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 1.2rem;
+}
+.creador-avatar-ring {
+  position: absolute; inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(var(--mint) 0%, var(--gold) 40%, var(--mint) 70%, transparent 100%);
+  animation: spin-ring 8s linear infinite;
+}
+@keyframes spin-ring { to { transform: rotate(360deg); } }
+.creador-avatar-inner {
+  position: absolute; inset: 3px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+}
+body.theme-blogger .creador-avatar-inner { background: #fff; }
+.creador-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+/* Fallback si la imagen no carga */
+.creador-avatar-fallback {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: var(--mint);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  user-select: none;
+}
+
+.creador-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+}
+body.theme-blogger .creador-name { color: #003366; }
+
+.creador-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mint);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.creador-bio {
+  font-size: 0.85rem;
+  color: var(--gray);
+  line-height: 1.7;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+.creador-bio strong { color: var(--white); font-weight: 600; }
+body.theme-blogger .creador-bio strong { color: #003366; }
+
+.creador-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.cbadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(43,191,159,0.1);
+  border: 1px solid rgba(43,191,159,0.2);
+  color: var(--mint);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.65rem;
+  border-radius: 2px;
+}
+body.theme-blogger .cbadge { background: rgba(206,17,38,0.08); border-color: rgba(206,17,38,0.2); color: #CE1126; }
+.cbadge.gold {
+  background: rgba(245,166,35,0.1);
+  border-color: rgba(245,166,35,0.25);
+  color: var(--gold);
+}
+
+.creador-wa-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: #25D366;
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.85rem 1.4rem;
+  text-decoration: none;
+  width: 100%;
+  justify-content: center;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: opacity 0.2s, transform 0.15s;
+  margin-top: 0.5rem;
+}
+.creador-wa-btn:hover { opacity: 0.9; transform: scale(1.02); }
+
+.creador-stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  width: 100%;
+}
+.cstat {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 0.9rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.2rem;
+  position: relative;
+  overflow: hidden;
+}
+body.theme-blogger .cstat { background: #fff; border-color: rgba(0,51,102,0.1); }
+.cstat::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--mint);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s;
+}
+.cstat:hover::before { transform: scaleX(1); }
+.cstat-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--white);
+}
+body.theme-blogger .cstat-num { color: #003366; }
+.cstat-num span { color: var(--mint); }
+body.theme-blogger .cstat-num span { color: #CE1126; }
+.cstat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+  line-height: 1.4;
+}
+
+/* ── Columna derecha: servicios ── */
+.creador-right { display: flex; flex-direction: column; gap: 2.5rem; }
+
+.creador-right-header { }
+.creador-right-header .section-label { margin-bottom: 0.6rem; }
+.creador-right-header h2 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin-bottom: 0.8rem;
+  overflow-wrap: break-word;
+}
+body.theme-blogger .creador-right-header h2 { color: #003366; }
+.creador-right-header p {
+  font-size: 0.95rem;
+  color: var(--gray);
+  line-height: 1.75;
+  max-width: 560px;
+}
+
+.servicios-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+@media (max-width: 600px) { .servicios-grid { grid-template-columns: 1fr; } }
+
+.servicio-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 1.6rem 1.4rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  cursor: default;
+}
+body.theme-blogger .servicio-card { background: #fff; border-color: rgba(0,51,102,0.1); }
+.servicio-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--mint), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s;
+}
+.servicio-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+  border-color: rgba(43,191,159,0.25);
+}
+.servicio-card:hover::before { transform: scaleX(1); }
+
+.servicio-card-num {
+  position: absolute;
+  top: 0.8rem; right: 1rem;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 3.5rem;
+  line-height: 1;
+  color: rgba(43,191,159,0.06);
+  pointer-events: none;
+  user-select: none;
+}
+body.theme-blogger .servicio-card-num { color: rgba(0,51,102,0.05); }
+
+.servicio-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.8rem;
+  display: block;
+  line-height: 1;
+}
+.servicio-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.97rem;
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+body.theme-blogger .servicio-card h3 { color: #003366; }
+.servicio-card p {
+  font-size: 0.82rem;
+  color: var(--gray);
+  line-height: 1.65;
+}
+
+.creador-filosofia {
+  background: linear-gradient(135deg, rgba(43,191,159,0.06) 0%, rgba(245,166,35,0.04) 100%);
+  border: 1px solid rgba(43,191,159,0.15);
+  border-left: 3px solid var(--mint);
+  padding: 1.5rem 1.8rem;
+  position: relative;
+}
+body.theme-blogger .creador-filosofia {
+  background: linear-gradient(135deg, rgba(206,17,38,0.04) 0%, rgba(245,166,35,0.04) 100%);
+  border-color: rgba(206,17,38,0.2);
+  border-left-color: #CE1126;
+}
+.creador-filosofia-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 0.7rem;
+}
+body.theme-blogger .creador-filosofia-label { color: #CE1126; }
+.creador-filosofia blockquote {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  font-style: italic;
+}
+body.theme-blogger .creador-filosofia blockquote { color: #003366; }
+
+.creador-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+.creador-cta-row p {
+  font-size: 0.85rem;
+  color: var(--gray);
+  flex: 1;
+  min-width: 200px;
+  line-height: 1.6;
+}
+.creador-cta-row strong { color: var(--white); }
+body.theme-blogger .creador-cta-row strong { color: #003366; }
+.creador-cta-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #25D366;
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.85rem 1.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.creador-cta-wa:hover { opacity: 0.9; transform: scale(1.03); box-shadow: 0 0 30px rgba(37,211,102,0.35); }
+
+body.theme-blogger .creador-section { background: #F4F6FB; }
+
+@media (max-width: 480px) {
+  .creador-section { padding: 4rem 4%; }
+  .creador-stats-row { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body class="theme-blogger">
@@ -773,6 +1150,7 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
     <li><a href="#features">Funciones</a></li>
     <li><a href="#precios">Precios</a></li>
     <li><a href="#pago">Pagar</a></li>
+    <li><a href="#creador">El Creador</a></li>
   </ul>
   <div class="nav-right">
     <div class="theme-switcher" title="Cambiar paleta">
@@ -787,7 +1165,7 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
         </select>
       </div>
     </div>
-    <a href="#registro" class="nav-cta">Prueba →</a>
+    <a href="#registro" class="nav-cta">Demo →</a>
   </div>
 </nav>
 
@@ -795,9 +1173,8 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
 <section class="hero" id="inicio">
   <div class="glow-orb"></div>
 
-  <!-- IZQUIERDA -->
   <div class="hero-left">
-    <div class="hero-badge">Software contable · 100% offline </div>
+    <div class="hero-badge">Software contable · 100% offline · IA</div>
     <h1>
       Tu negocio<br/>
       contabilizado<br/>
@@ -805,8 +1182,8 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
       Real
     </h1>
     <p class="hero-sub">
-      Accounxter es el sistema contable  diseñado para
-      <strong>microempresarios, tenderos, no obligados a llevar contabilidad, emprendedores organizados</strong>
+      Accounxter es el sistema contable con IA diseñado para
+      <strong>microempresarios, tenderos y emprendedores</strong>
       del Régimen Simple. Sin complicaciones. Sin contadores. Sin internet.
     </p>
     <div class="hero-actions">
@@ -848,7 +1225,6 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
       <button class="reg-tab" onclick="switchTab('wa',this)">💬 WhatsApp</button>
     </div>
 
-    <!-- TAB: Formulario con PTI Blocker -->
     <div id="tabForm" class="reg-tab-content active">
       <div id="ptiBlocker" class="pti-blocker">
         <div class="pti-card">
@@ -883,7 +1259,6 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
       </div>
     </div>
 
-    <!-- TAB: WhatsApp -->
     <div id="tabWa" class="reg-tab-content">
       <div class="wa-tab-body">
         <div class="wa-step"><div class="wa-step-num">1</div><p>Escribe tu <strong>nombre completo</strong> y <strong>ciudad</strong> en el mensaje.</p></div>
@@ -897,7 +1272,7 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
   </div>
 </section>
 
-<!-- ══ MODAL PTI — Política de Tratamiento de Datos ══ -->
+<!-- ══ MODAL PTI ══ -->
 <div id="ptiModal" class="pti-modal" role="dialog" aria-modal="true" aria-labelledby="ptiModalTitle">
   <div class="pti-modal-content">
     <button class="pti-modal-close" id="closePtiModalBtn" aria-label="Cerrar modal">×</button>
@@ -907,7 +1282,7 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
     <p><strong>Accounxter</strong> (Miguel Ángel Arroyo Pianeta, CC 1.096.216.552), en cumplimiento de la <strong>Ley 1581 de 2012</strong> y el <strong>Decreto 1377 de 2013</strong>, presenta su política de protección de datos personales:</p>
 
     <h3>1. Responsable del tratamiento</h3>
-    <p>Miguel Ángel Arroyo Pianeta, domicilio en Barrancabermeja, Santander, Colombia.<br>Contacto: <strong>accounxter@gmail.com</strong> · WhatsApp: <strong>+57 305 840 2580</strong></p>
+    <p>Miguel Ángel Arroyo Pianeta, domicilio en Barrancabermeja, Santander, Colombia.<br>Contacto: <strong>datos@accounxter.com</strong> · WhatsApp: <strong>+57 305 840 2580</strong></p>
 
     <h3>2. Datos recolectados</h3>
     <p>Nombre completo, correo electrónico, número de teléfono/WhatsApp, ciudad y cualquier información proporcionada voluntariamente en el formulario de registro o comunicación con Accounxter.</p>
@@ -922,7 +1297,7 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
     </ul>
 
     <h3>4. Derechos ARCO</h3>
-    <p>Como titular, puede ejercer sus derechos de Acceso, Rectificación, Cancelación y Oposición enviando un correo a <strong>accounxter@gmail.com</strong> o un mensaje de WhatsApp al <strong>+57 305 840 2580</strong>. Responderemos en máximo 10 días hábiles.</p>
+    <p>Como titular, puede ejercer sus derechos de Acceso, Rectificación, Cancelación y Oposición enviando un correo a <strong>datos@accounxter.com</strong> o un mensaje de WhatsApp al <strong>+57 305 840 2580</strong>. Responderemos en máximo 10 días hábiles.</p>
 
     <h3>5. Vigencia y conservación</h3>
     <p>Los datos se conservarán durante el tiempo necesario para cumplir las finalidades descritas o hasta que el titular solicite su eliminación, tras lo cual serán eliminados o anonimizados.</p>
@@ -949,7 +1324,7 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
 <div class="diff-band">
   <div class="diff-scroll">
     <span class="diff-item">Para microempresarios</span>
-    <span class="diff-item">No obligados a llevar contabilidad</span>
+    <span class="diff-item">Régimen Simple de Tributación</span>
     <span class="diff-item">Software 100% offline</span>
     <span class="diff-item">Nómina electrónica DIAN</span>
     <span class="diff-item">Facturación electrónica</span>
@@ -962,7 +1337,7 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
     <span class="diff-item">Nómina electrónica DIAN</span>
     <span class="diff-item">Facturación electrónica</span>
     <span class="diff-item">IVA automático</span>
-    <span class="diff-item">Conciliación bancaria </span>
+    <span class="diff-item">Conciliación bancaria con IA</span>
     <span class="diff-item">Sin cuotas de contador</span>
   </div>
 </div>
@@ -971,8 +1346,8 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
 <section class="section" id="quien">
   <div class="reveal">
     <p class="section-label">¿Para quién es?</p>
-    <h2 class="section-title">Hecho para el que trabaja, para el que estudia contaduría, para todos.</h2>
-    <p class="section-sub">Accounxter quiere ser didactico y simple, no es para contadores profesionales ni firmas tributarias. Es para ti: el que abre su negocio cada día.</p>
+    <h2 class="section-title">Hecho para el que trabaja, no para el que estudia contaduría</h2>
+    <p class="section-sub">Accounxter no es para contadores profesionales ni firmas tributarias. Es para ti: el que abre su negocio cada día.</p>
   </div>
   <div class="who-grid reveal">
     <div class="who-card"><span class="who-icon">🏪</span><h3>Tenderos y comerciantes</h3><p>Controla ventas, inventario y gastos del día sin necesitar un contador externo.</p></div>
@@ -991,17 +1366,17 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
       <div class="reveal">
         <p class="section-label">Funcionalidades</p>
         <h2 class="section-title">Todo lo que tu negocio necesita, nada que no necesita</h2>
-        <p class="section-sub">2 módulos integrados basicos de registro de compras y ventas, 6 modulos avanzados para llevar contabilidad automatizada, diseñados para el microempresario colombiano. </p>
+        <p class="section-sub">8 módulos integrados, diseñados para el microempresario colombiano. Con IA que aprende de tu negocio.</p>
       </div>
       <div class="feature-list reveal">
         <div class="feature-item"><div class="feature-num">01</div><h3>Facturación Electrónica DIAN</h3><p>Emite facturas con CUFE simulado, XML y PDF. Sin internet permanente.</p></div>
         <div class="feature-item"><div class="feature-num">02</div><h3>Nómina Electrónica</h3><p>Liquida salarios, prestaciones y parafiscales. SMMLV 2025: $1.423.500.</p></div>
         <div class="feature-item"><div class="feature-num">03</div><h3>IVA y Retención Automáticos</h3><p>Calcula IVA bimestral (F300) y Retención (F350). Prepara el borrador de tus declaraciones.</p></div>
-        <div class="feature-item"><div class="feature-num">04</div><h3>Conciliación Bancaria </h3><p>Importa extractos CSV de Bancolombia o Davivienda. La IA cruza automáticamente los movimientos.</p></div>
+        <div class="feature-item"><div class="feature-num">04</div><h3>Conciliación Bancaria con IA</h3><p>Importa extractos CSV de Bancolombia o Davivienda. La IA cruza automáticamente los movimientos.</p></div>
         <div class="feature-item"><div class="feature-num">05</div><h3>Cuentas por Cobrar y Pagar</h3><p>Controla lo que te deben y lo que debes. Alertas de vencimientos incluidas.</p></div>
         <div class="feature-item"><div class="feature-num">06</div><h3>Balance y Estado de Resultados</h3><p>Reportes en tiempo real. Historial de asientos. Exporta en PDF.</p></div>
         <div class="feature-item"><div class="feature-num">07</div><h3>Google Drive Sync</h3><p>Backup automático. Hasta 5 razones sociales. Tus datos siempre seguros.</p></div>
-        <div class="feature-item"><div class="feature-num">08</div><h3>Asistencia Offline Contable</h3><p>Pregúntanos. Te respondemos en lenguaje claro, no en términos contables.</p></div>
+        <div class="feature-item"><div class="feature-num">08</div><h3>Asistente IA Contable</h3><p>Pregúntale a la IA. Te responde en lenguaje claro, no en términos contables.</p></div>
       </div>
     </div>
     <div class="reveal">
@@ -1012,7 +1387,7 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
         </div>
         <div class="ui-mock-body">
           <div class="mock-header-row">
-            <div class="mock-greeting">Hola, <span>Querido Usuario</span> 👋</div>
+            <div class="mock-greeting">Hola, <span>Miguel</span> 👋</div>
             <div class="mock-date">Marzo 2026</div>
           </div>
           <div class="mock-kpi-row">
@@ -1034,7 +1409,7 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
           <div class="mock-row"><span class="mock-row-label">Fact. #0046 — Cliente B</span><span class="mock-row-val">$230.000 <span class="tag-pend">Pendiente</span></span></div>
           <div class="mock-row"><span class="mock-row-label">Nómina — Juan Pérez</span><span class="mock-row-val">$1.600.000 <span class="tag-ok">Pagado</span></span></div>
           <div class="mock-ai-box">
-            <div class="mock-ai-label">⚡ Implementación de Asistente IA</div>
+            <div class="mock-ai-label">⚡ Asistente IA</div>
             <div class="mock-ai-text"><strong>Tu flujo de caja cubre la nómina de marzo.</strong> La declaración de IVA del bimestre vence en 18 días. Tienes $1.98M provisionados correctamente.</div>
           </div>
         </div>
@@ -1159,7 +1534,7 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
       <div class="price-label">👑 Mejor valor</div>
       <div class="price-name">Premium</div>
       <div class="price-amount">$249.000</div>
-      <div class="price-period">COP · 2 años · licencia diamante</div>
+      <div class="price-period">COP · Vitalicio · Nunca expira</div>
       <ul class="price-features">
         <li>Empresas ilimitadas</li>
         <li>Todo lo de Standard</li>
@@ -1264,6 +1639,147 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
   </div>
 </section>
 
+<!-- SECCIÓN CREADOR (CON FOTO REAL) -->
+<section class="creador-section" id="creador">
+  <div class="creador-inner reveal">
+
+    <!-- COLUMNA IZQUIERDA: Perfil con foto -->
+    <div class="creador-profile">
+
+      <div class="creador-card">
+        <!-- Avatar con ring animado y foto real desde Google Drive -->
+        <div class="creador-avatar-wrap">
+          <div class="creador-avatar-ring"></div>
+          <div class="creador-avatar-inner">
+            <img
+              class="creador-avatar-img"
+              src="https://drive.google.com/thumbnail?id=1Wm-QPJpt45afybxu29FtY8dfcY0_Gvg-&sz=w200"
+              alt="Miguel Ángel Arroyo Pianeta - Contador Público, fundador de Accounxter"
+              loading="lazy"
+              onerror="this.style.display='none'; this.parentElement.innerHTML = '<span class=\'creador-avatar-fallback\'>MA</span>';"
+            >
+          </div>
+        </div>
+
+        <div class="creador-name">Miguel Ángel<br/>Arroyo Pianeta</div>
+        <div class="creador-title">
+          Contador Público<br/>
+          Especialista en Gerencia de Impuestos
+        </div>
+
+        <div class="creador-bio">
+          Profesional contable con formación avanzada en tributaria colombiana. Fundador de Accounxter, software contable con IA diseñado desde la trinchera del microempresario. <strong>Conoce el problema porque lo vivió.</strong>
+        </div>
+
+        <div class="creador-badges" style="margin-top:1rem;">
+          <span class="cbadge">📘 Contador Público</span>
+          <span class="cbadge">🎓 Esp. Gerencia Impuestos</span>
+          <span class="cbadge gold">⚖️ Reg. Simple Tributación</span>
+          <span class="cbadge gold">🏛️ DIAN · Cámara Comercio</span>
+        </div>
+
+        <a
+          href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Miguel%20Ángel!%20Vi%20tu%20perfil%20en%20Accounxter%20y%20me%20interesa%20hablar%20contigo."
+          target="_blank" rel="noopener"
+          class="creador-wa-btn"
+          style="margin-top:1.4rem;"
+        >
+          💬 Contactar por WhatsApp
+        </a>
+      </div>
+
+      <div class="creador-stats-row">
+        <div class="cstat">
+          <span class="cstat-num">10<span>+</span></span>
+          <span class="cstat-label">Años de experiencia</span>
+        </div>
+        <div class="cstat">
+          <span class="cstat-num">570<span>K</span></span>
+          <span class="cstat-label">Microempresarios atendidos</span>
+        </div>
+        <div class="cstat">
+          <span class="cstat-num">8<span>+</span></span>
+          <span class="cstat-label">Módulos en Accounxter</span>
+        </div>
+        <div class="cstat">
+          <span class="cstat-num">100<span>%</span></span>
+          <span class="cstat-label">Offline · Sin internet</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COLUMNA DERECHA: Servicios complementarios -->
+    <div class="creador-right">
+
+      <div class="creador-right-header">
+        <p class="section-label">El profesional detrás del software</p>
+        <h2>Servicios contables y tributarios complementarios</h2>
+        <p>Además del software, Miguel Ángel ofrece asesoría profesional directa para casos complejos que requieren atención personalizada.</p>
+      </div>
+
+      <div class="servicios-grid">
+        <div class="servicio-card">
+          <span class="servicio-card-num">01</span>
+          <span class="servicio-icon">📊</span>
+          <h3>Declaraciones de Impuestos</h3>
+          <p>Renta, IVA, Retención en la fuente, ICA. Elaboración y presentación ante la DIAN con precisión y cumplimiento normativo.</p>
+        </div>
+        <div class="servicio-card">
+          <span class="servicio-card-num">02</span>
+          <span class="servicio-icon">🏛️</span>
+          <h3>Gestión ante la DIAN y Cámara de Comercio</h3>
+          <p>Formalización de empresas, RUT, registro mercantil, actualización de actividades y trámites de representación.</p>
+        </div>
+        <div class="servicio-card">
+          <span class="servicio-card-num">03</span>
+          <span class="servicio-icon">📒</span>
+          <h3>Contabilidad Integral</h3>
+          <p>Llevanza contable mensual, conciliaciones, cuentas de orden, libros oficiales y preparación de informes gerenciales.</p>
+        </div>
+        <div class="servicio-card">
+          <span class="servicio-card-num">04</span>
+          <span class="servicio-icon">📈</span>
+          <h3>Estados Financieros</h3>
+          <p>Balance general, estado de resultados, flujo de efectivo y notas. Bajo NIIF PYMES o estándares locales colombianos.</p>
+        </div>
+        <div class="servicio-card">
+          <span class="servicio-card-num">05</span>
+          <span class="servicio-icon">💼</span>
+          <h3>Régimen Simple de Tributación</h3>
+          <p>Inscripción, cálculo de tarifas SIMPLE, bimestral anticipado y declaración anual. Especialidad diferenciadora.</p>
+        </div>
+        <div class="servicio-card">
+          <span class="servicio-card-num">06</span>
+          <span class="servicio-icon">🤖</span>
+          <h3>Soporte y Capacitación Accounxter</h3>
+          <p>Activación del software, onboarding personalizado, configuración de empresa y tutoriales para equipos de trabajo.</p>
+        </div>
+      </div>
+
+      <div class="creador-filosofia">
+        <div class="creador-filosofia-label">⚡ Filosofía de trabajo</div>
+        <blockquote>
+          "La tecnología contable no debería ser exclusiva de las grandes empresas. Cada tendero, cada emprendedor que formalizó su negocio merece herramientas de clase mundial — sin costos imposibles y sin necesidad de internet permanente."
+        </blockquote>
+        <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--gray);">— Miguel Ángel Arroyo Pianeta · Fundador Accounxter · Barrancabermeja, Santander</p>
+      </div>
+
+      <div class="creador-cta-row">
+        <p>¿Necesitas asesoría tributaria personalizada o tienes preguntas sobre el software? <strong>Escríbeme directo por WhatsApp.</strong> Solo chat, sin llamadas.</p>
+        <a
+          href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Miguel%20Ángel!%20Quiero%20asesoría%20contable%20personalizada."
+          target="_blank" rel="noopener"
+          class="creador-cta-wa"
+        >
+          💬 Hablar por WhatsApp
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- CTA FINAL -->
 <section class="cta-section">
   <div class="reveal">
@@ -1284,6 +1800,7 @@ body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
     <li><a href="#features">Funciones</a></li>
     <li><a href="#precios">Precios</a></li>
     <li><a href="#pago">Pagar</a></li>
+    <li><a href="#creador">El Creador</a></li>
     <li><a href="https://api.whatsapp.com/send/?phone=573058402580" target="_blank">Soporte</a></li>
   </ul>
   <div class="footer-copy">

@@ -1,1015 +1,2027 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Accounxter — Calcula tu fecha de Renta 2026 (DIAN)</title>
-    <meta name="description" content="Herramienta basada en el calendario oficial de la DIAN para conocer tu fecha límite de declaración de renta según los dos últimos dígitos de tu NIT." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <style>
-        /* ══════════════════════════════════════════
-           RESET & BASE (igual que Accounxter)
-           ══════════════════════════════════════════ */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">  
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+<title>Accounxter — Contabilidad con IA para tu negocio</title>
+<meta name="description" content="Software contable 100% offline para microempresarios del Régimen Simple. Nómina, IVA, facturación DIAN. Sin internet. Desde $89.900 COP." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ══════════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.45s ease, border-color 0.45s ease, color 0.45s ease, box-shadow 0.45s ease;
+}
+html { scroll-behavior: smooth; }
 
-        /* ══════════════════════════════════════════
-           PALETA DE COLORES
-           ══════════════════════════════════════════ */
-        :root {
-            --navy: #003366;
-            --navy2: #002952;
-            --mint: #CE1126;
-            --mint-dark: #A80D1E;
-            --white: #F4F6FB;
-            --gray: #6B7280;
-            --card-bg: #FFFFFF;
-            --border: rgba(0, 51, 102, 0.12);
-            --font-sans: 'Manrope', sans-serif;
-            --font-display: 'Syne', sans-serif;
-            --font-mono: 'Space Mono', monospace;
-        }
+/* ══════════════════════════════════════════
+   PALETAS DE COLORES
+══════════════════════════════════════════ */
+:root, body.theme-original {
+  --navy: #0A0F1E; --navy2: #111827; --mint: #2BBF9F; --mint-dark: #1f9a7f;
+  --white: #F5F5F7; --gray: #8A93A8; --card-bg: #141C2F;
+  --border: rgba(255,255,255,0.07); --accent-glow: rgba(43,191,159,0.35);
+  --gold: #F5A623; --green: #00E676;
+}
+body.theme-professional {
+  --navy: #0A2540; --navy2: #0D2036; --mint: #4C9A8C; --mint-dark: #3B7A6E;
+  --white: #EEF4F8; --gray: #7A90A4; --card-bg: #1A2A3F;
+  --border: rgba(255,255,255,0.08); --accent-glow: rgba(76,154,140,0.35);
+  --gold: #E6A017; --green: #00E676;
+}
+body.theme-contrast {
+  --navy: #000000; --navy2: #0D0D0D; --mint: #00FF9D; --mint-dark: #00CC7A;
+  --white: #FFFFFF; --gray: #AAAAAA; --card-bg: #1A1A1A;
+  --border: rgba(255,255,255,0.15); --accent-glow: rgba(0,255,157,0.4);
+  --gold: #FFB347; --green: #00FF9D;
+}
+body.theme-blogger {
+  --navy: #003366; --navy2: #002952; --mint: #CE1126; --mint-dark: #A80D1E;
+  --white: #F4F6FB; --gray: #6B7280; --card-bg: #FFFFFF;
+  --border: rgba(0,51,102,0.12); --accent-glow: rgba(206,17,38,0.35);
+  --gold: #F5A623; --green: #1DB954;
+}
 
-        body {
-            font-family: var(--font-sans);
-            background: var(--white);
-            color: #0A0E1A;
-            line-height: 1.6;
-        }
+/* ══════════════════════════════════════════
+   BLOGGER OVERRIDES
+══════════════════════════════════════════ */
+body.theme-blogger { background: #F4F6FB; color: #0A0E1A; }
+body.theme-blogger nav { background: rgba(0,51,102,0.96); border-bottom: 1px solid rgba(206,17,38,0.25); }
+body.theme-blogger .logo { color: #FFFFFF; }
+body.theme-blogger .nav-links a { color: rgba(255,255,255,0.7); }
+body.theme-blogger .nav-links a:hover { color: #FFFFFF; }
+body.theme-blogger .bono-bar { background: var(--mint); }
+body.theme-blogger .hero { background: #0A0E1A; color: #FFFFFF; }
+body.theme-blogger .hero-left h1,
+body.theme-blogger .hero-left .hero-sub,
+body.theme-blogger .stat-num { color: #FFFFFF; }
+body.theme-blogger .hero-left .hero-sub { color: rgba(255,255,255,0.75); }
+body.theme-blogger .registro-card,
+body.theme-blogger .who-card,
+body.theme-blogger .tcard,
+body.theme-blogger .price-card,
+body.theme-blogger .sorteo-box,
+body.theme-blogger .ui-mock { background: #FFFFFF; border-color: rgba(0,51,102,0.1); color: #0A0E1A; }
+body.theme-blogger .who-card p,
+body.theme-blogger .tcard-text,
+body.theme-blogger .feature-item p,
+body.theme-blogger .section-sub { color: #6B7280; }
+body.theme-blogger .who-card h3,
+body.theme-blogger .tcard-name,
+body.theme-blogger .feature-item h3,
+body.theme-blogger .section-title { color: #003366; }
+body.theme-blogger .features-section { background: #003366; }
+body.theme-blogger .features-section .section-title,
+body.theme-blogger .features-section .feature-item h3 { color: #FFFFFF; }
+body.theme-blogger .features-section .feature-item p { color: rgba(255,255,255,0.65); }
+body.theme-blogger .features-section .feature-num { color: #CE1126; }
+body.theme-blogger .pricing-section { background: #F4F6FB; }
+body.theme-blogger .price-card.featured { background: linear-gradient(135deg,#FFF8EE,#FFF3DC); border-color: var(--gold); }
+body.theme-blogger .mock-kpi { background: #F4F6FB; }
+body.theme-blogger .mock-greeting span,
+body.theme-blogger .mock-ai-label,
+body.theme-blogger .mock-kpi-val.red { color: #CE1126; }
+body.theme-blogger .mock-bar { background: rgba(206,17,38,0.2); }
+body.theme-blogger .mock-bar.active { background: #CE1126; }
+body.theme-blogger .ui-mock-bar { background: #002952; }
+body.theme-blogger .theme-select { color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
+body.theme-blogger .theme-select-wrap::after { color: #CE1126; }
+body.theme-blogger .theme-dot { background: #CE1126; box-shadow: 0 0 6px rgba(206,17,38,0.5); }
+body.theme-blogger .theme-switcher-icon { color: rgba(255,255,255,0.8); }
+body.theme-blogger .nav-cta { background: #CE1126; }
+body.theme-blogger .nav-cta:hover { background: #A80D1E; }
+body.theme-blogger .cursor { background: #CE1126; }
+body.theme-blogger .cursor-ring { border-color: rgba(206,17,38,0.5); }
+body.theme-blogger .glow-orb { background: radial-gradient(circle, rgba(206,17,38,0.18) 0%, transparent 65%); }
+body.theme-blogger .hero-badge { background: rgba(206,17,38,0.15); border-color: rgba(206,17,38,0.35); }
+body.theme-blogger .sorteo-section { background: #F4F6FB; }
+body.theme-blogger .sorteo-box { background: #FFFFFF; border-color: rgba(0,51,102,0.1); }
+body.theme-blogger .sorteo-box h3 { color: #F5A623; }
+body.theme-blogger .sorteo-box p, body.theme-blogger .sorteo-box strong { color: #0A0E1A; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+/* ══════════════════════════════════════════
+   BODY & CURSOR
+══════════════════════════════════════════ */
+body {
+  background: var(--navy);
+  color: var(--white);
+  font-family: 'Manrope', sans-serif;
+  overflow-x: hidden;
+}
+@media (pointer: fine) { body { cursor: none; } }
 
-        /* ══════════════════════════════════════════
-           BONO BAR
-           ══════════════════════════════════════════ */
-        .bono-bar {
-            background: var(--mint);
-            color: #fff;
-            text-align: center;
-            padding: 10px 16px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            letter-spacing: 0.3px;
-        }
-        .bono-bar strong {
-            font-weight: 800;
-        }
+.cursor {
+  position: fixed; width: 12px; height: 12px;
+  background: var(--mint); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  display: none;
+}
+.cursor-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 1.5px solid rgba(43,191,159,0.5); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: left 0.18s cubic-bezier(.17,.67,.35,1.2), top 0.18s cubic-bezier(.17,.67,.35,1.2),
+              width 0.25s, height 0.25s, border-color 0.45s ease;
+  display: none;
+}
+@media (pointer: fine) { .cursor, .cursor-ring { display: block; } }
+body.theme-professional .cursor-ring { border-color: rgba(76,154,140,0.5); }
+body.theme-contrast .cursor-ring { border-color: rgba(0,255,157,0.5); }
 
-        /* ══════════════════════════════════════════
-           NAVEGACIÓN
-           ══════════════════════════════════════════ */
-        nav {
-            background: rgba(0, 51, 102, 0.96);
-            border-bottom: 1px solid rgba(206, 17, 38, 0.25);
-            padding: 16px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(8px);
-        }
-        nav .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-        .logo {
-            font-family: var(--font-display);
-            font-weight: 800;
-            font-size: 1.6rem;
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .logo small {
-            font-weight: 400;
-            font-size: 0.75rem;
-            opacity: 0.7;
-            letter-spacing: 0.5px;
-        }
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            list-style: none;
-            flex-wrap: wrap;
-        }
-        .nav-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover {
-            color: #fff;
-        }
-        .nav-links .btn-outline-light {
-            border: 1.5px solid rgba(255, 255, 255, 0.3);
-            padding: 8px 20px;
-            border-radius: 40px;
-            color: #fff;
-            font-weight: 600;
-            transition: background 0.2s, border-color 0.2s;
-        }
-        .nav-links .btn-outline-light:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: #fff;
-        }
+/* ══════════════════════════════════════════
+   THEME SWITCHER
+══════════════════════════════════════════ */
+.theme-switcher { display: flex; align-items: center; gap: 0.55rem; }
+.theme-switcher-icon { font-size: 0.95rem; line-height: 1; flex-shrink: 0; opacity: 0.85; }
+.theme-select-wrap { position: relative; display: flex; align-items: center; }
+.theme-select-wrap::after {
+  content: '▾'; position: absolute; right: 0.6rem;
+  font-size: 0.6rem; color: var(--mint); pointer-events: none;
+}
+.theme-select {
+  appearance: none; -webkit-appearance: none;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+  color: var(--gray); font-family: 'Space Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.45rem 1.8rem 0.45rem 0.85rem; border-radius: 2px;
+  cursor: pointer; outline: none; min-width: 130px;
+}
+.theme-select:hover { background: rgba(255,255,255,0.1); border-color: var(--mint); color: var(--white); }
+.theme-select:focus { border-color: var(--mint); box-shadow: 0 0 0 2px var(--accent-glow); }
+.theme-select option { background: #111827; color: #F5F5F7; font-family: 'Space Mono', monospace; font-size: 0.7rem; }
+.theme-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--mint); flex-shrink: 0;
+  box-shadow: 0 0 6px var(--accent-glow);
+  animation: blink 1.6s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
 
-        /* ══════════════════════════════════════════
-           HERO
-           ══════════════════════════════════════════ */
-        .hero {
-            background: #0A0E1A;
-            color: #fff;
-            padding: 70px 0 80px;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: -40%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(206, 17, 38, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .hero .container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-        .hero-left h1 {
-            font-family: var(--font-display);
-            font-weight: 800;
-            font-size: 3rem;
-            line-height: 1.15;
-            margin-bottom: 16px;
-        }
-        .hero-left h1 .highlight {
-            color: var(--mint);
-        }
-        .hero-left .hero-sub {
-            font-size: 1.15rem;
-            color: rgba(255, 255, 255, 0.75);
-            max-width: 520px;
-            margin-bottom: 28px;
-            font-weight: 300;
-        }
-        .hero-left .hero-sub strong {
-            color: #fff;
-            font-weight: 600;
-        }
-        .hero-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px 20px;
-            margin-bottom: 32px;
-        }
-        .hero-badges span {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-        .btn-primary {
-            background: var(--mint);
-            color: #fff;
-            border: none;
-            padding: 14px 40px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.15s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .btn-primary:hover {
-            background: var(--mint-dark);
-            transform: scale(1.02);
-        }
-        .btn-secondary {
-            background: transparent;
-            color: #fff;
-            border: 1.5px solid rgba(255, 255, 255, 0.3);
-            padding: 14px 36px;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: #fff;
-        }
-        .btn-whatsapp {
-            background: #25D366;
-            color: #fff;
-            border: none;
-            padding: 14px 36px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.15s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .btn-whatsapp:hover {
-            background: #1DA851;
-            transform: scale(1.02);
-        }
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 5%;
+  background: rgba(10,15,30,0.92);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  animation: fadeDown 0.7s ease both;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+body.theme-professional nav { background: rgba(10,37,64,0.92); }
+body.theme-contrast nav { background: rgba(0,0,0,0.97); }
 
-        .hero-right {
-            display: flex;
-            justify-content: center;
-        }
-        .hero-card {
-            background: var(--card-bg);
-            color: #0A0E1A;
-            padding: 32px 28px;
-            border-radius: 24px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .hero-card h3 {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 1.3rem;
-            margin-bottom: 8px;
-            color: var(--navy);
-        }
-        .hero-card p {
-            color: var(--gray);
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-        }
-        .hero-card .deadline-highlight {
-            background: #FEF2F2;
-            border-left: 4px solid var(--mint);
-            padding: 14px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .hero-card .deadline-highlight strong {
-            color: var(--mint);
-            font-weight: 700;
-        }
-        .hero-card .consulta-link {
-            display: inline-block;
-            background: var(--navy);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 40px;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: background 0.2s;
-            width: 100%;
-            text-align: center;
-        }
-        .hero-card .consulta-link:hover {
-            background: var(--navy2);
-        }
+.logo {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem;
+  letter-spacing: -0.02em; color: var(--white); text-decoration: none; flex-shrink: 0;
+}
+.logo span { color: var(--mint); }
+.nav-links { display: flex; gap: 1.8rem; list-style: none; }
+.nav-links a {
+  font-family: 'Manrope', sans-serif; font-size: 0.82rem; font-weight: 500;
+  color: var(--gray); text-decoration: none; letter-spacing: 0.03em;
+  text-transform: uppercase; transition: color 0.25s;
+}
+.nav-links a:hover { color: var(--white); }
 
-        /* ══════════════════════════════════════════
-           SECCIÓN: HERRAMIENTA INTERACTIVA
-           ══════════════════════════════════════════ */
-        .section {
-            padding: 70px 0;
-        }
-        .section-title {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 2.2rem;
-            color: var(--navy);
-            text-align: center;
-            margin-bottom: 12px;
-        }
-        .section-sub {
-            text-align: center;
-            color: var(--gray);
-            font-size: 1.05rem;
-            max-width: 680px;
-            margin: 0 auto 48px;
-        }
-        .section-sub a {
-            color: var(--mint);
-            font-weight: 600;
-            text-decoration: none;
-        }
-        .section-sub a:hover {
-            text-decoration: underline;
-        }
+.nav-right { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
 
-        .tool-container {
-            max-width: 620px;
-            margin: 0 auto;
-            background: #fff;
-            border-radius: 24px;
-            padding: 40px 32px;
-            box-shadow: 0 8px 30px rgba(0, 51, 102, 0.06);
-            border: 1px solid var(--border);
-        }
+.nav-cta {
+  background: var(--mint); color: var(--white); border: none;
+  padding: 0.6rem 1.3rem; font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 0.82rem; letter-spacing: 0.04em; text-transform: uppercase;
+  cursor: pointer; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: background 0.2s, transform 0.15s; text-decoration: none; white-space: nowrap;
+  display: inline-block;
+}
+.nav-cta:hover { background: var(--mint-dark); transform: scale(1.04); }
 
-        .tool-input-group {
-            display: flex;
-            flex-direction: row;
-            gap: 12px;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
-        }
-        .tool-input-group input {
-            flex: 1;
-            min-width: 150px;
-            padding: 16px 20px;
-            border: 1.5px solid var(--border);
-            border-radius: 60px;
-            font-size: 1rem;
-            font-family: var(--font-mono);
-            font-weight: 700;
-            color: var(--navy);
-            background: var(--white);
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            text-align: center;
-            letter-spacing: 2px;
-        }
-        .tool-input-group input:focus {
-            border-color: var(--mint);
-            box-shadow: 0 0 0 4px rgba(206, 17, 38, 0.1);
-        }
-        .tool-input-group input::placeholder {
-            font-family: var(--font-sans);
-            font-weight: 400;
-            color: #9CA3AF;
-            letter-spacing: 0;
-        }
-        .tool-input-group button {
-            padding: 16px 32px;
-            background: var(--mint);
-            color: #fff;
-            border: none;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.15s;
-            white-space: nowrap;
-        }
-        .tool-input-group button:hover {
-            background: var(--mint-dark);
-            transform: scale(1.02);
-        }
+/* ── RESPONSIVE NAV ── */
+@media (max-width: 900px) { .nav-links { display: none; } .theme-select { min-width: 110px; } }
+@media (max-width: 600px) {
+  .theme-switcher-icon { display: none; }
+  .theme-dot { display: none; }
+  .theme-select { min-width: 90px; font-size: 0.6rem; }
+  nav { padding: 0.8rem 4%; }
+  .logo { font-size: 1.2rem; }
+  .nav-cta { padding: 0.55rem 1rem; font-size: 0.75rem; }
+}
+@media (max-width: 380px) {
+  .theme-select { min-width: 75px; font-size: 0.55rem; padding: 0.4rem 1.4rem 0.4rem 0.6rem; }
+}
 
-        .tool-helper {
-            font-size: 0.85rem;
-            color: var(--gray);
-            margin-top: 8px;
-            padding-left: 8px;
-        }
-        .tool-helper strong {
-            color: var(--navy);
-        }
+/* ══════════════════════════════════════════
+   BONO BAR
+══════════════════════════════════════════ */
+.bono-bar {
+  background: var(--mint); color: #fff;
+  text-align: center; padding: 10px 5%;
+  font-family: 'Space Mono', monospace; font-size: 0.72rem;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  line-height: 1.5;
+}
+.bono-bar strong { color: var(--gold); }
+@media (max-width: 480px) { .bono-bar { font-size: 0.6rem; padding: 8px 4%; } }
 
-        .result-box {
-            margin-top: 24px;
-            min-height: 60px;
-            transition: all 0.3s ease;
-        }
-        .result-success {
-            background: #F0FDF4;
-            border: 1px solid #BBF7D0;
-            border-radius: 16px;
-            padding: 20px 24px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            animation: fadeInUp 0.4s ease;
-        }
-        .result-success .result-icon {
-            font-size: 2.2rem;
-        }
-        .result-success strong {
-            color: var(--navy);
-            font-weight: 700;
-        }
-        .result-success .fecha-destacada {
-            color: var(--mint);
-            font-weight: 800;
-            font-size: 1.2rem;
-        }
-        .result-success .grupo-info {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  align-items: start;
+  gap: 2.5rem;
+  padding: 7rem 5% 5rem;
+  position: relative;
+  overflow: hidden;
+}
+@media (max-width: 1200px) {
+  .hero { grid-template-columns: 1fr 420px; gap: 2rem; }
+}
+@media (max-width: 960px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; padding: 6.5rem 5% 4rem; gap: 2.5rem; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 6rem 4% 3rem; gap: 2rem; }
+}
 
-        .result-error {
-            background: #FEF2F2;
-            border: 1px solid #FECACA;
-            border-radius: 16px;
-            padding: 16px 24px;
-            color: #991B1B;
-            font-weight: 500;
-            animation: fadeInUp 0.3s ease;
-        }
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 90% 70% at 30% 50%, black 20%, transparent 100%);
+  pointer-events: none;
+}
+.glow-orb {
+  position: absolute; width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(43,191,159,0.15) 0%, transparent 65%);
+  left: -100px; top: 50%; transform: translateY(-50%);
+  pointer-events: none; animation: pulse-orb 5s ease-in-out infinite;
+}
+@keyframes pulse-orb { 0%,100%{transform:translateY(-50%) scale(1);opacity:0.7} 50%{transform:translateY(-52%) scale(1.08);opacity:1} }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.hero-left { position: relative; z-index: 1; width: 100%; min-width: 0; }
 
-        /* ══════════════════════════════════════════
-           SECCIÓN: CONSULTA DIAN
-           ══════════════════════════════════════════ */
-        .consulta-section {
-            background: var(--navy);
-            color: #fff;
-            padding: 70px 0;
-            text-align: center;
-        }
-        .consulta-section .section-title {
-            color: #fff;
-        }
-        .consulta-section .section-sub {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        .consulta-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 40px 32px;
-            max-width: 640px;
-            margin: 0 auto;
-            backdrop-filter: blur(4px);
-        }
-        .consulta-box p {
-            font-size: 1.05rem;
-            margin-bottom: 24px;
-            color: rgba(255, 255, 255, 0.85);
-        }
-        .consulta-box .btn-consulta {
-            display: inline-block;
-            background: var(--mint);
-            color: #fff;
-            padding: 16px 48px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: background 0.2s, transform 0.15s;
-            border: none;
-            cursor: pointer;
-        }
-        .consulta-box .btn-consulta:hover {
-            background: var(--mint-dark);
-            transform: scale(1.02);
-        }
-        .consulta-box .btn-consulta .arrow {
-            display: inline-block;
-            margin-left: 8px;
-            transition: transform 0.2s;
-        }
-        .consulta-box .btn-consulta:hover .arrow {
-            transform: translateX(6px);
-        }
-        .consulta-box .info-ayuda {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.5);
-        }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(43,191,159,0.12); border: 1px solid rgba(43,191,159,0.3);
+  color: var(--mint); font-family: 'Space Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.4rem 0.9rem; border-radius: 2px;
+  width: fit-content; max-width: 100%;
+  margin-bottom: 1.5rem; animation: fadeUp 0.6s 0.2s ease both;
+  white-space: nowrap;
+}
+.hero-badge::before { content:''; width:6px; height:6px; min-width: 6px; background:var(--mint); border-radius:50%; animation: blink 1.2s infinite; }
 
-        /* ══════════════════════════════════════════
-           SECCIÓN: BENEFICIOS
-           ══════════════════════════════════════════ */
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 24px;
-            margin-top: 16px;
-        }
-        .benefit-card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 28px 24px;
-            border: 1px solid var(--border);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .benefit-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 16px 40px rgba(0, 51, 102, 0.06);
-        }
-        .benefit-card .emoji {
-            font-size: 2.2rem;
-            display: block;
-            margin-bottom: 12px;
-        }
-        .benefit-card h4 {
-            font-family: var(--font-display);
-            font-weight: 700;
-            color: var(--navy);
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-        }
-        .benefit-card p {
-            color: var(--gray);
-            font-size: 0.95rem;
-        }
+.hero-left h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.9rem, 4.5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  animation: fadeUp 0.7s 0.35s ease both;
+  hyphens: none;
+  overflow-wrap: normal;
+  max-width: 100%;
+}
+.hero-left h1 .accent { color: var(--mint); }
+.hero-left h1 .underline-word { position: relative; display: inline-block; }
+.hero-left h1 .underline-word::after {
+  content:''; position:absolute; left:0; bottom:-4px; right:0; height:4px;
+  background:var(--mint); clip-path:polygon(0 0, 100% 0, 98% 100%, 2% 100%);
+}
 
-        /* ══════════════════════════════════════════
-           CTA FINAL
-           ══════════════════════════════════════════ */
-        .cta-final {
-            background: var(--white);
-            border-top: 1px solid var(--border);
-            padding: 60px 0;
-            text-align: center;
-        }
-        .cta-final h2 {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 2rem;
-            color: var(--navy);
-            margin-bottom: 12px;
-        }
-        .cta-final p {
-            color: var(--gray);
-            font-size: 1.05rem;
-            max-width: 560px;
-            margin: 0 auto 32px;
-        }
-        .cta-final .btn-whatsapp {
-            font-size: 1.1rem;
-            padding: 16px 48px;
-        }
+.hero-sub {
+  font-size: clamp(0.88rem, 1.5vw, 1.05rem);
+  font-weight: 300; color: var(--gray);
+  max-width: 100%; line-height: 1.75;
+  margin: 1.5rem 0 2rem;
+  animation: fadeUp 0.7s 0.5s ease both;
+  overflow-wrap: break-word;
+}
+.hero-sub strong { color: var(--white); font-weight: 600; }
 
-        /* ══════════════════════════════════════════
-           FOOTER
-           ══════════════════════════════════════════ */
-        footer {
-            background: #0A0E1A;
-            color: rgba(255, 255, 255, 0.5);
-            padding: 40px 0;
-            text-align: center;
-            font-size: 0.85rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        footer a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-        }
-        footer a:hover {
-            color: #fff;
-        }
-        footer .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
-        }
+.hero-actions {
+  display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;
+  animation: fadeUp 0.7s 0.65s ease both;
+}
 
-        /* ══════════════════════════════════════════
-           RESPONSIVE
-           ══════════════════════════════════════════ */
-        @media (max-width: 900px) {
-            .hero .container {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                text-align: center;
-            }
-            .hero-left .hero-sub {
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .hero-actions {
-                justify-content: center;
-            }
-            .hero-badges {
-                justify-content: center;
-            }
-            .hero-right {
-                order: -1;
-            }
-            .hero-card {
-                max-width: 100%;
-            }
-            .hero-left h1 {
-                font-size: 2.4rem;
-            }
-            .section-title {
-                font-size: 1.8rem;
-            }
-            .tool-container {
-                padding: 28px 20px;
-            }
-            .tool-input-group {
-                flex-direction: column;
-            }
-            .tool-input-group button {
-                width: 100%;
-                justify-content: center;
-            }
-        }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: var(--mint); color: var(--white);
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+  text-transform: uppercase; letter-spacing: 0.04em;
+  padding: 0.9rem 1.8rem;
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  position: relative; overflow: hidden;
+  white-space: nowrap;
+}
+.btn-primary::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  transform:translateX(-100%); transition:transform 0.5s;
+}
+.btn-primary:hover::after { transform:translateX(100%); }
+.btn-primary:hover { background:var(--mint-dark); transform:scale(1.03); box-shadow:0 0 40px var(--accent-glow); }
 
-        @media (max-width: 600px) {
-            nav .container {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 12px;
-            }
-            .nav-links {
-                justify-content: center;
-                gap: 16px;
-            }
-            .hero-left h1 {
-                font-size: 2rem;
-            }
-            .hero {
-                padding: 50px 0 60px;
-            }
-            .btn-primary,
-            .btn-secondary,
-            .btn-whatsapp,
-            .consulta-box .btn-consulta {
-                width: 100%;
-                justify-content: center;
-            }
-            .hero-actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .result-success {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-    </style>
+.btn-ghost-hero {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  color: var(--gray); font-family: 'Manrope', sans-serif;
+  font-weight: 600; font-size: 0.92rem; text-decoration: none;
+  transition: color 0.2s; white-space: nowrap;
+}
+.btn-ghost-hero:hover { color: var(--white); }
+.btn-ghost-hero .arrow { transition: transform 0.2s; }
+.btn-ghost-hero:hover .arrow { transform: translateX(4px); }
+
+.hero-stats {
+  display: flex; gap: 1.5rem; margin-top: 3rem;
+  padding-top: 2rem; border-top: 1px solid var(--border);
+  flex-wrap: wrap; animation: fadeUp 0.7s 0.8s ease both;
+}
+@media (max-width: 480px) { .hero-stats { gap: 1rem; margin-top: 2rem; padding-top: 1.5rem; } }
+.stat-item { display: flex; flex-direction: column; gap: 0.3rem; }
+.stat-num {
+  font-family:'Syne',sans-serif;
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+  font-weight:800; letter-spacing:-0.02em; line-height:1;
+}
+.stat-num span { color: var(--mint); }
+.stat-label { font-size: 0.68rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* ══════════════════════════════════════════
+   REGISTRO CARD
+══════════════════════════════════════════ */
+.registro-card {
+  position: relative; z-index: 1;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--mint);
+  animation: fadeUp 0.8s 0.4s ease both;
+  overflow: hidden;
+  width: 100%;
+  min-width: 0;
+  align-self: start;
+}
+.registro-card::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 70% 50% at 50% -10%, rgba(43,191,159,0.08) 0%, transparent 60%);
+  pointer-events:none;
+}
+
+.reg-header { padding: 1.5rem 1.5rem 1rem; border-bottom: 1px solid var(--border); }
+.reg-header-top { display:flex; align-items:center; justify-content:space-between; gap:0.8rem; margin-bottom:0.8rem; flex-wrap:wrap; }
+.reg-title { font-family:'Syne',sans-serif; font-weight:800; font-size:1.05rem; }
+.cupos-badge {
+  display:flex; align-items:center; gap:0.5rem;
+  background:rgba(245,166,35,0.1); border:1px solid rgba(245,166,35,0.25);
+  padding:0.3rem 0.75rem; border-radius:2px; flex-shrink:0;
+}
+.cupos-dot { width:6px; height:6px; background:var(--gold); border-radius:50%; animation:blink 1.5s infinite; }
+.cupos-text { font-family:'Space Mono',monospace; font-size:0.65rem; color:var(--gold); letter-spacing:0.08em; white-space:nowrap; }
+.cupos-bar-row { display:flex; align-items:center; gap:0.8rem; }
+.cupos-bar-label { font-size:0.68rem; color:var(--gray); white-space:nowrap; }
+.cupos-bar-track { flex:1; height:4px; background:rgba(255,255,255,0.08); border-radius:10px; overflow:hidden; }
+.cupos-bar-fill { height:100%; border-radius:10px; background:linear-gradient(90deg,var(--mint),var(--gold)); transition:width 0.8s ease; }
+
+.reg-tabs { display:flex; padding:0.8rem 1.5rem 0; gap:0; border-bottom:1px solid var(--border); }
+.reg-tab {
+  font-family:'Space Mono',monospace; font-size:0.65rem;
+  letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--gray); background:transparent; border:none;
+  padding:0.6rem 1rem; cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:color 0.2s, border-color 0.2s;
+}
+.reg-tab.active { color:var(--white); border-bottom-color:var(--mint); }
+.reg-tab-content { display:none; }
+.reg-tab-content.active { display:block; }
+
+/* PTI Blocker */
+.pti-blocker { padding: 1.5rem; text-align:center; }
+.pti-card {
+  background:rgba(43,191,159,0.05); border:1px solid var(--border);
+  border-radius:8px; padding:1.5rem 1.2rem; margin-bottom:1.2rem;
+}
+.pti-checkbox-wrapper {
+  display:flex; align-items:flex-start; justify-content:center;
+  gap:0.6rem; flex-wrap:wrap; margin-bottom:1.2rem; text-align:left;
+}
+.pti-checkbox-wrapper input { width:16px; height:16px; cursor:pointer; flex-shrink:0; margin-top:2px; }
+.pti-checkbox-wrapper label { font-size:0.82rem; cursor:pointer; line-height:1.5; }
+.pti-link { color:var(--mint); text-decoration:underline; cursor:pointer; }
+.unlock-btn { opacity:0.6; cursor:pointer; }
+.unlock-btn.enabled { opacity:1; }
+
+.gform-wrap { width:100%; background:#fff; overflow:hidden; }
+.gform-wrap iframe { display:block; width:100%; border:none; min-height:680px; height:680px; }
+
+/* ── WhatsApp tab ── */
+.wa-tab-body { padding:1.5rem; }
+.wa-step { display:flex; gap:0.9rem; align-items:flex-start; margin-bottom:1.1rem; }
+.wa-step-num {
+  background:var(--mint); color:#fff; font-family:'Syne',sans-serif;
+  font-weight:800; font-size:0.78rem; min-width:24px; height:24px;
+  border-radius:2px; display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; margin-top:2px;
+}
+.wa-step p { font-size:0.85rem; color:var(--gray); line-height:1.6; }
+.wa-step p strong { color:var(--white); }
+.wa-btn {
+  display:inline-flex; align-items:center; gap:0.6rem;
+  background:#25D366; color:#fff; padding:0.8rem 1.4rem;
+  font-family:'Syne',sans-serif; font-weight:700; font-size:0.88rem;
+  text-decoration:none; text-transform:uppercase; letter-spacing:0.04em;
+  clip-path:polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition:opacity 0.2s, transform 0.15s; margin-top:0.5rem;
+}
+.wa-btn:hover { opacity:0.9; transform:scale(1.02); }
+
+/* ══════════════════════════════════════════
+   DIFF BAND
+══════════════════════════════════════════ */
+.diff-band { background:var(--mint); padding:1rem 0; overflow:hidden; }
+.diff-scroll { display:flex; gap:3rem; white-space:nowrap; animation:scroll-band 22s linear infinite; }
+.diff-item {
+  font-family:'Syne',sans-serif; font-weight:700; font-size:0.78rem;
+  letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.9);
+  display:inline-flex; align-items:center; gap:0.8rem; flex-shrink:0;
+}
+.diff-item::before { content:'✕'; font-size:0.62rem; opacity:0.55; }
+@keyframes scroll-band { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ══════════════════════════════════════════
+   SECCIONES GENERALES
+══════════════════════════════════════════ */
+.section { padding: 5rem 5%; }
+@media (max-width: 600px) { .section { padding: 3.5rem 4%; } }
+.section-label { font-family:'Space Mono',monospace; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--mint); margin-bottom:0.8rem; }
+.section-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(1.7rem,4vw,3rem); letter-spacing:-0.02em; line-height:1.1; max-width:700px; margin-bottom:1.2rem; overflow-wrap:break-word; }
+.section-sub { color:var(--gray); font-size:clamp(0.9rem,2.5vw,1.05rem); line-height:1.75; max-width:560px; margin-bottom:3rem; }
+
+/* ══════════════════════════════════════════
+   WHO GRID
+══════════════════════════════════════════ */
+.who-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1.5px; background:var(--border); border:1.5px solid var(--border); }
+@media (max-width: 480px) { .who-grid { grid-template-columns:1fr 1fr; } }
+@media (max-width: 360px) { .who-grid { grid-template-columns:1fr; } }
+.who-card { background:var(--card-bg); padding:2rem 1.5rem; position:relative; overflow:hidden; transition:background 0.25s; }
+.who-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--mint); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
+.who-card:hover { background:#182035; }
+.who-card:hover::before { transform:scaleX(1); }
+.who-icon { font-size:2rem; margin-bottom:1rem; display:block; }
+.who-card h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; margin-bottom:0.5rem; }
+.who-card p { color:var(--gray); font-size:0.87rem; line-height:1.6; }
+
+/* ══════════════════════════════════════════
+   FEATURES
+══════════════════════════════════════════ */
+.features-section { padding:5rem 5%; background:var(--navy2); position:relative; overflow:hidden; }
+.features-section::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 60% 40% at 80% 50%, rgba(43,191,159,0.07) 0%, transparent 70%);
+  pointer-events:none;
+}
+.features-layout { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+@media (max-width: 860px) { .features-layout { grid-template-columns:1fr; gap:2.5rem; } }
+
+.feature-list { display:flex; flex-direction:column; }
+.feature-item { padding:1.8rem 0; border-bottom:1px solid var(--border); transition:padding-left 0.25s; position:relative; }
+.feature-item::before { content:''; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--mint); transform:scaleY(0); transform-origin:top; transition:transform 0.3s; }
+.feature-item:hover { padding-left:1rem; }
+.feature-item:hover::before { transform:scaleY(1); }
+.feature-num { font-family:'Space Mono',monospace; font-size:0.62rem; color:var(--mint); letter-spacing:0.15em; margin-bottom:0.5rem; }
+.feature-item h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:0.4rem; }
+.feature-item p { color:var(--gray); font-size:0.88rem; line-height:1.65; }
+
+.ui-mock { position:sticky; top:7rem; background:var(--card-bg); border:1px solid var(--border); border-radius:4px; overflow:hidden; box-shadow:0 40px 80px rgba(0,0,0,0.5); }
+.ui-mock-bar { background:#0D1323; padding:0.8rem 1.2rem; display:flex; align-items:center; gap:0.6rem; border-bottom:1px solid var(--border); }
+.dot { width:10px; height:10px; border-radius:50%; }
+.dot-r{background:#FF5F57} .dot-y{background:#FEBC2E} .dot-g{background:#28C840}
+.mock-title { font-family:'Space Mono',monospace; font-size:0.7rem; color:var(--gray); margin-left:0.5rem; }
+.ui-mock-body { padding:1.3rem; }
+.mock-header-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; flex-wrap:wrap; gap:0.5rem; }
+.mock-greeting { font-family:'Syne',sans-serif; font-weight:700; font-size:0.95rem; }
+.mock-greeting span { color:var(--mint); }
+.mock-date { font-family:'Space Mono',monospace; font-size:0.62rem; color:var(--gray); }
+.mock-kpi-row { display:grid; grid-template-columns:1fr 1fr; gap:0.7rem; margin-bottom:1.1rem; }
+.mock-kpi { background:var(--navy); padding:0.9rem; border-radius:3px; border:1px solid var(--border); }
+.mock-kpi-label { font-size:0.62rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.3rem; }
+.mock-kpi-val { font-family:'Syne',sans-serif; font-weight:700; font-size:1.2rem; }
+.mock-kpi-val.up{color:#00E676} .mock-kpi-val.red{color:var(--mint)}
+.mock-chart-label { font-size:0.65rem; color:var(--gray); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.6rem; }
+.mock-bars { display:flex; align-items:flex-end; gap:5px; height:72px; margin-bottom:1rem; }
+.mock-bar { flex:1; border-radius:2px 2px 0 0; background:rgba(43,191,159,0.2); animation:grow-bar 1.2s ease both; animation-delay:var(--d,0s); }
+@keyframes grow-bar{from{transform:scaleY(0);transform-origin:bottom}to{transform:scaleY(1);transform-origin:bottom}}
+.mock-bar.active{background:var(--mint)}
+.mock-row { display:flex; justify-content:space-between; align-items:center; padding:0.6rem 0; border-bottom:1px solid var(--border); font-size:0.77rem; }
+.mock-row:last-child{border:none}
+.mock-row-label{color:var(--gray)}
+.mock-row-val{font-weight:600;font-family:'Space Mono',monospace;font-size:0.72rem}
+.tag-ok{background:rgba(0,230,118,0.15);color:#00E676;font-size:0.58rem;padding:0.18rem 0.45rem;border-radius:2px}
+.tag-pend{background:rgba(255,193,7,0.12);color:#FFC107;font-size:0.58rem;padding:0.18rem 0.45rem;border-radius:2px}
+.mock-ai-box{margin-top:0.9rem;padding:0.8rem;background:rgba(43,191,159,0.08);border:1px solid rgba(43,191,159,0.2);border-radius:3px}
+.mock-ai-label{font-size:0.58rem;color:var(--mint);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.35rem}
+.mock-ai-text{font-size:0.76rem;color:var(--gray);line-height:1.5}
+.mock-ai-text strong{color:var(--white)}
+@media(max-width:860px){.ui-mock{position:static;margin-top:2rem}}
+
+/* ══════════════════════════════════════════
+   COMPARE
+══════════════════════════════════════════ */
+.compare-section{padding:5rem 5%}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:var(--border);max-width:900px;border:1.5px solid var(--border)}
+@media(max-width:640px){.compare-grid{grid-template-columns:1fr}}
+.compare-col{background:var(--card-bg)}
+.compare-header{padding:1.5rem 1.5rem;border-bottom:1px solid var(--border);position:relative}
+.compare-header.us{border-top:3px solid var(--mint)}
+.compare-header.them{border-top:3px solid rgba(255,255,255,0.1)}
+.compare-header h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;overflow-wrap:break-word}
+.compare-header p{font-size:0.78rem;color:var(--gray);margin-top:0.3rem}
+.compare-tag{position:absolute;top:0.8rem;right:0.8rem;font-family:'Space Mono',monospace;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.12em;padding:0.18rem 0.5rem;border-radius:2px}
+.compare-tag.ours{background:rgba(43,191,159,0.15);color:var(--mint)}
+.compare-tag.theirs{background:rgba(255,255,255,0.05);color:var(--gray)}
+.compare-body{padding:1.2rem 1.5rem}
+.compare-row{display:flex;align-items:flex-start;gap:0.7rem;padding:0.65rem 0;border-bottom:1px solid var(--border);font-size:0.85rem}
+.compare-row:last-child{border:none}
+.chk{color:#00E676;font-size:1rem;flex-shrink:0;margin-top:0.05rem}
+.xmk{color:var(--gray);font-size:1rem;flex-shrink:0;margin-top:0.05rem}
+.compare-row p{color:var(--gray);line-height:1.5;overflow-wrap:break-word}
+.compare-row p strong{color:var(--white);display:block}
+
+/* ══════════════════════════════════════════
+   PRICING
+══════════════════════════════════════════ */
+.pricing-section{padding:5rem 5%;background:var(--navy2)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--border);border:1.5px solid var(--border);max-width:900px;margin-top:3rem}
+@media(max-width:700px){.pricing-grid{grid-template-columns:1fr;max-width:480px}}
+.price-card{background:var(--card-bg);padding:2rem 1.7rem;position:relative;transition:background 0.25s}
+.price-card.featured{background:#182035;border-top:3px solid var(--mint)}
+.price-label{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.9rem}
+.price-label.featured{color:var(--mint)}
+.price-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:1.2rem}
+.price-amount{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,2.5rem);line-height:1;margin-bottom:0.3rem;letter-spacing:-0.02em}
+.price-period{font-size:0.78rem;color:var(--gray);margin-bottom:1.8rem}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:0.7rem;margin-bottom:1.8rem}
+.price-features li{font-size:0.86rem;color:var(--gray);display:flex;gap:0.6rem;align-items:flex-start}
+.price-features li::before{content:'→';color:var(--mint);flex-shrink:0}
+.price-btn{display:block;text-align:center;text-decoration:none;font-family:'Syne',sans-serif;font-weight:700;font-size:0.83rem;text-transform:uppercase;letter-spacing:0.05em;padding:0.85rem 1rem;background:transparent;color:var(--white);border:1px solid var(--border);clip-path:polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);transition:background 0.2s, color 0.2s}
+.price-btn.featured{background:var(--mint);border-color:var(--mint)}
+.price-btn:hover{background:var(--mint);border-color:var(--mint)}
+
+/* ══════════════════════════════════════════
+   TESTIMONIALS
+══════════════════════════════════════════ */
+.testimonial-section{padding:5rem 5%}
+.testimonial-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.4rem;margin-top:3rem}
+@media(max-width:480px){.testimonial-grid{grid-template-columns:1fr}}
+.tcard{background:var(--card-bg);border:1px solid var(--border);padding:1.8rem;position:relative;transition:transform 0.25s,box-shadow 0.25s}
+.tcard:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(0,0,0,0.4)}
+.tcard::before{content:'"';position:absolute;top:1rem;right:1.2rem;font-size:4.5rem;line-height:1;font-family:'Syne',sans-serif;font-weight:800;color:rgba(43,191,159,0.1)}
+.tcard-text{font-size:0.9rem;line-height:1.75;color:var(--gray);margin-bottom:1.3rem}
+.tcard-text strong{color:var(--white)}
+.tcard-author{display:flex;align-items:center;gap:0.8rem}
+.tcard-avatar{width:36px;height:36px;border-radius:50%;background:var(--mint);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.88rem;flex-shrink:0}
+.tcard-name{font-family:'Syne',sans-serif;font-weight:700;font-size:0.86rem}
+.tcard-role{font-size:0.73rem;color:var(--gray)}
+
+/* ══════════════════════════════════════════
+   SORTEO
+══════════════════════════════════════════ */
+.sorteo-section{padding:5rem 5%;background:var(--navy2);position:relative;overflow:hidden}
+.sorteo-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 100%, rgba(245,166,35,0.06) 0%, transparent 70%);pointer-events:none}
+.sorteo-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;align-items:start}
+@media(max-width:760px){.sorteo-grid{grid-template-columns:1fr;gap:1.5rem}}
+.sorteo-box{background:var(--card-bg);border:1px solid var(--border);border-top:2px solid var(--gold);padding:1.8rem;margin-bottom:1.2rem}
+.sorteo-box:last-child{margin-bottom:0}
+.sorteo-box h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;margin-bottom:0.7rem;color:var(--gold)}
+.sorteo-box p{font-size:0.86rem;color:var(--gray);line-height:1.7;margin-bottom:0.5rem}
+.sorteo-box p:last-child{margin-bottom:0}
+.sorteo-box strong{color:var(--white)}
+.event-pill{display:inline-block;background:rgba(43,191,159,0.15);color:var(--mint);font-family:'Space Mono',monospace;font-size:0.65rem;padding:0.2rem 0.65rem;letter-spacing:0.08em;margin-right:4px;margin-bottom:4px;border-radius:2px}
+.feature-check{list-style:none;display:flex;flex-direction:column;gap:0.7rem;margin-top:1.1rem}
+.feature-check li{display:flex;align-items:flex-start;gap:0.7rem;font-size:0.86rem;color:var(--gray)}
+.feature-check li::before{content:'✓';color:#00E676;font-weight:800;flex-shrink:0;margin-top:1px}
+
+/* ══════════════════════════════════════════
+   PAGO
+══════════════════════════════════════════ */
+.pago-section{padding:5rem 5%;background:linear-gradient(160deg,#0d0d1f 0%,#1a0535 40%,#0e0c28 100%);position:relative;overflow:hidden}
+body.theme-professional .pago-section{background:linear-gradient(160deg,#061220 0%,#0d2035 40%,#0a1828 100%)}
+body.theme-contrast .pago-section{background:#000}
+.pago-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 80% 30%, rgba(108,63,197,0.15) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 10% 80%, rgba(43,191,159,0.1) 0%, transparent 55%);pointer-events:none}
+.pago-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;position:relative;z-index:1}
+@media(max-width:760px){.pago-inner{grid-template-columns:1fr;gap:2.5rem}}
+
+.nequi-col{display:flex;flex-direction:column;align-items:flex-start;gap:1.5rem}
+.nequi-card{background:linear-gradient(135deg,#5a1ed4 0%,#9b2dd8 60%,#c035e0 100%);border-radius:4px;padding:1.8rem;width:100%;max-width:320px;display:flex;flex-direction:column;align-items:center;gap:1.1rem;box-shadow:0 30px 60px rgba(90,30,212,0.4);position:relative;overflow:hidden}
+.nequi-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);pointer-events:none}
+.nequi-chips{display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center}
+.nequi-chip{background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.9);font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.22rem 0.65rem;border-radius:2px}
+.nequi-qr-frame{background:#fff;border-radius:4px;padding:0.9rem;width:175px;height:175px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.nequi-qr-frame img{width:100%;height:100%;object-fit:contain;border-radius:2px}
+.nequi-qr-fallback{text-align:center;color:#5a1ed4;font-family:'Syne',sans-serif;font-weight:800;font-size:0.82rem;line-height:1.4}
+.nequi-info{text-align:center}
+.nequi-sub{font-family:'Space Mono',monospace;font-size:0.6rem;color:rgba(255,255,255,0.5);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem}
+.nequi-number{font-family:'Space Mono',monospace;font-size:1.7rem;font-weight:700;letter-spacing:0.04em;color:#fff}
+.nequi-name{font-size:0.72rem;color:rgba(255,255,255,0.5);margin-top:0.2rem}
+
+.copy-btn{display:flex;align-items:center;gap:0.6rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:var(--gray);font-family:'Space Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.62rem 1.1rem;cursor:pointer;border-radius:2px;transition:background 0.2s,color 0.2s,border-color 0.2s;width:fit-content}
+.copy-btn:hover{background:rgba(255,255,255,0.1);color:var(--white)}
+.copy-btn.copied{background:rgba(0,230,118,0.1);border-color:rgba(0,230,118,0.3);color:#00E676}
+
+.steps-col{}
+.steps-header{margin-bottom:2rem}
+.steps-header h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;margin-bottom:0.5rem;overflow-wrap:break-word}
+.steps-header p{color:var(--gray);font-size:0.88rem}
+.steps-list{display:flex;flex-direction:column;gap:0.9rem;margin-bottom:2.2rem}
+.step-item{display:flex;gap:1.1rem;align-items:flex-start;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:1rem 1.2rem;border-radius:2px;transition:border-color 0.2s,background 0.2s}
+.step-item:hover{border-color:rgba(43,191,159,0.25);background:rgba(43,191,159,0.04)}
+.step-num{background:var(--mint);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:0.8rem;min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:2px;flex-shrink:0;margin-top:1px}
+.step-text{font-size:0.86rem;color:var(--gray);line-height:1.6}
+.step-text strong{color:var(--white)}
+.step-text code{background:rgba(245,166,35,0.15);color:var(--gold);font-family:'Space Mono',monospace;font-size:0.85em;padding:0.1rem 0.4rem;border-radius:2px}
+
+.apk-block{display:flex;flex-direction:column;gap:0.9rem}
+.apk-btn{display:inline-flex;align-items:center;gap:0.7rem;background:var(--mint);color:var(--white);font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(0.82rem,2.5vw,0.95rem);text-transform:uppercase;letter-spacing:0.04em;padding:0.95rem 1.8rem;clip-path:polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);text-decoration:none;transition:background 0.2s,transform 0.15s,box-shadow 0.2s;position:relative;overflow:hidden;flex-wrap:wrap}
+.apk-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);transform:translateX(-100%);transition:transform 0.5s}
+.apk-btn:hover::after{transform:translateX(100%)}
+.apk-btn:hover{background:var(--mint-dark);transform:scale(1.02);box-shadow:0 0 40px var(--accent-glow)}
+.apk-meta{font-family:'Space Mono',monospace;font-size:0.63rem;color:var(--gray);letter-spacing:0.08em}
+.wa-comprobante{display:inline-flex;align-items:center;gap:0.6rem;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.25);color:#25D366;font-family:'Manrope',sans-serif;font-weight:600;font-size:0.86rem;padding:0.78rem 1.3rem;text-decoration:none;transition:background 0.2s;border-radius:2px}
+.wa-comprobante:hover{background:rgba(37,211,102,0.18)}
+
+/* ══════════════════════════════════════════
+   CTA FINAL & FOOTER
+══════════════════════════════════════════ */
+.cta-section{padding:6rem 5%;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%, rgba(43,191,159,0.15) 0%, transparent 70%);pointer-events:none}
+.cta-section h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.8rem);letter-spacing:-0.025em;line-height:1.1;max-width:700px;margin:0 auto 1.5rem;overflow-wrap:break-word}
+.cta-section p{color:var(--gray);font-size:clamp(0.9rem,2.5vw,1.05rem);max-width:480px;margin:0 auto 2.5rem;line-height:1.7}
+
+footer{padding:2.5rem 5%;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
+@media(max-width:600px){footer{flex-direction:column;text-align:center;align-items:center}}
+.footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem}
+.footer-logo span{color:var(--mint)}
+.footer-links{display:flex;gap:1.5rem;list-style:none;flex-wrap:wrap;justify-content:center}
+.footer-links a{font-size:0.78rem;color:var(--gray);text-decoration:none;transition:color 0.2s}
+.footer-links a:hover{color:var(--white)}
+.footer-copy{font-size:0.7rem;color:var(--gray);line-height:1.8;text-align:center}
+
+/* ══════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ══════════════════════════════════════════
+   WA FLOTANTE
+══════════════════════════════════════════ */
+.wa-float{position:fixed;bottom:20px;right:20px;z-index:999}
+.wa-float a{display:flex;align-items:center;gap:8px;background:#25D366;color:#fff;padding:10px 16px;border-radius:50px;font-weight:700;font-size:0.82rem;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,0.35);transition:all 0.2s}
+.wa-float a:hover{transform:translateY(-2px)}
+@media(max-width:480px){.wa-float{bottom:16px;right:14px} .wa-float a{padding:9px 13px;font-size:0.78rem}}
+
+/* ══════════════════════════════════════════
+   MODAL PTI
+══════════════════════════════════════════ */
+.pti-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.92);z-index:10001;justify-content:center;align-items:center;backdrop-filter:blur(4px);padding:1rem}
+.pti-modal-content{background:var(--card-bg);width:100%;max-width:680px;max-height:88vh;overflow-y:auto;border-radius:12px;border-top:4px solid var(--mint);padding:2rem;position:relative;box-shadow:0 20px 40px rgba(0,0,0,0.5)}
+@media(max-width:480px){.pti-modal-content{padding:1.4rem;border-radius:8px}}
+.pti-modal-close{position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,0.1);border:none;color:var(--gray);font-size:1.4rem;width:30px;height:30px;border-radius:50%;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center}
+.pti-modal-close:hover{background:rgba(255,255,255,0.2);color:var(--white)}
+.pti-modal h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.2rem,3vw,1.5rem);margin-bottom:0.5rem;overflow-wrap:break-word}
+.pti-modal h3{color:var(--white);font-size:0.95rem;margin:1.2rem 0 0.4rem}
+.pti-modal p,.pti-modal li{font-size:0.83rem;line-height:1.65;color:var(--gray)}
+.pti-modal ul{padding-left:1.2rem;margin:0.5rem 0}
+.pti-modal li{margin-bottom:0.45rem}
+.pti-modal-accept-row{margin-top:1.5rem;padding-top:1.2rem;border-top:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:1rem}
+.pti-modal-accept-row label{display:flex;align-items:flex-start;gap:0.7rem;font-size:0.85rem;color:var(--gray);cursor:pointer;max-width:500px;text-align:left;line-height:1.5}
+.pti-modal-accept-row input[type="checkbox"]{width:16px;height:16px;flex-shrink:0;margin-top:2px;cursor:pointer}
+.btn-modal-accept{display:inline-flex;align-items:center;gap:0.5rem;background:var(--mint);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;text-transform:uppercase;letter-spacing:0.04em;padding:0.75rem 1.8rem;clip-path:polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);border:none;cursor:pointer;transition:background 0.2s,opacity 0.2s;opacity:0.6}
+.btn-modal-accept.enabled{opacity:1}
+.btn-modal-accept:hover.enabled{background:var(--mint-dark)}
+
+@keyframes theme-flash{0%{opacity:0.5}50%{opacity:1}100%{opacity:1}}
+body.theme-switching .bono-bar{animation:theme-flash 0.5s ease}
+
+/* ══════════════════════════════════════════
+   SECCIÓN CREADOR (CON FOTO REAL)
+══════════════════════════════════════════ */
+.creador-section {
+  padding: 6rem 5%;
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+.creador-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 55% 60% at 100% 0%, rgba(43,191,159,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 0% 100%, rgba(245,166,35,0.05) 0%, transparent 55%);
+  pointer-events: none;
+}
+.creador-section::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.creador-inner {
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 5rem;
+  align-items: start;
+  max-width: 1200px;
+}
+@media (max-width: 1024px) {
+  .creador-inner { grid-template-columns: 300px 1fr; gap: 3.5rem; }
+}
+@media (max-width: 800px) {
+  .creador-inner { grid-template-columns: 1fr; gap: 3rem; }
+}
+
+/* ── Columna izquierda: perfil ── */
+.creador-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.creador-card {
+  width: 100%;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--mint);
+  padding: 2rem 1.8rem 1.8rem;
+  position: relative;
+  overflow: hidden;
+}
+body.theme-blogger .creador-card { background: #fff; border-color: rgba(0,51,102,0.1); }
+
+.creador-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(135deg, rgba(43,191,159,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Avatar con ring animado y foto real */
+.creador-avatar-wrap {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 1.2rem;
+}
+.creador-avatar-ring {
+  position: absolute; inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(var(--mint) 0%, var(--gold) 40%, var(--mint) 70%, transparent 100%);
+  animation: spin-ring 8s linear infinite;
+}
+@keyframes spin-ring { to { transform: rotate(360deg); } }
+.creador-avatar-inner {
+  position: absolute; inset: 3px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+}
+body.theme-blogger .creador-avatar-inner { background: #fff; }
+.creador-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+/* Fallback si la imagen no carga */
+.creador-avatar-fallback {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: var(--mint);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  user-select: none;
+}
+
+.creador-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+}
+body.theme-blogger .creador-name { color: #003366; }
+
+.creador-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mint);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.creador-bio {
+  font-size: 0.85rem;
+  color: var(--gray);
+  line-height: 1.7;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+.creador-bio strong { color: var(--white); font-weight: 600; }
+body.theme-blogger .creador-bio strong { color: #003366; }
+
+.creador-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.cbadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(43,191,159,0.1);
+  border: 1px solid rgba(43,191,159,0.2);
+  color: var(--mint);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.65rem;
+  border-radius: 2px;
+}
+body.theme-blogger .cbadge { background: rgba(206,17,38,0.08); border-color: rgba(206,17,38,0.2); color: #CE1126; }
+.cbadge.gold {
+  background: rgba(245,166,35,0.1);
+  border-color: rgba(245,166,35,0.25);
+  color: var(--gold);
+}
+
+.creador-wa-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: #25D366;
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.85rem 1.4rem;
+  text-decoration: none;
+  width: 100%;
+  justify-content: center;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: opacity 0.2s, transform 0.15s;
+  margin-top: 0.5rem;
+}
+.creador-wa-btn:hover { opacity: 0.9; transform: scale(1.02); }
+
+.creador-stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  width: 100%;
+}
+.cstat {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 0.9rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.2rem;
+  position: relative;
+  overflow: hidden;
+}
+body.theme-blogger .cstat { background: #fff; border-color: rgba(0,51,102,0.1); }
+.cstat::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--mint);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s;
+}
+.cstat:hover::before { transform: scaleX(1); }
+.cstat-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--white);
+}
+body.theme-blogger .cstat-num { color: #003366; }
+.cstat-num span { color: var(--mint); }
+body.theme-blogger .cstat-num span { color: #CE1126; }
+.cstat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+  line-height: 1.4;
+}
+
+/* ── Columna derecha: servicios ── */
+.creador-right { display: flex; flex-direction: column; gap: 2.5rem; }
+
+.creador-right-header { }
+.creador-right-header .section-label { margin-bottom: 0.6rem; }
+.creador-right-header h2 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin-bottom: 0.8rem;
+  overflow-wrap: break-word;
+}
+body.theme-blogger .creador-right-header h2 { color: #003366; }
+.creador-right-header p {
+  font-size: 0.95rem;
+  color: var(--gray);
+  line-height: 1.75;
+  max-width: 560px;
+}
+
+.servicios-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+@media (max-width: 600px) { .servicios-grid { grid-template-columns: 1fr; } }
+
+.servicio-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 1.6rem 1.4rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  cursor: default;
+}
+body.theme-blogger .servicio-card { background: #fff; border-color: rgba(0,51,102,0.1); }
+.servicio-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--mint), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s;
+}
+.servicio-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+  border-color: rgba(43,191,159,0.25);
+}
+.servicio-card:hover::before { transform: scaleX(1); }
+
+.servicio-card-num {
+  position: absolute;
+  top: 0.8rem; right: 1rem;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 3.5rem;
+  line-height: 1;
+  color: rgba(43,191,159,0.06);
+  pointer-events: none;
+  user-select: none;
+}
+body.theme-blogger .servicio-card-num { color: rgba(0,51,102,0.05); }
+
+.servicio-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.8rem;
+  display: block;
+  line-height: 1;
+}
+.servicio-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.97rem;
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+body.theme-blogger .servicio-card h3 { color: #003366; }
+.servicio-card p {
+  font-size: 0.82rem;
+  color: var(--gray);
+  line-height: 1.65;
+}
+
+.creador-filosofia {
+  background: linear-gradient(135deg, rgba(43,191,159,0.06) 0%, rgba(245,166,35,0.04) 100%);
+  border: 1px solid rgba(43,191,159,0.15);
+  border-left: 3px solid var(--mint);
+  padding: 1.5rem 1.8rem;
+  position: relative;
+}
+body.theme-blogger .creador-filosofia {
+  background: linear-gradient(135deg, rgba(206,17,38,0.04) 0%, rgba(245,166,35,0.04) 100%);
+  border-color: rgba(206,17,38,0.2);
+  border-left-color: #CE1126;
+}
+.creador-filosofia-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 0.7rem;
+}
+body.theme-blogger .creador-filosofia-label { color: #CE1126; }
+.creador-filosofia blockquote {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  font-style: italic;
+}
+body.theme-blogger .creador-filosofia blockquote { color: #003366; }
+
+.creador-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+.creador-cta-row p {
+  font-size: 0.85rem;
+  color: var(--gray);
+  flex: 1;
+  min-width: 200px;
+  line-height: 1.6;
+}
+.creador-cta-row strong { color: var(--white); }
+body.theme-blogger .creador-cta-row strong { color: #003366; }
+.creador-cta-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #25D366;
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.85rem 1.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.creador-cta-wa:hover { opacity: 0.9; transform: scale(1.03); box-shadow: 0 0 30px rgba(37,211,102,0.35); }
+
+body.theme-blogger .creador-section { background: #F4F6FB; }
+
+@media (max-width: 480px) {
+  .creador-section { padding: 4rem 4%; }
+  .creador-stats-row { grid-template-columns: 1fr 1fr; }
+}
+</style>
 </head>
-<body>
+<body class="theme-blogger">
 
-    <!-- ═══════ BONO BAR ═══════ -->
-    <div class="bono-bar">
-        <span>📅 <strong>Calendario DIAN 2026</strong> — Ingresa los dos últimos dígitos de tu NIT y conoce tu fecha exacta de declaración de renta</span>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<!-- WA flotante -->
+<div class="wa-float">
+  <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Accounxter!%20Quiero%20más%20información" target="_blank" rel="noopener">💬 Soporte</a>
+</div>
+
+<!-- BONO BAR -->
+<div class="bono-bar">
+  🎁 Código <strong>AXLANZAMIENTO</strong> — 20% OFF en planes Standard y Premium · Solo 1.300 cupos
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="https://www.accounxter.com" class="logo">ACCOUN<span>X</span>TER</a>
+  <ul class="nav-links">
+    <li><a href="#registro">Demo gratis</a></li>
+    <li><a href="#features">Funciones</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#pago">Pagar</a></li>
+    <li><a href="#novedades">Novedades</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="theme-switcher" title="Cambiar paleta">
+      <span class="theme-switcher-icon">🎨</span>
+      <div class="theme-dot" id="themeDot"></div>
+      <div class="theme-select-wrap">
+        <select class="theme-select" id="themePicker" onchange="applyTheme(this.value)" aria-label="Seleccionar paleta">
+          <option value="theme-blogger">🇨🇴 Brochure</option>
+          <option value="theme-original">🌿 Verde Menta</option>
+          <option value="theme-professional">🔷 Azul Ébano</option>
+          <option value="theme-contrast">⚡ Contraste</option>
+        </select>
+      </div>
+    </div>
+    <a href="#registro" class="nav-cta">Demo →</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="inicio">
+  <div class="glow-orb"></div>
+
+  <div class="hero-left">
+    <div class="hero-badge">Software contable · 100% offline · IA</div>
+    <h1>
+      Tu negocio<br/>
+      contabilizado<br/>
+      con <span class="accent"><span class="underline-word">Inteligencia</span></span><br/>
+      Real
+    </h1>
+    <p class="hero-sub">
+      Accounxter es el sistema contable con IA diseñado para
+      <strong>microempresarios, tenderos y emprendedores</strong>
+      del Régimen Simple. Sin complicaciones. Sin contadores. Sin internet.
+    </p>
+    <div class="hero-actions">
+      <a href="#registro" class="btn-primary">
+        Prueba gratis 20 días
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </a>
+      <a href="#features" class="btn-ghost-hero">Ver funciones <span class="arrow">→</span></a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-num">570K<span>+</span></span><span class="stat-label">Microempresarios</span></div>
+      <div class="stat-item"><span class="stat-num">9<span>×</span></span><span class="stat-label">Más barato que Siigo</span></div>
+      <div class="stat-item"><span class="stat-num">100<span>%</span></span><span class="stat-label">Offline</span></div>
+      <div class="stat-item"><span class="stat-num">DIAN<span>✓</span></span><span class="stat-label">Facturación</span></div>
+    </div>
+  </div>
+
+  <!-- DERECHA: REGISTRO -->
+  <div class="registro-card" id="registro">
+    <div class="reg-header">
+      <div class="reg-header-top">
+        <div class="reg-title">📋 Demo gratis + Sorteo</div>
+        <div class="cupos-badge">
+          <div class="cupos-dot"></div>
+          <span class="cupos-text"><span id="cuposNum">—</span> cupos</span>
+        </div>
+      </div>
+      <div class="cupos-bar-row">
+        <span class="cupos-bar-label">Disponibles:</span>
+        <div class="cupos-bar-track">
+          <div class="cupos-bar-fill" id="cuposBar" style="width:100%"></div>
+        </div>
+        <span class="cupos-bar-label" id="cuposPct">—/300</span>
+      </div>
     </div>
 
-    <!-- ═══════ NAVEGACIÓN ═══════ -->
-    <nav>
-        <div class="container">
-            <a href="#" class="logo">
-                Accounxter
-                <small>· Renta</small>
-            </a>
-            <ul class="nav-links">
-                <li><a href="#herramienta">Tu fecha</a></li>
-                <li><a href="#consulta">¿Declaro?</a></li>
-                <li><a href="#beneficios">Beneficios</a></li>
-                <li><a href="#contacto" class="btn-outline-light">Contactar</a></li>
-            </ul>
+    <div class="reg-tabs">
+      <button class="reg-tab active" onclick="switchTab('form',this)">📋 Formulario</button>
+      <button class="reg-tab" onclick="switchTab('wa',this)">💬 WhatsApp</button>
+    </div>
+
+    <div id="tabForm" class="reg-tab-content active">
+      <div id="ptiBlocker" class="pti-blocker">
+        <div class="pti-card">
+          <span style="font-size:2.2rem;">🔒</span>
+          <h3 style="font-family:'Syne',sans-serif;margin:0.7rem 0 0.4rem;font-size:1rem;">Protección de datos personales</h3>
+          <p style="color:var(--gray);font-size:0.82rem;margin-bottom:1.2rem;line-height:1.6;">
+            Antes de registrarte, debes aceptar nuestra<br>
+            <strong>Política de Tratamiento de Datos Personales</strong><br>
+            según la Ley 1581 de 2012 y Decreto 1377 de 2013.
+          </p>
+          <div class="pti-checkbox-wrapper">
+            <input type="checkbox" id="aceptaPTICheckbox">
+            <label for="aceptaPTICheckbox">
+              He leído y acepto la <span id="openPTIModalBtn" class="pti-link">Política de Tratamiento de Datos</span>
+            </label>
+          </div>
+          <button id="unlockFormBtn" class="btn-primary unlock-btn" disabled style="font-size:0.82rem;padding:0.75rem 1.4rem;">
+            🔓 Acceder al formulario
+          </button>
         </div>
-    </nav>
-
-    <!-- ═══════ HERO ═══════ -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-left">
-                <h1>
-                    Declaración de Renta <br />
-                    <span class="highlight">Persona Natural 2026</span>
-                </h1>
-                <p class="hero-sub">
-                    <strong>Conoce tu fecha límite exacta</strong> con base en el calendario oficial de la DIAN.
-                    Solo necesitas los <strong>dos últimos dígitos</strong> de tu NIT.
-                </p>
-                <div class="hero-badges">
-                    <span><span class="icon">📅</span> Calculadora oficial</span>
-                    <span><span class="icon">🧾</span> Asesoría contable</span>
-                    <span><span class="icon">⚡</span> Respuesta rápida</span>
-                </div>
-                <div class="hero-actions">
-                    <a href="#herramienta" class="btn-primary">🔍 Calcular mi fecha</a>
-                    <a href="https://api.whatsapp.com/send/?phone=573227571857&text=Hola%20Accounxter!%20Quiero%20asesor%C3%ADa%20para%20mi%20declaraci%C3%B3n%20de%20renta%20como%20persona%20natural." target="_blank" class="btn-whatsapp">💬 Contratar por WhatsApp</a>
-                </div>
-            </div>
-            <div class="hero-right">
-                <div class="hero-card">
-                    <h3>📋 ¿Declaras o no?</h3>
-                    <p>Además de tu fecha, verifica tu obligación en el portal oficial de la DIAN.</p>
-                    <div class="deadline-highlight">
-                        <strong>⏰ Basado en el Calendario DIAN 2026</strong><br />
-                        La fecha depende de los <strong>dos últimos dígitos</strong> de tu NIT.
-                    </div>
-                    <a href="https://webazure.dian.gov.co/consultarenta/" target="_blank" class="consulta-link">
-                        Ir a consulta DIAN →
-                    </a>
-                </div>
-            </div>
+      </div>
+      <div id="formIframeContainer" style="display:none;">
+        <div class="gform-wrap">
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLScdWRV0Ro_VAL3vp-dpI8D0v3Tp0An1q1GjD4Hfg0DUM_21eg/viewform?embedded=true"
+            title="Registro demo gratuito Accounxter"
+            loading="lazy">Cargando…</iframe>
         </div>
-    </section>
+        <p style="font-size:0.68rem;color:var(--gray);text-align:center;margin-top:0.7rem;padding-bottom:0.8rem;">
+          ✅ Al enviar confirmas la Política de Tratamiento de Datos Personales.
+        </p>
+      </div>
+    </div>
 
-    <!-- ═══════ HERRAMIENTA INTERACTIVA ═══════ -->
-    <section class="section" id="herramienta">
-        <div class="container">
-            <h2 class="section-title">📆 Calcula tu fecha límite exacta</h2>
-            <p class="section-sub">
-                De acuerdo con el <strong>Calendario Tributario 2026</strong> de la DIAN, la fecha de vencimiento para la declaración de renta de personas naturales se determina por los <strong>dos últimos dígitos del NIT</strong>.
-                <br /><a href="https://www.dian.gov.co" target="_blank">Fuente: DIAN</a>
-            </p>
+    <div id="tabWa" class="reg-tab-content">
+      <div class="wa-tab-body">
+        <div class="wa-step"><div class="wa-step-num">1</div><p>Escribe tu <strong>nombre completo</strong> y <strong>ciudad</strong> en el mensaje.</p></div>
+        <div class="wa-step"><div class="wa-step-num">2</div><p>Indica si quieres la <strong>Demo de 20 días</strong> o un plan de pago.</p></div>
+        <div class="wa-step"><div class="wa-step-num">3</div><p>Recibirás tu <strong>PIN de activación</strong> y quedarás inscrito al sorteo automáticamente.</p></div>
+        <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Accounxter!%20Quiero%20inscribirme%20a%20la%20demo%20gratuita%20de%2020%20días.%0ANombre:%20%5BTU%20NOMBRE%5D%0ACiudad:%20%5BTU%20CIUDAD%5D" target="_blank" rel="noopener" class="wa-btn">
+          💬 Registrarme por WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <div class="tool-container">
-                <div class="tool-input-group">
-                    <input type="text" id="nitDigits" maxlength="2" placeholder="Ej: 35" inputmode="numeric" />
-                    <button onclick="consultarFecha()">🔍 Consultar fecha</button>
-                </div>
-                <div class="tool-helper">
-                    💡 Ingresa los <strong>dos últimos dígitos</strong> de tu NIT (ejemplo: <strong>35</strong>, <strong>12</strong> o <strong>00</strong>).
-                </div>
+<!-- ══ MODAL PTI ══ -->
+<div id="ptiModal" class="pti-modal" role="dialog" aria-modal="true" aria-labelledby="ptiModalTitle">
+  <div class="pti-modal-content">
+    <button class="pti-modal-close" id="closePtiModalBtn" aria-label="Cerrar modal">×</button>
+    <h2 id="ptiModalTitle">📋 Política de Tratamiento de Datos Personales</h2>
+    <p style="color:var(--mint);font-family:'Space Mono',monospace;font-size:0.68rem;margin-bottom:1.3rem;">Actualización: Abril 2026</p>
 
-                <div class="result-box" id="fechaResultado">
-                    <!-- Resultado dinámico -->
-                </div>
-            </div>
+    <p><strong>Accounxter</strong> (Miguel Ángel Arroyo Pianeta, CC 1.096.216.552), en cumplimiento de la <strong>Ley 1581 de 2012</strong> y el <strong>Decreto 1377 de 2013</strong>, presenta su política de protección de datos personales:</p>
+
+    <h3>1. Responsable del tratamiento</h3>
+    <p>Miguel Ángel Arroyo Pianeta, domicilio en Barrancabermeja, Santander, Colombia.<br>Contacto: <strong>accounxter@gmail.com</strong> · WhatsApp: <strong>+57 305 840 2580</strong></p>
+
+    <h3>2. Datos recolectados</h3>
+    <p>Nombre completo, correo electrónico, número de teléfono/WhatsApp, ciudad y cualquier información proporcionada voluntariamente en el formulario de registro o comunicación con Accounxter.</p>
+
+    <h3>3. Finalidad del tratamiento</h3>
+    <ul>
+      <li>Envío de información comercial, promociones y novedades.</li>
+      <li>Activación de demos gratuitas, licencias y códigos PIN.</li>
+      <li>Notificación de ganadores de sorteos y eventos promocionales.</li>
+      <li>Atención al cliente, soporte técnico y gestión de reclamos.</li>
+      <li>Mejora continua del software y análisis estadístico interno.</li>
+    </ul>
+
+    <h3>4. Derechos ARCO</h3>
+    <p>Como titular, puede ejercer sus derechos de Acceso, Rectificación, Cancelación y Oposición enviando un correo a <strong>datos@accounxter.com</strong> o un mensaje de WhatsApp al <strong>+57 305 840 2580</strong>. Responderemos en máximo 10 días hábiles.</p>
+
+    <h3>5. Vigencia y conservación</h3>
+    <p>Los datos se conservarán durante el tiempo necesario para cumplir las finalidades descritas o hasta que el titular solicite su eliminación, tras lo cual serán eliminados o anonimizados.</p>
+
+    <h3>6. Seguridad de la información</h3>
+    <p>Accounxter implementa medidas técnicas, administrativas y humanas para proteger sus datos contra acceso no autorizado, pérdida o divulgación indebida.</p>
+
+    <h3>7. Aceptación</h3>
+    <p>Al marcar la casilla de aceptación y enviar el formulario, declara que ha leído, entendido y aceptado esta Política de Tratamiento de Datos Personales.</p>
+
+    <div class="pti-modal-accept-row">
+      <label>
+        <input type="checkbox" id="ptiModalCheckbox">
+        <span>He leído y acepto la Política de Tratamiento de Datos Personales de Accounxter.</span>
+      </label>
+      <button id="acceptFromModalBtn" class="btn-modal-accept" disabled>✅ Aceptar y abrir formulario</button>
+    </div>
+
+    <p style="margin-top:1.3rem;border-top:1px solid var(--border);padding-top:0.9rem;font-size:0.72rem;text-align:center;color:var(--gray);">© 2026 Accounxter · Todos los derechos reservados</p>
+  </div>
+</div>
+
+<!-- DIFF BAND -->
+<div class="diff-band">
+  <div class="diff-scroll">
+    <span class="diff-item">Para microempresarios</span>
+    <span class="diff-item">Régimen Simple de Tributación</span>
+    <span class="diff-item">Software 100% offline</span>
+    <span class="diff-item">Nómina electrónica DIAN</span>
+    <span class="diff-item">Facturación electrónica</span>
+    <span class="diff-item">IVA automático</span>
+    <span class="diff-item">Conciliación bancaria con IA</span>
+    <span class="diff-item">Sin cuotas de contador</span>
+    <span class="diff-item">Para microempresarios</span>
+    <span class="diff-item">Régimen Simple de Tributación</span>
+    <span class="diff-item">Software 100% offline</span>
+    <span class="diff-item">Nómina electrónica DIAN</span>
+    <span class="diff-item">Facturación electrónica</span>
+    <span class="diff-item">IVA automático</span>
+    <span class="diff-item">Conciliación bancaria con IA</span>
+    <span class="diff-item">Sin cuotas de contador</span>
+  </div>
+</div>
+
+<!-- PARA QUIÉN -->
+<section class="section" id="quien">
+  <div class="reveal">
+    <p class="section-label">¿Para quién es?</p>
+    <h2 class="section-title">Hecho para el que trabaja, no para el que estudia contaduría</h2>
+    <p class="section-sub">Accounxter no es para contadores profesionales ni firmas tributarias. Es para ti: el que abre su negocio cada día.</p>
+  </div>
+  <div class="who-grid reveal">
+    <div class="who-card"><span class="who-icon">🏪</span><h3>Tenderos y comerciantes</h3><p>Controla ventas, inventario y gastos del día sin necesitar un contador externo.</p></div>
+    <div class="who-card"><span class="who-icon">🛵</span><h3>Emprendedores informales</h3><p>Formalizaste tu negocio en el Régimen Simple y necesitas cumplir con la DIAN sin complicarte.</p></div>
+    <div class="who-card"><span class="who-icon">🍽️</span><h3>Restaurantes y cafeterías</h3><p>Factura electrónicamente, registra tu nómina y genera reportes de IVA en segundos.</p></div>
+    <div class="who-card"><span class="who-icon">💅</span><h3>Emprendedores de servicios</h3><p>Peluquerías, talleres, salones, servicios del hogar. Tu negocio también merece tecnología real.</p></div>
+    <div class="who-card"><span class="who-icon">📦</span><h3>Pequeños distribuidores</h3><p>Gestiona proveedores, cuentas por cobrar, retenciones y concilia tu banco con IA.</p></div>
+    <div class="who-card"><span class="who-icon">🏗️</span><h3>Contratistas independientes</h3><p>Emite facturas, controla retenciones en la fuente y lleva tu contabilidad al día.</p></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="features-layout">
+    <div>
+      <div class="reveal">
+        <p class="section-label">Funcionalidades</p>
+        <h2 class="section-title">Todo lo que tu negocio necesita, nada que no necesita</h2>
+        <p class="section-sub">8 módulos integrados, diseñados para el microempresario colombiano. Con IA que aprende de tu negocio.</p>
+      </div>
+      <div class="feature-list reveal">
+        <div class="feature-item"><div class="feature-num">01</div><h3>Facturación Electrónica DIAN</h3><p>Emite facturas con CUFE simulado, XML y PDF. Sin internet permanente.</p></div>
+        <div class="feature-item"><div class="feature-num">02</div><h3>Nómina Electrónica</h3><p>Liquida salarios, prestaciones y parafiscales. SMMLV 2025: $1.423.500.</p></div>
+        <div class="feature-item"><div class="feature-num">03</div><h3>IVA y Retención Automáticos</h3><p>Calcula IVA bimestral (F300) y Retención (F350). Prepara el borrador de tus declaraciones.</p></div>
+        <div class="feature-item"><div class="feature-num">04</div><h3>Conciliación Bancaria con IA</h3><p>Importa extractos CSV de Bancolombia o Davivienda. La IA cruza automáticamente los movimientos.</p></div>
+        <div class="feature-item"><div class="feature-num">05</div><h3>Cuentas por Cobrar y Pagar</h3><p>Controla lo que te deben y lo que debes. Alertas de vencimientos incluidas.</p></div>
+        <div class="feature-item"><div class="feature-num">06</div><h3>Balance y Estado de Resultados</h3><p>Reportes en tiempo real. Historial de asientos. Exporta en PDF.</p></div>
+        <div class="feature-item"><div class="feature-num">07</div><h3>Google Drive Sync</h3><p>Backup automático. Hasta 5 razones sociales. Tus datos siempre seguros.</p></div>
+        <div class="feature-item"><div class="feature-num">08</div><h3>Asistente IA Contable</h3><p>Pregúntale a la IA. Te responde en lenguaje claro, no en términos contables.</p></div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="ui-mock">
+        <div class="ui-mock-bar">
+          <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+          <span class="mock-title">accounxter.apk — Dashboard</span>
         </div>
-    </section>
-
-    <!-- ═══════ CONSULTA DIAN ═══════ -->
-    <section class="consulta-section" id="consulta">
-        <div class="container">
-            <h2 class="section-title">🔍 ¿Estás obligado a declarar renta?</h2>
-            <p class="section-sub">
-                Además de conocer tu fecha, verifica tu obligación en el portal oficial de la DIAN.
-                Solo necesitas tu NIT o cédula.
-            </p>
-            <div class="consulta-box">
-                <p>
-                    <strong>Herramienta oficial de la DIAN</strong><br />
-                    Descubre si debes presentar tu declaración de renta este año.
-                </p>
-                <a href="https://webazure.dian.gov.co/consultarenta/" target="_blank" class="btn-consulta">
-                    Consultar en la DIAN <span class="arrow">→</span>
-                </a>
-                <div class="info-ayuda">
-                    ⏱️ Disponible 24/7 · Enlace oficial · Sin costo
-                </div>
-            </div>
+        <div class="ui-mock-body">
+          <div class="mock-header-row">
+            <div class="mock-greeting">Hola, <span>Querido Usuario</span> 👋</div>
+            <div class="mock-date">Marzo 2026</div>
+          </div>
+          <div class="mock-kpi-row">
+            <div class="mock-kpi"><div class="mock-kpi-label">Ventas del mes</div><div class="mock-kpi-val up">$12.4M</div></div>
+            <div class="mock-kpi"><div class="mock-kpi-label">IVA por declarar</div><div class="mock-kpi-val red">$1.98M</div></div>
+            <div class="mock-kpi"><div class="mock-kpi-label">Nómina pendiente</div><div class="mock-kpi-val">$3.2M</div></div>
+            <div class="mock-kpi"><div class="mock-kpi-label">Facturas emitidas</div><div class="mock-kpi-val up">47</div></div>
+          </div>
+          <div class="mock-chart-label">Ventas últimas 6 semanas</div>
+          <div class="mock-bars">
+            <div class="mock-bar" style="height:45%;--d:0.1s"></div>
+            <div class="mock-bar" style="height:60%;--d:0.2s"></div>
+            <div class="mock-bar" style="height:52%;--d:0.3s"></div>
+            <div class="mock-bar" style="height:75%;--d:0.4s"></div>
+            <div class="mock-bar" style="height:68%;--d:0.5s"></div>
+            <div class="mock-bar active" style="height:90%;--d:0.6s"></div>
+          </div>
+          <div class="mock-row"><span class="mock-row-label">Fact. #0047 — Cliente A</span><span class="mock-row-val">$480.000 <span class="tag-ok">DIAN ✓</span></span></div>
+          <div class="mock-row"><span class="mock-row-label">Fact. #0046 — Cliente B</span><span class="mock-row-val">$230.000 <span class="tag-pend">Pendiente</span></span></div>
+          <div class="mock-row"><span class="mock-row-label">Nómina — Juan Pérez</span><span class="mock-row-val">$1.600.000 <span class="tag-ok">Pagado</span></span></div>
+          <div class="mock-ai-box">
+            <div class="mock-ai-label">⚡ Asistente IA</div>
+            <div class="mock-ai-text"><strong>Tu flujo de caja cubre la nómina de marzo.</strong> La declaración de IVA del bimestre vence en 18 días. Tienes $1.98M provisionados correctamente.</div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- ═══════ BENEFICIOS ═══════ -->
-    <section class="section" id="beneficios">
-        <div class="container">
-            <h2 class="section-title">✅ ¿Por qué contratar nuestros servicios?</h2>
-            <p class="section-sub">
-                Te acompañamos en todo el proceso para que tu declaración sea precisa,
-                oportuna y sin contratiempos.
-            </p>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <span class="emoji">🧾</span>
-                    <h4>Asesoría personalizada</h4>
-                    <p>Revisamos tu caso particular y te guiamos paso a paso para que cumplas con la DIAN.</p>
-                </div>
-                <div class="benefit-card">
-                    <span class="emoji">📅</span>
-                    <h4>Fecha exacta</h4>
-                    <p>Nuestra herramienta usa el calendario oficial de la DIAN para darte el día exacto de vencimiento.</p>
-                </div>
-                <div class="benefit-card">
-                    <span class="emoji">⚡</span>
-                    <h4>Respuesta ágil</h4>
-                    <p>Resolvemos tus dudas en menos de 24 horas y te damos seguimiento constante.</p>
-                </div>
-                <div class="benefit-card">
-                    <span class="emoji">🔒</span>
-                    <h4>Confianza y respaldo</h4>
-                    <p>Somos contadores públicos con experiencia en declaraciones de renta para personas naturales.</p>
-                </div>
-            </div>
+<!-- DIFERENCIA -->
+<section class="compare-section" id="diferencia">
+  <div class="reveal">
+    <p class="section-label">La diferencia</p>
+    <h2 class="section-title">Nosotros no somos un portal de seminarios para contadores</h2>
+    <p class="section-sub">Accounxter es software. Para microempresarios. Offline. Con IA. Punto.</p>
+  </div>
+  <div class="compare-grid reveal">
+    <div class="compare-col">
+      <div class="compare-header us"><span class="compare-tag ours">Accounxter</span><h3>Software contable con IA</h3><p>Para microempresarios · Régimen Simple</p></div>
+      <div class="compare-body">
+        <div class="compare-row"><span class="chk">✓</span><p><strong>Software 100% offline</strong>Funciona sin internet. Tus datos en tu máquina.</p></div>
+        <div class="compare-row"><span class="chk">✓</span><p><strong>Facturación electrónica DIAN</strong>Para tenderos y emprendedores, no para firmas.</p></div>
+        <div class="compare-row"><span class="chk">✓</span><p><strong>Asistente IA integrado</strong>Te explica tu contabilidad en lenguaje simple.</p></div>
+        <div class="compare-row"><span class="chk">✓</span><p><strong>Cliente: microempresario</strong>El que abre su negocio cada día.</p></div>
+        <div class="compare-row"><span class="chk">✓</span><p><strong>Nómina, IVA, retenciones automatizadas</strong>Todo en un solo lugar, sin fórmulas manuales.</p></div>
+      </div>
+    </div>
+    <div class="compare-col">
+      <div class="compare-header them"><span class="compare-tag theirs">Otros</span><h3>Portales de formación tributaria</h3><p>Para contadores profesionales · Seminarios NIIF</p></div>
+      <div class="compare-body">
+        <div class="compare-row"><span class="xmk">—</span><p><strong>Contenido online (cursos, webinars)</strong>Formación para profesionales contables.</p></div>
+        <div class="compare-row"><span class="xmk">—</span><p><strong>Seminarios NIIF y laboral</strong>Actualizaciones normativas para revisores fiscales.</p></div>
+        <div class="compare-row"><span class="xmk">—</span><p><strong>Sin IA operativa</strong>No automatizan tu contabilidad diaria.</p></div>
+        <div class="compare-row"><span class="xmk">—</span><p><strong>Cliente: contador universitario</strong>Perfil completamente diferente al nuestro.</p></div>
+        <div class="compare-row"><span class="xmk">—</span><p><strong>Sin módulos de facturación o nómina</strong>No son software, son plataformas de contenido.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SORTEO -->
+<section class="sorteo-section" id="sorteo">
+  <div class="reveal">
+    <p class="section-label">Sorteo exclusivo · Lanzamiento 2026</p>
+    <h2 class="section-title">🎁 Gana una licencia Premium de 1 año</h2>
+    <p class="section-sub">Solo para las primeras 350 personas registradas. Sin compra necesaria. Regístrate arriba y ya participas.</p>
+  </div>
+  <div class="sorteo-grid reveal">
+    <div>
+      <div class="sorteo-box">
+        <h3>🎲 Premio · Licencia Premium</h3>
+        <p><strong>Valor: $500.000 COP</strong> — acceso 2 años con soporte y todas las actualizaciones.</p>
+        <p>📅 Fecha del sorteo: <strong> muy pronto... en Junio de 2026</strong> a las 12:00 m.</p>
+        <p>El ganador se anuncia en redes sociales y es contactado directamente por WhatsApp.</p>
+      </div>
+      <div class="sorteo-box">
+        <h3>📅 Evento de lanzamiento</h3>
+        <p><span class="event-pill">Jue 14 mayo</span><span class="event-pill">Junio de 2026</span> 9:00 am – 12:30 pm</p>
+        <p>📍 Auditorio Asopenoba, centro de salud cardales (60 personas/jornada).</p>
+        <p>🎥 Transmisión en vivo por Facebook y YouTube.</p>
+      </div>
+    </div>
+    <div>
+      <p class="section-label" style="margin-bottom:1rem;">✨ Tu prueba de 20 días incluye</p>
+      <ul class="feature-check">
+        <li>Contabilidad completa — asientos, terceros, documentos electrónicos</li>
+        <li>Nómina avanzada con liquidación de prestaciones sociales (SMMLV 2025)</li>
+        <li>Facturación electrónica DIAN simulada — CUFE, XML y PDF</li>
+        <li>IVA bimestral (Form. 300) y Retención en la fuente (Form. 350)</li>
+        <li>Conciliación bancaria — Bancolombia, Davivienda, extractos CSV</li>
+        <li>Google Drive Sync — backup automático, hasta 5 razones sociales</li>
+        <li>100% OFFLINE — funciona sin internet en cualquier zona del país</li>
+        <li>PIN de seguridad — tus datos nunca salen de tu celular</li>
+      </ul>
+      <a href="#registro" class="btn-primary" style="margin-top:1.8rem;display:inline-flex;">
+        🎟️ Quiero mi demo gratis
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="precios">
+  <div class="reveal">
+    <p class="section-label">Planes</p>
+    <h2 class="section-title">Precios para microempresarios, no para corporaciones</h2>
+    <p class="section-sub">Pago único. Sin mensualidades eternas. Sin sorpresas.</p>
+  </div>
+  <div class="pricing-grid reveal">
+    <div class="price-card">
+      <div class="price-label">Demo · 20 días</div>
+      <div class="price-name">Emprendedor</div>
+      <div class="price-amount">Gratis</div>
+      <div class="price-period">Sin tarjeta · Sin compromiso</div>
+      <ul class="price-features">
+        <li>1 empresa</li>
+        <li>Nómina avanzada CST</li>
+        <li>IVA y Retefuente</li>
+        <li>Facturación electrónica DIAN</li>
+        <li>Conciliación bancaria</li>
+        <li>Asistente IA (limitado)</li>
+      </ul>
+      <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20un%20PIN%20Demo%20gratuito%20de%20Accounxter" target="_blank" rel="noopener" class="price-btn">Solicitar PIN Demo →</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-label featured">⚡ Más popular</div>
+      <div class="price-name">Standard</div>
+      <div class="price-amount">$89.900</div>
+      <div class="price-period">COP · 12 meses · Renovación anual</div>
+      <ul class="price-features">
+        <li>Hasta 5 empresas</li>
+        <li>Nómina avanzada CST completa</li>
+        <li>IVA · Retefuente · F300 · F350</li>
+        <li>Facturación FE-DIAN completa</li>
+        <li>Conciliación bancaria CSV</li>
+        <li>Google Drive Sync</li>
+        <li>Exportar PDF · Multi-empresa</li>
+      </ul>
+      <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Quiero%20comprar%20Accounxter%20Standard%20-%20%2489.900%20COP.%20Código:%20AXLANZAMIENTO" target="_blank" rel="noopener" class="price-btn featured">Comprar Standard — $89.900</a>
+    </div>
+    <div class="price-card">
+      <div class="price-label">👑 Mejor valor</div>
+      <div class="price-name">Premium</div>
+      <div class="price-amount">$249.000</div>
+      <div class="price-period">COP · 2 Años · Actualizaciones en tiempo Real</div>
+      <ul class="price-features">
+        <li>Empresas ilimitadas</li>
+        <li>Todo lo de Standard</li>
+        <li>Acceso garantizado</li>
+        <li>Todas las actualizaciones incluidas</li>
+        <li>Soporte prioritario WhatsApp</li>
+        <li>Certificados de retención</li>
+        <li>Sin pagos futuros complementarios</li>
+      </ul>
+      <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Quiero%20comprar%20Accounxter%20PREMIUM%20vitalicio%20-%20%24249.000%20COP.%20Código:%20AXLANZAMIENTO" target="_blank" rel="noopener" class="price-btn">Comprar Premium — $249.000</a>
+    </div>
+  </div>
+  <p style="margin-top:1.3rem;font-size:0.75rem;color:var(--gray);font-family:'Space Mono',monospace;">Pago por Nequi · Bre-B · Transferencia bancaria · PIN de activación en máximo 24 horas hábiles.</p>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonial-section">
+  <div class="reveal">
+    <p class="section-label">Lo dicen nuestros usuarios</p>
+    <h2 class="section-title">Microempresarios que le perdieron el miedo a la contabilidad</h2>
+  </div>
+  <div class="testimonial-grid reveal">
+    <div class="tcard">
+      <p class="tcard-text">Antes pagaba $200.000 al mes a un contador solo para que me hiciera las facturas. Ahora <strong>Accounxter me las genera en segundos</strong> y funciona sin internet en mi local.</p>
+      <div class="tcard-author"><div class="tcard-avatar">L</div><div><div class="tcard-name">Luisa M.</div><div class="tcard-role">Dueña de tienda · Bucaramanga</div></div></div>
+    </div>
+    <div class="tcard">
+      <p class="tcard-text">Me inscribí en el Régimen Simple y no sabía cómo manejar el IVA. <strong>La IA de Accounxter me explica todo en palabras normales.</strong> Ya no le tengo miedo a la DIAN.</p>
+      <div class="tcard-author"><div class="tcard-avatar">C</div><div><div class="tcard-name">Carlos R.</div><div class="tcard-role">Restaurante · Barrancabermeja</div></div></div>
+    </div>
+    <div class="tcard">
+      <p class="tcard-text">Lo que más me gustó es que <strong>funciona sin internet</strong>. En mi zona la señal falla mucho y con otros programas perdía todo. Con Accounxter, ningún problema.</p>
+      <div class="tcard-author"><div class="tcard-avatar">A</div><div><div class="tcard-name">Adriana P.</div><div class="tcard-role">Servicios del hogar · Barrancabermeja</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PAGO Y DESCARGA -->
+<section class="pago-section" id="pago">
+  <div class="reveal" style="margin-bottom:2.5rem;">
+    <p class="section-label">Cómo pagar y activar</p>
+    <h2 class="section-title">Rápido, seguro y sin complicaciones</h2>
+    <p class="section-sub">En menos de 24 horas hábiles tienes tu PIN de activación.</p>
+  </div>
+  <div class="pago-inner reveal">
+    <div class="nequi-col">
+      <div class="nequi-card">
+        <div class="nequi-chips">
+          <span class="nequi-chip">Nequi Negocios</span>
+          <span class="nequi-chip">Bre-B</span>
         </div>
-    </section>
-
-    <!-- ═══════ CTA FINAL ═══════ -->
-    <section class="cta-final" id="contacto">
-        <div class="container">
-            <h2>📲 ¡Contrata ahora y declara con tranquilidad!</h2>
-            <p>
-                Escríbenos por WhatsApp y agenda tu asesoría. Te ayudamos a cumplir con
-                la DIAN de forma fácil y segura.
-            </p>
-            <a href="https://api.whatsapp.com/send/?phone=573227571857&text=Hola%20Accounxter!%20Quiero%20asesor%C3%ADa%20para%20mi%20declaraci%C3%B3n%20de%20renta%20como%20persona%20natural." target="_blank" class="btn-whatsapp">
-                💬 Contratar por WhatsApp
-            </a>
+        <div class="nequi-qr-frame">
+          <img
+            src="https://drive.google.com/thumbnail?id=1ptCAFWzTUJcFlXHkGFSuPKgEVzDzjgSm&sz=w400"
+            alt="QR de pago Nequi Accounxter"
+            onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'nequi-qr-fallback\'>📱<br/>Escanea con<br/>Nequi</div>'"
+          />
         </div>
-    </section>
-
-    <!-- ═══════ FOOTER ═══════ -->
-    <footer>
-        <div class="container">
-            <div class="footer-links">
-                <a href="#">Inicio</a>
-                <a href="#herramienta">Calculadora</a>
-                <a href="#consulta">Consulta DIAN</a>
-                <a href="#contacto">Contacto</a>
-            </div>
-            <p>
-                &copy; 2026 Accounxter · Contadores Públicos · Asesoría en declaración de renta para personas naturales.
-                <br />
-                <span style="opacity:0.5;">Basado en el Calendario Tributario DIAN 2026.</span>
-            </p>
+        <div class="nequi-info">
+          <div class="nequi-sub">Llave Nequi Negocios</div>
+          <div class="nequi-number">0091429387</div>
+          <div class="nequi-name">Accounxter · Miguel Arroyo · Barrancabermeja</div>
         </div>
-    </footer>
+      </div>
+      <button class="copy-btn" id="copyBtn" onclick="copyNequi()">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3a1 1 0 00-1-1H3a1 1 0 00-1 1v7a1 1 0 001 1h2" stroke="currentColor" stroke-width="1.5"/></svg>
+        Copiar: 0091429387
+      </button>
+      <div class="apk-block">
+        <a href="https://drive.google.com/file/d/1qHzLnNh_07LIaa4l7b76lexGk5OFpURM/view?usp=sharing" class="apk-btn">
+          📱 Descargar APK — Accounxter 
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3M2 12h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </a>
+        <span class="apk-meta">🤖 Android 7.0+ · Archivo verificado · Sin virus</span>
+        <a href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola!%20Quiero%20activar%20mi%20licencia%20de%20Accounxter.%20Te%20envío%20el%20comprobante." target="_blank" rel="noopener" class="wa-comprobante">
+          💬 Enviar comprobante por WhatsApp
+        </a>
+      </div>
+    </div>
 
-    <!-- ═══════ JAVASCRIPT (CON LISTA DE FECHAS CORREGIDA) ═══════ -->
-    <script>
-        function consultarFecha() {
-            const input = document.getElementById('nitDigits');
-            const resultDiv = document.getElementById('fechaResultado');
-            let val = input.value.trim();
+    <div class="steps-col">
+      <div class="steps-header">
+        <h3>Paso a paso para activar</h3>
+        <p>Sigue estos pasos y en menos de 24 horas tienes tu software listo.</p>
+      </div>
+      <div class="steps-list">
+        <div class="step-item"><div class="step-num">1</div><div class="step-text">Aplica el código <code>AXLANZAMIENTO</code> y obtén <strong>20% de descuento</strong> en Standard y Premium.</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-text">Descarga el APK desde el botón de arriba e instala en tu celular Android.</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-text">Transfiere el valor del plan a la llave Nequi <strong>0091429387</strong> o escanea el QR.</div></div>
+        <div class="step-item"><div class="step-num">4</div><div class="step-text">Envía el <strong>comprobante de pago</strong> por WhatsApp al <strong>+57 305 840 2580</strong>.</div></div>
+        <div class="step-item"><div class="step-num">5</div><div class="step-text">Recibes tu <strong>PIN de activación</strong> en máximo <strong>24 horas hábiles</strong> ✅</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:1.2rem 1.4rem;">
+        <div style="font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--gray);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.9rem;">Resumen de planes</div>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+          <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--gray);border-bottom:1px solid var(--border);padding-bottom:0.6rem;"><span>🆓 Demo — 20 días</span><strong style="color:var(--white)">GRATIS</strong></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--gray);border-bottom:1px solid var(--border);padding-bottom:0.6rem;"><span>⭐ Standard — 12 meses</span><strong style="color:var(--gold)">$89.900 COP</strong></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:var(--gray);"><span>👑 Premium — Vitalicio</span><strong style="color:var(--gold)">$249.000 COP</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            // Validación: vacío
-            if (val === '') {
-                resultDiv.innerHTML = '<div class="result-error">⚠️ Por favor, ingresa los dos últimos dígitos de tu NIT.</div>';
-                return;
-            }
+<!-- SECCIÓN NOVEDADES (ANTERIORMENTE CREADOR) -->
+<section class="creador-section" id="novedades">
+  <div class="creador-inner reveal">
 
-            // Validación: solo números y máximo 2 dígitos
-            if (!/^\d{1,2}$/.test(val)) {
-                resultDiv.innerHTML = '<div class="result-error">⚠️ Ingresa solo números (máximo 2 dígitos). Ejemplo: 35, 12 o 00.</div>';
-                return;
-            }
+    <!-- COLUMNA IZQUIERDA: Perfil con foto -->
+    <div class="creador-profile">
 
-            let num = parseInt(val, 10);
-            // Si es 00, lo tratamos como 100 para el cálculo
-            if (val === '00') {
-                num = 100;
-            }
+      <div class="creador-card">
+        <!-- Avatar con ring animado y foto real desde Google Drive -->
+        <div class="creador-avatar-wrap">
+          <div class="creador-avatar-ring"></div>
+          <div class="creador-avatar-inner">
+            <img
+              class="creador-avatar-img"
+              src="https://drive.google.com/thumbnail?id=1Wm-QPJpt45afybxu29FtY8dfcY0_Gvg-&sz=w200"
+              alt="Miguel Ángel Arroyo Pianeta - Contador Público, fundador de Accounxter"
+              loading="lazy"
+              onerror="this.style.display='none'; this.parentElement.innerHTML = '<span class=\'creador-avatar-fallback\'>MA</span>';"
+            >
+          </div>
+        </div>
 
-            // Validación de rango (1 a 100, donde 100 representa 00)
-            if (num < 1 || num > 100) {
-                resultDiv.innerHTML = '<div class="result-error">⚠️ El número debe estar entre 01 y 99, o 00.</div>';
-                return;
-            }
+        <div class="creador-name">Miguel Ángel<br/>Arroyo Pianeta</div>
+        <div class="creador-title">
+          Contador Público<br/>
+          Especialista en Gerencia de Impuestos
+        </div>
 
-            // ═══════════════════════════════════════════════════════
-            // ARRAY DE FECHAS (50 elementos) – CORREGIDO Y COMPLETADO
-            // según el Calendario Tributario DIAN 2026, sección
-            // "Renta - Personas naturales" (declaración y pago).
-            // Los rangos van de 01-02 (índice 0) a 99-00 (índice 49)
-            // ═══════════════════════════════════════════════════════
-            const dates = [
-                '12 de agosto',    // 01-02
-                '13 de agosto',    // 03-04
-                '14 de agosto',    // 05-06
-                '18 de agosto',    // 07-08
-                '19 de agosto',    // 09-10
-                '20 de agosto',    // 11-12
-                '21 de agosto',    // 13-14
-                '24 de agosto',    // 15-16
-                '25 de agosto',    // 17-18
-                '26 de agosto',    // 19-20
-                '27 de agosto',    // 21-22
-                '28 de agosto',    // 23-24
-                '31 de agosto',    // 25-26
-                '1 de septiembre', // 27-28
-                '2 de septiembre', // 29-30
-                '3 de septiembre', // 31-32
-                '4 de septiembre', // 33-34
-                '7 de septiembre', // 35-36
-                '8 de septiembre', // 37-38
-                '9 de septiembre', // 39-40
-                '10 de septiembre', // 41-42
-                '11 de septiembre', // 43-44
-                '14 de septiembre', // 45-46
-                '15 de septiembre', // 47-48
-                '16 de septiembre', // 49-50
-                '17 de septiembre', // 51-52
-                '18 de septiembre', // 53-54
-                '21 de septiembre', // 55-56
-                '22 de septiembre', // 57-58
-                '23 de septiembre', // 59-60
-                '24 de septiembre', // 61-62
-                '25 de septiembre', // 63-64
-                '28 de septiembre', // 65-66
-                '1 de octubre',    // 67-68
-                '2 de octubre',    // 69-70
-                '5 de octubre',    // 71-72
-                '6 de octubre',    // 73-74
-                '7 de octubre',    // 75-76
-                '8 de octubre',    // 77-78
-                '9 de octubre',    // 79-80
-                '13 de octubre',   // 81-82
-                '14 de octubre',   // 83-84
-                '15 de octubre',   // 85-86
-                '16 de octubre',   // 87-88
-                '19 de octubre',   // 89-90
-                '20 de octubre',   // 91-92
-                '21 de octubre',   // 93-94
-                '22 de octubre',   // 95-96
-                '23 de octubre',   // 97-98
-                '26 de octubre',   // 99-00
-            ];
+        <div class="creador-bio">
+          Profesional contable con formación avanzada en tributaria colombiana. Fundador de Accounxter, software contable con IA diseñado desde la trinchera del microempresario. <strong>Conoce el problema porque lo vivió.</strong>
+        </div>
 
-            // Cálculo del índice: (número - 1) / 2, redondeado hacia abajo
-            let index = Math.floor((num - 1) / 2);
+        <div class="creador-badges" style="margin-top:1rem;">
+          <span class="cbadge">📘 Contador Público</span>
+          <span class="cbadge">🎓 Esp. Gerencia Impuestos</span>
+          <span class="cbadge gold">⚖️ Reg. Simple Tributación</span>
+          <span class="cbadge gold">🏛️ DIAN · Cámara Comercio</span>
+        </div>
 
-            // Seguridad por si el índice se sale del array
-            if (index < 0) index = 0;
-            if (index >= dates.length) index = dates.length - 1;
+        <a
+          href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Miguel%20Ángel!%20Vi%20tu%20perfil%20en%20Accounxter%20y%20me%20interesa%20hablar%20contigo."
+          target="_blank" rel="noopener"
+          class="creador-wa-btn"
+          style="margin-top:1.4rem;"
+        >
+          💬 Contactar por WhatsApp
+        </a>
+      </div>
 
-            const fecha = dates[index];
+      <div class="creador-stats-row">
+        <div class="cstat">
+          <span class="cstat-num">10<span>+</span></span>
+          <span class="cstat-label">Años de experiencia</span>
+        </div>
+        <div class="cstat">
+          <span class="cstat-num">570<span>K</span></span>
+          <span class="cstat-label">Microempresarios atendidos</span>
+        </div>
+        <div class="cstat">
+          <span class="cstat-num">8<span>+</span></span>
+          <span class="cstat-label">Módulos en Accounxter</span>
+        </div>
+        <div class="cstat">
+          <span class="cstat-num">100<span>%</span></span>
+          <span class="cstat-label">Offline · Sin internet</span>
+        </div>
+      </div>
 
-            // Mostrar el número de dos dígitos en el resultado (00 si era 100)
-            const displayNum = (num === 100) ? '00' : String(num).padStart(2, '0');
+    </div>
 
-            // Determinar el rango correspondiente para mostrarlo
-            let rangoInicio = String(num).padStart(2, '0');
-            let rangoFin;
-            if (num % 2 === 1) {
-                // si es impar, el rango es num - num+1
-                rangoFin = String(num + 1).padStart(2, '0');
-            } else {
-                // si es par, el rango es num-1 - num
-                rangoInicio = String(num - 1).padStart(2, '0');
-                rangoFin = String(num).padStart(2, '0');
-            }
-            // Para 00 (100), el rango es 99-00
-            if (num === 100) {
-                rangoInicio = '99';
-                rangoFin = '00';
-            }
+    <!-- COLUMNA DERECHA: Servicios complementarios -->
+    <div class="creador-right">
 
-            // Mostrar resultado exitoso
-            resultDiv.innerHTML = `
-                <div class="result-success">
-                    <span class="result-icon">📅</span>
-                    <div>
-                        <strong>Últimos dígitos: ${displayNum}</strong><br />
-                        <span class="grupo-info">Rango: ${rangoInicio}-${rangoFin}</span><br />
-                        Tu fecha límite para declarar es el <span class="fecha-destacada">${fecha} de 2026</span>.
-                    </div>
-                </div>
-            `;
-        }
+      <div class="creador-right-header">
+        <p class="section-label">El profesional detrás del software</p>
+        <h2>Servicios contables y tributarios complementarios</h2>
+        <p>Además del software, Miguel Ángel ofrece asesoría profesional directa para casos complejos que requieren atención personalizada.</p>
+      </div>
 
-        // Permitir que la tecla "Enter" ejecute la consulta
-        document.addEventListener('DOMContentLoaded', function() {
-            const input = document.getElementById('nitDigits');
-            input.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    consultarFecha();
-                }
-            });
-            input.focus();
-        });
-    </script>
+      <div class="servicios-grid">
+        <div class="servicio-card">
+          <span class="servicio-card-num">01</span>
+          <span class="servicio-icon">📊</span>
+          <h3>Declaraciones de Impuestos</h3>
+          <p>Renta, IVA, Retención en la fuente, ICA. Elaboración y presentación ante la DIAN con precisión y cumplimiento normativo.</p>
+        </div>
+        <div class="servicio-card">
+          <span class="servicio-card-num">02</span>
+          <span class="servicio-icon">🏛️</span>
+          <h3>Gestión ante la DIAN y Cámara de Comercio</h3>
+          <p>Formalización de empresas, RUT, registro mercantil, actualización de actividades y trámites de representación.</p>
+        </div>
+        <div class="servicio-card">
+          <span class="servicio-card-num">03</span>
+          <span class="servicio-icon">📒</span>
+          <h3>Contabilidad Integral</h3>
+          <p>Llevanza contable mensual, conciliaciones, cuentas de orden, libros oficiales y preparación de informes gerenciales.</p>
+        </div>
+        <div class="servicio-card">
+          <span class="servicio-card-num">04</span>
+          <span class="servicio-icon">📈</span>
+          <h3>Estados Financieros</h3>
+          <p>Balance general, estado de resultados, flujo de efectivo y notas. Bajo NIIF PYMES o estándares locales colombianos.</p>
+        </div>
+        <div class="servicio-card">
+          <span class="servicio-card-num">05</span>
+          <span class="servicio-icon">💼</span>
+          <h3>Régimen Simple de Tributación</h3>
+          <p>Inscripción, cálculo de tarifas SIMPLE, bimestral anticipado y declaración anual. Especialidad diferenciadora.</p>
+        </div>
+        <div class="servicio-card">
+          <span class="servicio-card-num">06</span>
+          <span class="servicio-icon">🤖</span>
+          <h3>Soporte y Capacitación Accounxter</h3>
+          <p>Activación del software, onboarding personalizado, configuración de empresa y tutoriales para equipos de trabajo.</p>
+        </div>
+        <!-- NUEVAS TARJETAS DE NOVEDADES -->
+        <div class="servicio-card">
+          <span class="servicio-card-num">07</span>
+          <span class="servicio-icon">📄</span>
+          <h3>Declaraciones de Renta PN y PJ</h3>
+          <p>Lo más reciente en declaraciones de renta para personas naturales y jurídicas. Cumplimiento normativo garantizado.</p>
+        </div>
+        <div class="servicio-card">
+          <span class="servicio-card-num">08</span>
+          <span class="servicio-icon">📊</span>
+          <h3>Presentación de Información Exógena</h3>
+          <p>Elaboración y presentación de información exógena ante la DIAN. Reportes precisos y a tiempo.</p>
+        </div>
+        <div class="servicio-card">
+          <span class="servicio-card-num">09</span>
+          <span class="servicio-icon">📅</span>
+          <h3>Calendario Tributario 2026</h3>
+          <p>Descargue el calendario con todas las fechas importantes para sus obligaciones tributarias.</p>
+          <a href="https://drive.google.com/file/d/1YxvChgVXH5nZk4hl7R_eg2Em9PSbJWIy/view?usp=sharing" target="_blank" rel="noopener" style="display:inline-block;margin-top:0.6rem;color:var(--mint);font-weight:600;text-decoration:underline;">Descargar calendario →</a>
+        </div>
+      </div>
 
+      <div class="creador-filosofia">
+        <div class="creador-filosofia-label">⚡ Filosofía de trabajo</div>
+        <blockquote>
+          "La tecnología contable no debería ser exclusiva de las grandes empresas. Cada tendero, cada emprendedor que formalizó su negocio merece herramientas de clase mundial — sin costos imposibles y sin necesidad de internet permanente."
+        </blockquote>
+        <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--gray);">— Miguel Ángel Arroyo Pianeta · Fundador Accounxter · Barrancabermeja, Santander</p>
+      </div>
+
+      <div class="creador-cta-row">
+        <p>¿Necesitas asesoría tributaria personalizada o tienes preguntas sobre el software? <strong>Escríbeme directo por WhatsApp.</strong> Solo chat, sin llamadas.</p>
+        <a
+          href="https://api.whatsapp.com/send/?phone=573058402580&text=Hola%20Miguel%20Ángel!%20Quiero%20asesoría%20contable%20personalizada."
+          target="_blank" rel="noopener"
+          class="creador-cta-wa"
+        >
+          💬 Hablar por WhatsApp
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section">
+  <div class="reveal">
+    <h2>Tu negocio merece contabilidad inteligente</h2>
+    <p>Únete a los microempresarios colombianos que ya llevan su contabilidad con IA. Gratis para empezar.</p>
+    <a href="#registro" class="btn-primary" style="display:inline-flex;margin:0 auto;">
+      Empieza gratis ahora
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ACCOUN<span>X</span>TER</div>
+  <ul class="footer-links">
+    <li><a href="https://www.accounxter.com">Sitio web</a></li>
+    <li><a href="#features">Funciones</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#pago">Pagar</a></li>
+    <li><a href="#novedades">Novedades</a></li>
+    <li><a href="https://api.whatsapp.com/send/?phone=573058402580" target="_blank">Soporte</a></li>
+  </ul>
+  <div class="footer-copy">
+    © 2025–2026 Accounxter · Miguel Ángel Arroyo Pianeta ·<br/>
+    DNDA radicado 1-2026-56626 · Barrancabermeja, Santander · v5.0.5<br/>
+    Prohibida su distribución o modificación sin autorización escrita.
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════
+   CURSOR PERSONALIZADO (solo escritorio)
+══════════════════════════════════════════ */
+if (window.matchMedia('(pointer: fine)').matches) {
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('ring');
+  let mx=0, my=0, rx=0, ry=0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+  });
+  (function animRing(){
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(animRing);
+  })();
+}
+
+/* ══════════════════════════════════════════
+   THEME SWITCHER
+══════════════════════════════════════════ */
+const THEME_KEY   = 'accounxter_theme';
+const ALL_THEMES  = ['theme-blogger','theme-original','theme-professional','theme-contrast'];
+
+function applyTheme(themeClass, skipSave) {
+  if (!ALL_THEMES.includes(themeClass)) themeClass = 'theme-blogger';
+  document.body.classList.add('theme-switching');
+  setTimeout(() => document.body.classList.remove('theme-switching'), 500);
+  ALL_THEMES.forEach(t => document.body.classList.remove(t));
+  document.body.classList.add(themeClass);
+  const picker = document.getElementById('themePicker');
+  if (picker) picker.value = themeClass;
+  if (!skipSave) {
+    try { localStorage.setItem(THEME_KEY, themeClass); } catch(e) {}
+  }
+}
+
+(function initTheme(){
+  let saved = 'theme-blogger';
+  try { saved = localStorage.getItem(THEME_KEY) || 'theme-blogger'; } catch(e) {}
+  applyTheme(saved, true);
+})();
+
+/* ══════════════════════════════════════════
+   TABS FORMULARIO
+══════════════════════════════════════════ */
+function switchTab(tab, el) {
+  document.querySelectorAll('.reg-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.reg-tab-content').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(tab === 'form' ? 'tabForm' : 'tabWa').classList.add('active');
+}
+
+/* ══════════════════════════════════════════
+   PTI BLOCKER
+══════════════════════════════════════════ */
+const ptiBlocker     = document.getElementById('ptiBlocker');
+const formContainer  = document.getElementById('formIframeContainer');
+const acceptCheckbox = document.getElementById('aceptaPTICheckbox');
+const unlockBtn      = document.getElementById('unlockFormBtn');
+const openModalBtn   = document.getElementById('openPTIModalBtn');
+const ptiModal       = document.getElementById('ptiModal');
+const closeModalBtn  = document.getElementById('closePtiModalBtn');
+const ptiModalCb     = document.getElementById('ptiModalCheckbox');
+const acceptFromModal= document.getElementById('acceptFromModalBtn');
+
+function showForm() {
+  ptiBlocker.style.display  = 'none';
+  formContainer.style.display = 'block';
+  const iframe = formContainer.querySelector('iframe');
+  if (iframe) { const s = iframe.src; iframe.src = ''; iframe.src = s; }
+  if (acceptCheckbox) acceptCheckbox.checked = true;
+  ptiModal.style.display = 'none';
+}
+
+if (acceptCheckbox && unlockBtn) {
+  acceptCheckbox.addEventListener('change', function(){
+    const ok = this.checked;
+    unlockBtn.disabled = !ok;
+    unlockBtn.classList.toggle('enabled', ok);
+  });
+}
+if (unlockBtn) {
+  unlockBtn.addEventListener('click', function(){
+    if (acceptCheckbox && acceptCheckbox.checked) showForm();
+  });
+}
+if (openModalBtn) {
+  openModalBtn.addEventListener('click', e => {
+    e.preventDefault();
+    ptiModal.style.display = 'flex';
+  });
+}
+if (closeModalBtn) {
+  closeModalBtn.addEventListener('click', () => { ptiModal.style.display = 'none'; });
+}
+window.addEventListener('click', e => {
+  if (ptiModal && e.target === ptiModal) ptiModal.style.display = 'none';
+});
+if (ptiModalCb && acceptFromModal) {
+  ptiModalCb.addEventListener('change', function(){
+    acceptFromModal.disabled = !this.checked;
+    acceptFromModal.classList.toggle('enabled', this.checked);
+  });
+}
+if (acceptFromModal) {
+  acceptFromModal.addEventListener('click', function(){
+    if (ptiModalCb && ptiModalCb.checked) showForm();
+  });
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && ptiModal) ptiModal.style.display = 'none';
+});
+
+/* ══════════════════════════════════════════
+   CUPOS DISPONIBLES
+══════════════════════════════════════════ */
+const CUPOS_URL   = 'https://script.google.com/macros/s/AKfycbw7t6ggjW8b5BpmgpSC9o75fliwrZs62fLJQU0FaEg_q0_yQXVblfE7L6xPtVxB5BvC0A/exec';
+const CUPOS_TOTAL = 350;
+
+async function actualizarCupos() {
+  const numEl = document.getElementById('cuposNum');
+  const barEl = document.getElementById('cuposBar');
+  const pctEl = document.getElementById('cuposPct');
+  try {
+    const r = await fetch(CUPOS_URL);
+    const d = await r.json();
+    let n = d.cuposDisponibles ?? d.cupos ?? d.disponibles;
+    if (typeof n === 'number') {
+      if(numEl) numEl.textContent = n.toLocaleString('es-CO');
+      if(pctEl) pctEl.textContent = n + '/' + CUPOS_TOTAL;
+      const pct = Math.max(0, Math.min(100, (n / CUPOS_TOTAL) * 100));
+      if(barEl) {
+        barEl.style.width = pct + '%';
+        if (pct < 20) barEl.style.background = 'linear-gradient(90deg,var(--mint),#ff8a00)';
+      }
+      if (n <= 0 && numEl) numEl.textContent = '0';
+    }
+  } catch(e) {
+    if(numEl) numEl.textContent = '—';
+    if(pctEl) pctEl.textContent = '';
+  }
+}
+actualizarCupos();
+setInterval(actualizarCupos, 60000);
+
+/* ══════════════════════════════════════════
+   COPIAR NEQUI
+══════════════════════════════════════════ */
+function copyNequi() {
+  navigator.clipboard.writeText('0091429387').then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ ¡Copiado!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M11 5V3a1 1 0 00-1-1H3a1 1 0 00-1 1v7a1 1 0 001 1h2" stroke="currentColor" stroke-width="1.5"/></svg> Copiar: 0091429387';
+      btn.classList.remove('copied');
+    }, 2500);
+  }).catch(() => { prompt('Copia este número:', '0091429387'); });
+}
+
+/* ══════════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════════ */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+document.querySelectorAll('.who-card,.tcard,.price-card').forEach((el,i) => {
+  el.style.transitionDelay = (i * 0.06) + 's';
+});
+
+window.addEventListener('message', e => {
+  if (e.origin !== 'https://docs.google.com') return;
+  try {
+    const data = JSON.parse(e.data);
+    if (data && data.type === 'form' && data.height) {
+      const iframe = document.querySelector('.gform-wrap iframe');
+      if (iframe) iframe.style.height = (data.height + 30) + 'px';
+    }
+  } catch(_) {}
+});
+</script>
 </body>
 </html>
